@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Email template for delivery carrier confirmation -->
+        <record id="email_template_delivery_carrier_confirmation" model="mail.template">
+            <field name="name">Delivery Carrier: Confirmation</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">{{ object.company_id.name }}: Order Confirmed</field>
+            <field name="email_from">{{ (object.user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="description">Sent to customer when a delivery carrier is confirmed</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="object.partner_id.name or ''"/>,
+        <br/><br/>
+        Your order with number <strong t-out="object.name or ''"/> has been confirmed. Please check your customer portal to continue with the process.
+        <br/><br/>
+
+        You can track your order status and delivery details in your customer portal.
+        <br/><br/>
+        Regards,<br/>
+        <t t-out="object.user_id.signature or ''"/>
+    </p>
+</div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

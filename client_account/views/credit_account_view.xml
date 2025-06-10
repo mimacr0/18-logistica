@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="credit_account_view_form" model="ir.ui.view">
+        <field name="name">credit.account.view.form</field>
+        <field name="model">credit.account</field>
+        <field name="arch" type="xml">
+            <form string="Credit Account">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,rejected" />
+                    <button name="action_confirm" type="object" class="bg-success text-white" string="Confirm" invisible="state != 'draft'"/>
+                    <button name="%(reject_reason_credit_wizard_action)d" type="action" class="bg-warning text-white" string="Reject" invisible="state == 'rejected'"/>
+                    <button name="return_to_draft" icon="fa-arrow-left" type="object" string="Return to Draft" class="oe_link" invisible="state != 'rejected'"/>
+                </header>
+                <sheet>
+                    <label for="name" string="Credit Number"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="account_id" readonly="state != 'draft'" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            <field name="partner_account" invisible="1"/>
+                            <field name="concept" required="1" widget="selection_badge" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Approval Data" invisible="state != 'confirmed'">
+                            <field name="approve_user" widget="many2one_avatar_user" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="approve_date" readonly="1"/>
+                        </group>
+                        <group string="Rejection Data" invisible="state != 'rejected'">
+                            <field name="reject_user" widget="many2one_avatar_user" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="reject_date" readonly="1"/>
+                            <field name="reject_reason" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" widget="monetary" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="credit_account_view_kanban" model="ir.ui.view">
+        <field name="name">credit.account.view.kanban</field>
+        <field name="model">credit.account</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" records_draggable="0" create="True" group_create="0" display_unavailability="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="partner_account"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_image">
+                            <h4><strong><field name="name"/></strong></h4>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-baseline mb-2">
+                            <field name="partner_account" class="fs-5"/>
+                            <div class="d-inline-flex align-items-baseline">
+                                <i class="fa fa-money me-2" title="Amount"/>
+                                <h4>
+                                    <field name="amount" widget="monetary" class="fw-bolder"/>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="mb-2 card text-center">
+                            <field name="concept"/>
+                        </div>
+                        <footer class="align-items-end">
+                            <div class="d-flex flex-wrap gap-1 text-muted text-nowrap me-auto">
+                                <i class="fa fa-calendar me-2" title="Date"/>
+                                <field name="date"/>
+                            </div>
+                            <div class="ms-auto">
+                                <field name="state" widget="label_selection" options="{'classes': {'draft': 'info', 'confirmed': 'success', 'rejected': 'warning'}}"/>
+                            </div>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="credit_account_view_list" model="ir.ui.view">
+        <field name="name">credit.account.view.list</field>
+        <field name="model">credit.account</field>
+        <field name="arch" type="xml">
+            <list string="Credit Account" default_order="name desc" decoration-info="state=='draft'" decoration-success="state=='confirmed'" decoration-warning="state=='rejected'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="concept"/>
+                <field name="amount" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Total"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state"/>
+                <field name="reject_reason" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="credit_account_view_search" model="ir.ui.view">
+        <field name="name">credit.account.view.search</field>
+        <field name="model">credit.account</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Cuenta de Crédito">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="state"/>
+                <searchpanel>
+                    <field name="account_id" icon="fa-user" string="Account" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+</odoo>

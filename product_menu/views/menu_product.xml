@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem 
+        id="menu_root_product_menu"
+        name="Products" 
+        sequence="5"
+        web_icon="product_menu,static/description/product_menu.png"
+    />
+    <menuitem 
+        id="menu_products_product_menu"
+        name="Products" 
+        sequence="10"
+        parent="menu_root_product_menu"
+        action="product_menu_product_product_action"
+    />
+
+    <menuitem 
+        id="menu_products_configuration_menu"
+        name="Configuration" 
+        sequence="100"
+        parent="menu_root_product_menu"
+    />
+
+        <menuitem 
+        id="menu_products_attributes_menu"
+        name="Attributes" 
+        sequence="10"
+        parent="menu_products_configuration_menu"
+        action="product.attribute_action"
+    />
+
+</odoo>

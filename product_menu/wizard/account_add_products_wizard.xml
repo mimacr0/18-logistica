@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="add_products_wizard_view">
+        <field name="name">aadd.products.wizard.view</field>
+        <field name="model">add.products.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Account Add Products">
+                <sheet>
+                    <group name="select_account">
+                        <field name="account_partner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                    </group>
+                    <field name="image_1920" widget="image" class="oe_avatar" invisible="not account_partner_id"/>
+                    <div class="oe_title" invisible="not account_partner_id">
+                        <label for="name" string="Product Name"/>
+                        <h1>
+                            <div class="d-flex">
+                                <field class="text-break" name="name" placeholder="Robot vacuum cleaner ..."/>
+                            </div>
+                        </h1>
+                    </div>
+                    <div name="category" invisible="not account_partner_id">
+                        <field name="storage_type"  widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                    </div>
+                    <group invisible="not account_partner_id">
+                        <group name="group_logistics" string="Logistics">
+                            <label for="length" help="Size: Length × Width × Height" string="Measures (cm)"/>
+                            <div class="o_row" name="size">
+                                <field name="length" placeholder="Length"/>
+                                <span>×</span>
+                                <field name="width" placeholder="Width"/>
+                                <span>×</span>
+                                <field name="height" placeholder="Height"/>
+                                <span>cm</span>
+                            </div>
+                            <label for="volume"/>
+                            <div class="o_row">
+                                <field name="volume" class="oe_inline"/>
+                                <span>cm³</span>
+                            </div>
+                            <label for="weight"/>
+                            <div class="o_row">
+                                <field name="weight" class="oe_inline"/>
+                                <span>kg</span>
+                            </div>
+                            <field name="list_price" widget="monetary" class="oe_inline"/>
+                        </group>
+                        <group name="group_category" string="Categories">
+                            <field name="categ_id" string="Product Category"/>
+                            <field name="product_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                        <group name="group_services_repair" string="Service repair">
+                            <field name="repair_price" widget="monetary" class="oe_inline"/>
+                            <field name="warranty_price" widget="monetary" class="oe_inline"/>
+                        </group>
+                        <group name="group_services_review" string="Service review" >
+                            <field name="review_price" widget="monetary" class="oe_inline"/>
+                            <field name="renew_price" widget="monetary" class="oe_inline"/>
+                        </group>
+                        <field name="currency_id" readonly="1" invisible="1"/>
+                        <separator string="Attributes"/>
+                        <field name="attr_line_ids" nolabel="1">
+                            <list editable="bottom">
+                                <field name="attribute_id" readonly="id != False"/>
+                                <field name="value_ids" widget="many2many_tags" domain="[('attribute_id', '=', attribute_id)]" options="{'no_create_edit': True, 'color_field': 'color'}" context="{'default_attribute_id': attribute_id, 'show_attribute': False}"/>
+                            </list>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="cancel" string="Cancel" type="object" class="btn-default" special="cancel" icon="fa-times"/>
+                        <button name="action_add_product" string="Save" type="object" icon="fa-floppy-o"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_add_products_wizard" model="ir.actions.act_window">
+        <field name="name">Account Add Products</field>
+        <field name="res_model">add.products.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

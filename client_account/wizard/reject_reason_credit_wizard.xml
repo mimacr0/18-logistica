@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reject_reason_credit_wizard" model="ir.ui.view">
+        <field name="name">reject.reason.credit.wizard</field>
+        <field name="model">reject.reason.credit</field>
+        <field name="arch" type="xml">
+            <form string="Reject Reason">
+                <sheet>
+                    <group>
+                        <label for="reason" string="Reason"/>
+                        <div class="oe_title">
+                            <field name="reason" widget="text_area" nolabel="1"
+                                   placeholder="You must enter the reason you are declining credit." required="1"/>
+                        </div>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_reject" type="object" class="btn btn-primary" string="Reject"/>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="reject_reason_credit_wizard_action" model="ir.actions.act_window">
+        <field name="name">Reject Reason</field>
+        <field name="res_model">reject.reason.credit</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

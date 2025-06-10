@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="add_account_partner_view" model="ir.ui.view">
+        <field name="name">add_account_partner_view</field>
+        <field name="model">add.account.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <label for="account"/>
+                        <h2><field name="account" required="1" placeholder="SHORT ACCOUNT NAME"/></h2>
+                        <field name="partner_id" required="1" domain="[('account', '=', False),('is_company','=',True),('is_carrier','=',False)]"
+                               placeholder="Select a created contact..." options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                        <field name="lang" widget="selection_badge" required="1"/>
+                        <field name="commercial" required="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}"
+                               domain="[('login', '!=', 'admin'), ('share', '=', False)]" widget="many2one_avatar_user"
+                               placeholder="Select the salesperson who will be in charge of the account."/>
+                    </group>
+                </sheet>
+                <footer id="footer_add_account">
+                    <button name="add_account" string="Confirm" type="object" class="btn-primary oe_highlight" icon="fa-arrow-right"/>
+                    <button name="cancel" string="Cancel" type="object" class="btn-default" special="cancel" icon="fa-times"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_add_account_partner_view" model="ir.actions.act_window">
+        <field name="name">New account registration</field>
+        <field name="res_model">add.account.partner</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="add_account_partner_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

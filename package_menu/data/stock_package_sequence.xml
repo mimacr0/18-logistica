@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Nueva secuencia para stock.quant.package -->
+    <record id="seq_stock_quant_package_custom" model="ir.sequence">
+        <field name="name">Custom Stock Package Sequence</field>
+        <field name="code">stock.quant.package.custom</field>
+        <field name="prefix">%(y)s%(month)s%(day)s</field>
+        <field name="padding">3</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/> <!-- Global para todas las empresas -->
+    </record>
+    <record id="seq_stock_lot_custom" model="ir.sequence">
+        <field name="name">Custom Lot Sequence</field>
+        <field name="code">stock.lot.custom</field>
+        <field name="prefix">-</field>
+        <field name="padding">3</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/> <!-- Global para todas las empresas -->
+    </record>
+</odoo>

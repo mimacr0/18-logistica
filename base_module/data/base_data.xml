@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="base_data" model="ir.model.data">
+            <field name="name">base_data</field>
+            <field name="module">base_module</field>
+            <field name="model">ir.model.data</field>
+            <field name="res_id" eval="ref('base_data')"/>
+        </record>
+
+        <record id="base_data_record" model="base.data">
+            <field name="name">Base Data Record</field>
+            <field name="value">Sample Value</field>
+        </record>
+
+        <record id="base_data_action" model="ir.actions.act_window">
+            <field name="name">Base Data Action</field>
+            <field name="res_model">base.data</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_search_form_view_stock_menu" model="ir.ui.view">
+        <field name="name">product.product.search.stock.form.stock.menu</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_search_form_view_stock_report"/>
+        <field name="arch" type="xml">
+            <xpath expr="//searchpanel/field[@name='categ_id']" position="before">
+                <field name="account_partner_id" string="Account Partner" icon="fa-users" enable_counters="1"/>
+
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_receive_package_wizard_user,access_receive_package_wizard_user,stock_reception.model_receive_package_wizard,base.group_user,1,1,1,1
+access_create_stock_picking_wizard,access_create_stock_picking_wizard,model_create_stock_picking_wizard,base.group_user,1,1,1,1
+access_create_stock_picking_line_wizard,access_create_stock_picking_line_wizard,model_create_stock_picking_line_wizard,base.group_user,1,1,1,1

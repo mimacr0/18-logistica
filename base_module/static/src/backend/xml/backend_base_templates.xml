@@ -1,0 +1,14 @@
+<templates id="template" xml:space="preserve">
+    <!-- Inherit the dropdown to select the apps, to add the function OnClickMainMenu-->
+    <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//Dropdown"
+               position="replace">
+            <div class="d-flex justify-content-center align-items-center o_main-menu-button p-2"
+                 t-on-click="OnClickMainMenu">
+                <i class="oi oi-apps"
+                   style="font-size: 18px !important; color: white; margin-top: 3px;"/>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

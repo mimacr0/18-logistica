@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_account" inherit_id="portal.portal_layout">
+        <xpath expr="//div[@id='wrap']/div/t/div[hasclass('wrapper')]/h3" position="replace">
+            <h3 class="my-3">
+                <i class="fa fa-user" aria-hidden="true"/>
+                <span t-esc="env.user.partner_id.commercial_partner_id.account"/>
+            </h3>
+        </xpath>
+    </template>
+
+    <template id="my_credit_available" inherit_id="portal.side_content">
+        <xpath expr="//div[hasclass('justify-content-start')]" position="before">
+            <div class='mt16 text-center'>
+                <h4>
+                    <i class="fa fa-credit-card-alt" aria-hidden="true"/>
+                    Available Credit
+                </h4>
+                <h2 t-esc="env.user.partner_id.commercial_partner_id.total_account" t-options='{"widget": "monetary", "display_currency": env.user.partner_id.currency_id}'/>
+                <hr/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

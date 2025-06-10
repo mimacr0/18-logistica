@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_root_reception"
+        name="Package reception"
+        sequence="10"
+        web_icon="package_menu,static/description/package_menu.png"/>
+
+    <menuitem id="menu_package" name="Packages" parent="menu_root_reception" action="action_view_quant_package" groups="stock.group_tracking_lot" sequence="10"/>
+
+    <menuitem id="menu_package_configuration" name="Configuration" parent="menu_root_reception" sequence="100"/>
+    <menuitem id="menu_package_type" name="Package Types" parent="menu_package_configuration" action="stock.action_package_type_view" sequence="10"/>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="module_category_stock_reception" model="ir.module.category">
+            <field name="name">Stock Reception</field>
+        </record>
+
+        <record id="module_category_stock_reception_api" model="ir.module.category">
+            <field name="name">Stock Reception API</field>
+        </record>
+
+        <record id="module_category_print_report_delivery" model="ir.module.category">
+            <field name="name">Print Report Delivery</field>
+        </record>
+
+        <!-- Security rules for package reception model -->
+        <record id="group_package_reception_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="stock_reception.module_category_stock_reception"/>
+        </record>
+
+        <record id="group_package_reception_client_api" model="res.groups">
+            <field name="name">Client API</field>
+            <field name="category_id" ref="stock_reception.module_category_stock_reception_api"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="group_package_reception_responsible" model="res.groups">
+            <field name="name">Responsible</field>
+            <field name="category_id" ref="stock_reception.module_category_stock_reception"/>
+            <field name="implied_ids" eval="[(4, ref('stock_reception.group_package_reception_user'))]"/>
+        </record>
+
+        <record id="group_package_reception_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="stock_reception.module_category_stock_reception"/>
+            <field name="implied_ids" eval="[(4, ref('stock_reception.group_package_reception_responsible'),('stock_reception.group_package_reception_client_api'))]"/>
+        </record>
+
+        <record id="group_print_report_delivery" model="res.groups">
+            <field name="name">Print Report Delivery</field>
+            <field name="category_id" ref="stock_reception.module_category_print_report_delivery"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+
+    </data>
+</odoo>

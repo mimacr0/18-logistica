@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem 
+        id="menu_root_stock_menu"
+        name="Stock" 
+        sequence="5"
+        web_icon="stock_menu,static/description/stock_menu.png"
+    />
+    <menuitem 
+        id="menu_products_stock_menu"
+        name="Stock" 
+        sequence="10"
+        parent="menu_root_stock_menu"
+        action="stock.action_product_stock_view"
+    />
+
+
+</odoo>
