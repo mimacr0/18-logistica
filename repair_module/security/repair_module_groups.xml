@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- This group is meant to manage quality stages -->
+    <record model="ir.module.category" id="repair_module.access_repair_module_category">
+        <field name="name">Access Repair Module</field>
+        <field name="description">.</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="repair_module.group_after_sales_department" model="res.groups">
+        <field name="name">After Sales Department</field>
+        <field name="category_id" ref="repair_module.access_repair_module_category"/>
+        <field name="users" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">The department after sales access</field>
+    </record>
+
+    <record id="repair_module.group_repair_department" model="res.groups">
+        <field name="name">Repair Department</field>
+        <field name="category_id" ref="repair_module.access_repair_module_category"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">The department repair access</field>
+    </record>
+</odoo>

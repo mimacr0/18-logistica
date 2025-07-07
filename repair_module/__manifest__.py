@@ -26,12 +26,14 @@
     'data': [
         'data/repair_order_sequence.xml',
         'data/quality_point_data.xml',
+        # 'security/repair_module_groups.xml',
         
         # 'security/base_security.xml',
         'views/quality_check_views.xml',
         'views/quality_alert_views.xml',
         'views/repair_order_views.xml',
         'views/stock_lot_views.xml',
+        'views/stock_picking_views.xml',
         # 'report/base_report.xml',
         # 'wizard/base_wizard_views.xml',
         # 'portal/base_template.xml',

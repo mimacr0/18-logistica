@@ -6,7 +6,13 @@ class RepairOrder(models.Model):
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
     origin = fields.Char(string='Origin')
     quality_check_id = fields.Many2one('quality.check', string="Quality Check")
-
+    maintenance_type = fields.Selection([
+        ('repair', 'Repair'),
+        ('review', 'Review'),
+        ('warranty', 'Warranty'),
+        ('renew', 'Renew'),
+    ])
+    
     @api.onchange('account_partner_id')
     def _set_partner_and_owner(self):
         for sale in self:
