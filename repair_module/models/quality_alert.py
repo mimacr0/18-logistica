@@ -70,7 +70,7 @@ class QualityAlert(models.Model):
             'context': {
                 'default_account_partner_id': self.account_partner_id.id,
                 'default_origin': self.name,
-                'default_partner_id': self.partner_id.id,
+                'default_partner_id': self.account_partner_id.partner_id.id,
                 'default_picking_type_id': picking_type.id,  # Permite elegir el tipo
                 'default_quality_alert_ids': [(6, 0, [self.id])],
                 # 'default_location_id': self.location_id.id if self.location_id else False,

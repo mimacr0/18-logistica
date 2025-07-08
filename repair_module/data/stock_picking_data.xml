@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data noupdate="0">
 
         <record id="stock_picking_type_move_to_repair" model="stock.picking.type">
             <field name="name">Move to Repair</field>
@@ -13,5 +13,18 @@
             <!-- <field name="default_product_location_dest_id" ref="__custom__.repairs_location"></field> -->
         </record>
 
+        <record id="picking_type_warehouse0_review" model="stock.picking.type">
+            <field name="name">Review</field>
+            <field name="code">repair_operation</field>
+            <field name="sequence_code">REV</field>
+            <field name="reservation_method">at_confirm</field>
+            <field name="barcode">review_operation</field>
+            <field name="default_product_location_src_id" ref="stock.stock_location_stock"></field>
+            <field name="default_product_location_dest_id" ref="stock.stock_location_stock"></field>
+            <field name="default_location_src_id" ref="stock.stock_location_stock"></field>
+            <field name="default_location_dest_id" ref="stock.stock_location_stock"></field>
+            <field name="default_remove_location_dest_id" ref="stock.stock_location_stock"></field>
+            <field name="default_recycle_location_dest_id" ref="stock.stock_location_stock"></field>
+        </record>
     </data>
 </odoo>

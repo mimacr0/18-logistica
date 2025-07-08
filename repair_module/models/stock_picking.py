@@ -35,7 +35,7 @@ class StockPicking(models.Model):
                     'account_partner_id': picking.account_partner_id.id,
                     'product_id': product.id,
                     'origin': picking.name,
-                    'partner_id': picking.partner_id.id,
+                    'partner_id': picking.account_partner_id.partner_id.id,
                     'picking_id': picking.id,
                     'picking_type_id': picking_type.id,
                     'maintenance_type': picking.maintenance_type,
