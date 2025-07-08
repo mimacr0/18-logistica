@@ -58,13 +58,7 @@ class QualityAlert(models.Model):
         self.stage_id = self.env.ref('quality.quality_alert_stage_1')
         # Cargar la vista de formulario de stock.picking
         picking_form_view = self.env.ref('stock.view_picking_form')
-        
-        # Cuando el resto esté más desarrollado, esto tiene que cambiarse para añadir si se escogen reparaciones o revisiones
-        # Por ahora vamos a diferenciar solo si el producto es por identificador único o por cantidad
-        if self.product_id.tracking == 'serial':
-            picking_type = self.env.ref('repair_module.stock_picking_type_repair_one_by_one')
-        else: 
-            picking_type = self.env.ref('repair_module.stock_picking_type_repair_batch')
+        picking_type = self.env.ref('repair_module.stock_picking_type_move_to_repair')
 
         return {
             'type': 'ir.actions.act_window',
@@ -95,6 +89,7 @@ class QualityAlert(models.Model):
             },
         }
 
+        
     def open_stock_picking(self):
         self.ensure_one()
         action = self.env['ir.actions.actions']._for_xml_id('stock.stock_picking_action_picking_type')

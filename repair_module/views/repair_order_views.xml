@@ -19,16 +19,16 @@
             </xpath> -->
             <xpath expr="//div[@name='button_box']" position="after">
                 <div style="display: flex; align-items: flex-start; font-size: 1.2rem;" class="float-end">
-
                     <field name="maintenance_type" widget="badge"/>
-
-
                 </div>
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="account_partner_id"/>
             </xpath>
-
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="lifecycle_state"/>
+            </xpath>
+            
 
         </field>
     </record>

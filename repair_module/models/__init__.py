@@ -5,7 +5,7 @@
 #
 ##############################################################################
 
-from . import quality_check
+# from . import quality_check
 from . import quality_alert
 from . import repair_order
 from . import stock_lot

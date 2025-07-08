@@ -6,13 +6,22 @@ class RepairOrder(models.Model):
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
     origin = fields.Char(string='Origin')
     quality_check_id = fields.Many2one('quality.check', string="Quality Check")
+    
     maintenance_type = fields.Selection([
         ('repair', 'Repair'),
         ('review', 'Review'),
         ('warranty', 'Warranty'),
         ('renew', 'Renew'),
     ])
-    
+    lifecycle_state = fields.Selection([
+        ('A', 'A-Awaiting Inspection'),
+        ('B', 'B-New'),
+        ('C', 'C-Semi-new'),
+        ('D', 'D-Repair'),
+        ('E', 'E-Scrap'),
+        ('F', 'F-Repair in review') 
+    ], string='Lifecycle State')
+
     @api.onchange('account_partner_id')
     def _set_partner_and_owner(self):
         for sale in self:
@@ -33,15 +42,22 @@ class RepairOrder(models.Model):
 
     def action_validate(self):
         res = super().action_validate()  # O .action_confirm() dependiendo de tu versión
-        for repair in self:
-            if repair.quality_check_id:
-                repair.quality_check_id.repair_order_id = repair.id
+        self.picking_id.quality_alert_ids.stage_id = self.env.ref('quality.quality_alert_stage_2')
         return res
 
     def create(self, vals):
         res = super().create(vals) 
-        if res.quality_check_id:
-            res.quality_check_id.repair_order_id = res.id
+        res.picking_id.quality_alert_ids.stage_id = self.env.ref('quality.quality_alert_stage_2')
+        return res
+
+    def action_repair_start(self):
+        res = super().action_repair_start()
+        self.picking_id.quality_alert_ids.stage_id = self.env.ref('repair_module.quality_alert_stage_repairing')
+        return res
+
+    def action_repair_end(self):
+        res = super().action_repair_end()
+        self.picking_id.quality_alert_ids.stage_id = self.env.ref('repair_module.quality_alert_stage_sent_to_postsale')
         return res
 
     def open_quality_check(self):

@@ -10,7 +10,8 @@
                 <button name="action_create_repair_order"
                         type="object"
                         string="Create Repair 1"
-                        class="btn-primary"/>
+                        class="btn-primary"
+                        invisible="state != 'done'"/>
                 <!-- El botón de abajo abre el formulario, pero no crea per sé las reparaciones
                  por este motivo, no he utilizado el método, pero se podría-->
                 <!-- <button name="action_repair_return"

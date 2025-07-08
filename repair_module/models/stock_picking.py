@@ -4,7 +4,6 @@ from odoo.exceptions import ValidationError
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    alert_ids = fields.Many2many('quality.alert', 'quality_alert_picking_rel', string='Alerts', check_company=True)
     maintenance_type = fields.Selection([
         ('repair', 'Repair'),
         ('review', 'Review'),
@@ -14,9 +13,14 @@ class StockPicking(models.Model):
 
     def action_create_repair_order(self):
         RepairOrder = self.env['repair.order']
-        picking_type = self.env.ref('repair.picking_type_warehouse0_repair')
 
         for picking in self:
+
+            if picking.maintenance_type in ['repair', 'warranty']:
+                picking_type = self.env.ref('repair.picking_type_warehouse0_repair')
+            elif  picking.maintenance_type in ['renew', 'review']:
+                picking_type = self.env.ref('repair_module.picking_type_warehouse0_review')
+
             if not picking.move_line_ids:
                 raise ValidationError(_('Introduce at least one product'))
 
@@ -34,6 +38,7 @@ class StockPicking(models.Model):
                     'partner_id': picking.partner_id.id,
                     'picking_id': picking.id,
                     'picking_type_id': picking_type.id,
+                    'maintenance_type': picking.maintenance_type,
                 }
 
                 try:
