@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="base_wizard_example" model="ir.ui.view">
+            <field name="name">Base Wizard Example</field>
+            <field name="model">base.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Base Wizard Example">
+                    <field name="name" invisible="1"/> <!-- The name is needed in the BinaryField component used to download the file -->
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_example" model="ir.actions.act_window">
+            <field name="name">Action Wizard</field>
+            <field name="res_model">base.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem action="action_wizard_example" id="menu_wizard_example" parent="menu_wizard"/>
+    </data>
+</odoo>
