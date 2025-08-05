@@ -28,19 +28,13 @@
         'data/stock_picking_data.xml',
         'data/quality_alert_data.xml',
         # 'security/repair_module_groups.xml',
-        
         # 'security/base_security.xml',
-        # 'views/quality_check_views.xml',
         'views/quality_alert_views.xml',
         'views/repair_order_views.xml',
         'views/stock_lot_views.xml',
         'views/stock_picking_views.xml',
-        # 'report/base_report.xml',
-        # 'wizard/base_wizard_views.xml',
-        # 'portal/base_template.xml',
         'security/ir.model.access.csv',
-    ],     # Es importante tener en cuenta el orden en el que deben declararse las carpetas y archivos
-
+    ],   
     'images': ['static/description/icon.png'],
     'installable': True, #Este campo se debe cambiar a True cuando se quiera que el modulo sea instalable
     'auto_install': False,

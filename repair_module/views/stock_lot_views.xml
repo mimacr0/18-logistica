@@ -8,6 +8,21 @@
             <xpath expr="//label[@for='total_value']" position="before">
                 <field name="lifecycle_state"/>
             </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Repair Order" name="repair_info">
+                    <group>
+                        <field name="repair_order_id"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="diagnosis_ids" widget="many2many_list" options="{'no_create': True, 'no_edit': True}" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="result_ids" options="{'no_create': True, 'no_edit': True}" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>      
         </field>
     </record>
 </odoo>
