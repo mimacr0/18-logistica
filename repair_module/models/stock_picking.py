@@ -1,16 +1,11 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import timedelta
-
+from .choices import MAINTENANCE_TYPE
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    maintenance_type = fields.Selection([
-        ('repair', 'Repair'),
-        ('review', 'Review'),
-        ('warranty', 'Warranty'),
-        ('renew', 'Renew'),
-    ])
+    maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
     picking_type_barcode = fields.Char(related="picking_type_id.barcode")
 
     def action_create_repair_order(self):
@@ -24,10 +19,10 @@ class StockPicking(models.Model):
             else:
                 raise ValidationError(_('Please select a maintenance type'))
 
-            if not picking.move_line_ids:
+            if not picking.move_ids:
                 raise ValidationError(_('Introduce at least one product'))
 
-            for line in picking.move_line_ids:
+            for line in picking.move_ids:
                 if line.quantity <= 0.0:
                     raise ValidationError(_('The amount moved must be greater than 0'))
 
@@ -56,22 +51,23 @@ class StockPicking(models.Model):
 
                 try:
                     if tracking == 'serial':
-                        if not line.lot_id:
+                        move_line = line.move_line_ids
+                        if not move_line.lot_id:
                             raise ValidationError(_("There are no selected lots"))
 
                         # Si tracking es 'serial', solo puede haber un lote por línea
                         RepairOrder.create({
                             **common_vals,
                             'product_qty': 1.0,
-                            'lot_id': line.lot_id.id,
-                            'lifecycle_state': line.lot_id.lifecycle_state,
-                            'product_location_src_id': line.lot_id.location_id.id,
+                            'lot_id': move_line.lot_id.id,
+                            'lifecycle_state': move_line.lot_id.lifecycle_state,
+                            'product_location_src_id': move_line.lot_id.location_id.id,
                         })
 
                     else:
                         RepairOrder.create({
                             **common_vals,
-                            'product_qty': line.quantity,
+                            'product_qty': move_line.quantity,
                             'lot_id': False,
                         })
 

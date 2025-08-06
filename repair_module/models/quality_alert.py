@@ -5,18 +5,16 @@
 ##############################################################################
 
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
+from .choices import MAINTENANCE_TYPE, LIFECYCLE_STATE
 
 
 class QualityAlert(models.Model):
     _inherit = 'quality.alert'
 
-    repair_order_ids = fields.One2many(
-        comodel_name='repair.order',
-        inverse_name='repair_alert_id',
-        string='Órdenes de reparación vinculadas'
-    )
-        
+    repair_order_ids = fields.One2many(comodel_name='repair.order', inverse_name='repair_alert_id', string='Órdenes de reparación vinculadas')
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
+    maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
     quantity = fields.Integer(string='Quantity')
     stock_picking_count = fields.Integer(compute='_compute_stock_picking_count')
     check_ids = fields.Many2one('quality.check', string='Quality Checks')
@@ -42,47 +40,47 @@ class QualityAlert(models.Model):
 
     def action_create_move_to_repair(self):
         self.ensure_one()
-        self.stage_id = self.env.ref('quality.quality_alert_stage_1')
-        # Cargar la vista de formulario de stock.picking
-        picking_form_view = self.env.ref('stock.view_picking_form')
+        if self.quantity <= 0:
+            raise ValidationError(_('Quantity must be greater than 0. Please check the value.'))            
+        
         picking_type = self.env.ref('repair_module.stock_picking_type_move_to_repair')
-    
+
+        picking = self.env['stock.picking'].create({
+            'account_partner_id': self.account_partner_id.id,
+            'partner_id': self.account_partner_id.partner_id.id,
+            'origin': self.name,
+            'picking_type_id': picking_type.id,
+            'location_id': self.lot_id.location_id.id if self.lot_id.location_id else False,
+            'location_dest_id': picking_type.default_location_dest_id.id,
+            'quality_alert_ids': [(6, 0, [self.id])],
+            'maintenance_type': self.maintenance_type,
+        })
+
+        move = self.env['stock.move'].create({
+            'name': self.product_id.display_name,
+            'product_id': self.product_id.id,
+            'product_uom_qty': self.quantity,
+            'product_uom': self.product_id.uom_id.id,
+            'picking_id': picking.id,
+            'location_id': self.lot_id.location_id.id,
+            'location_dest_id': picking_type.default_location_dest_id.id,
+        })
+
+        move_line = self.env['stock.move.line'].create({
+            'move_id': move.id,
+            'product_id': self.product_id.id,
+            'qty_done': self.quantity,
+            'lot_id': self.lot_id.id,
+            'location_id': self.lot_id.location_id.id,
+            'location_dest_id': picking_type.default_location_dest_id.id,
+        })
+
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Crear Movimiento de Reparación'),
             'res_model': 'stock.picking',
             'view_mode': 'form',
+            'res_id': picking.id,
             'target': 'current',
-            'views': [(picking_form_view.id, 'form')],
-            'context': {
-                'default_account_partner_id': self.account_partner_id.id,
-                'default_origin': self.name,
-                'default_partner_id': self.account_partner_id.partner_id.id,
-                'default_picking_type_id': picking_type.id,  # Permite elegir el tipo
-                'default_quality_alert_ids': [(6, 0, [self.id])],
-                'default_repair_alert_id': self.id,
-                'default_location_id': self.lot_id.location_id.id if self.lot_id.location_id else False,
-                'default_location_dest_id': picking_type.default_location_dest_id.id if picking_type.default_location_dest_id else False,
-                'default_move_ids_without_package': [
-                    (0, 0, {
-                        'name': self.product_id.display_name or '',
-                        'product_id': self.product_id.id,
-                        'product_uom_qty': self.quantity,
-                        # 'lot_ids': [(6, 0, [self.lot_id.id])] if self.lot_id else False,
-                        'location_id': self.lot_id.location_id.id if self.lot_id.location_id else False,
-                        # 'location_dest_id': self.location_dest_id.id if self.location_dest_id else False,
-                        'move_line_ids': [(0, 0, {
-                            'product_id': self.product_id.id,
-                            'qty_done':  self.quantity,  # o la cantidad que quieras mover
-                            # 'quantity':  self.quantity,  # o la cantidad que quieras mover
-                            'lot_id': self.lot_id.id,
-                            'location_id':  self.lot_id.location_id.id if self.lot_id.location_id else False,
-                            'location_dest_id': picking_type.default_location_dest_id.id,
-                        })],
-                    
-                    })
-                ],
-            },
         }
 
         

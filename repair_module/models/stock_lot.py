@@ -1,16 +1,10 @@
 from odoo import models, fields, api, _
+from .choices import LIFECYCLE_STATE
 
 class StockLot(models.Model):
     _inherit = 'stock.lot'
 
-    lifecycle_state = fields.Selection([
-        ('A', 'A-Awaiting Inspection'),
-        ('B', 'B-New'),
-        ('C', 'C-Semi-new'),
-        ('D', 'D-Repair'),
-        ('E', 'E-Scrap'),
-        ('F', 'F-Repair in review') 
-    ], string='Lifecycle State')
+    lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State')
     
     repair_history = fields.Html(string='Repair History')
     repair_order_id = fields.Many2one('repair.order', string='Repair Order')

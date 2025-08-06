@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from .choices import MAINTENANCE_TYPE, LIFECYCLE_STATE
 
 class RepairOrder(models.Model):
     _inherit = 'repair.order'
@@ -10,18 +11,9 @@ class RepairOrder(models.Model):
     diagnosis_ids = fields.Many2many(comodel_name='repair.diagnosis', string='Diagnosis', relation='repair_order_repair_diagnosis_rel', column1='repair_id', column2='diagnosis_id')
     result_ids = fields.Many2many(comodel_name='repair.result', string='Results', relation='repair_order_repair_result_rel', column1='repair_id', column2='result_id')
     technician_id = fields.Many2one(comodel_name="res.users", string="Technician")
-    maintenance_type = fields.Selection([
-        ('repair', 'Repair'),
-        ('review', 'Review'),
-        ('warranty', 'Warranty'),
-        ('renew', 'Renew')])
-    lifecycle_state = fields.Selection([
-        ('A', 'A-Awaiting Inspection'),
-        ('B', 'B-New'),
-        ('C', 'C-Semi-new'),
-        ('D', 'D-Repair'),
-        ('E', 'E-Scrap'),
-        ('F', 'F-Repair in review') ], string='Lifecycle State')
+    maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
+
+    lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State')
     confirm_date = fields.Datetime(string='Confirm Date')
     assigned_date = fields.Datetime(string='Assigned Date')
     assigned_user_id = fields.Many2one('res.users', string='Assigned User')
