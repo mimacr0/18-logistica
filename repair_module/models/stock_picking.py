@@ -63,12 +63,14 @@ class StockPicking(models.Model):
                             'lifecycle_state': move_line.lot_id.lifecycle_state,
                             'product_location_src_id': move_line.lot_id.location_id.id,
                         })
-
-                    else:
+                    elif tracking == 'lot':
+                        # Para productos sin serial, usar directamente line.quantity
                         RepairOrder.create({
                             **common_vals,
-                            'product_qty': move_line.quantity,
-                            'lot_id': False,
+                            'product_qty': line.quantity,
+                            'lot_id': line.lot_ids[0].id,
+                            'lifecycle_state': line.lot_ids[0].lifecycle_state,
+                            'product_location_src_id': line.location_id.id,
                         })
 
                 except Exception as e:

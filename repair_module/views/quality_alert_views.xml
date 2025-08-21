@@ -6,30 +6,66 @@
         <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
         <field name="arch" type="xml">
             <header position="inside">
-                <button name="action_create_move_to_repair"
-                        type="object"
-                        string="Move To Repair"
-                        class="btn-primary"/>
+                <button name="action_create_move_to_repair" type="object" string="Move To Repair" invisible="not is_repair or picking_ids"/>
+                <button name="toggle_lock" type="object" string="Lock" class="oe_highlight" invisible="is_locked or not is_repair"/>
+                <button name="toggle_lock" type="object" string="Unlock" class="oe_highlight" invisible="not is_locked or not is_repair"/>
             </header>
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="open_stock_picking" type="object" class="oe_stat_button" icon="fa-bell" invisible="stock_picking_count == 0">
+                <button name="open_stock_picking" type="object" class="oe_stat_button" icon="fa-bell" invisible="stock_picking_count == 0 or not is_repair">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value"><field name="stock_picking_count"/></span>
                         <span class="o_stat_text">Stock Picking</span>
                     </div>
                 </button>
             </xpath>
-            <xpath expr="//field[@name='title']" position="after">
-                <field name="account_partner_id"/>
+            <xpath expr="//field[@name='title']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
             </xpath> 
+            <xpath expr="//field[@name='title']" position="after">
+                <field name="account_partner_id" invisible="not is_repair" readonly="is_locked"/>
+            </xpath>
+            <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
+                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//sheet/group/group/field[@name='product_id']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
+                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
+                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
             <xpath expr="//field[@name='lot_id']" position="after">
-                <field name="quantity"></field>
+                <field name="quantity" invisible="not is_repair" readonly="is_locked"/>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
+                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
+                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">is_locked</attribute>
+                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//notebook/page[@name='miscellaneous']" position="before">
-                <page string="Repair" name="repair_orders">
-                    <field name="repair_order_ids" widget="one2many"/>
+                <page string="Repair" name="repair_orders" invisible="not is_repair">
+                    <field name="repair_order_ids" widget="one2many" readonly="1"/>
                 </page>
-            </xpath> 
+            </xpath>
+            <xpath expr="//page[@name='miscellaneous']/group" position="after">
+                <group>
+                    <group>
+                        <field name="is_repair" widget="boolean_toggle" class="oe_inline" groups="repair_module.group_after_sales_department"/>
+                    </group>
+                </group>
+            </xpath>
         </field>
     </record>
 </odoo>
