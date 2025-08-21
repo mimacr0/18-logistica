@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data noupdate="0">
         
         <record id="quality_alert_stage_in_transit_reception" model="quality.alert.stage">
             <field name="name">In Transit (Reception)</field>
             <field name="sequence">10</field>
+            <field name="folded">1</field>
         </record>
 
         <record id="quality_alert_stage_received" model="quality.alert.stage">
@@ -20,6 +21,7 @@
         <record id="quality_alert_stage_repairing" model="quality.alert.stage">
             <field name="name">Repairing</field>
             <field name="sequence">40</field>
+            <field name="folded">1</field>
         </record>
 
         <record id="quality_alert_stage_sent_to_postsale" model="quality.alert.stage">
@@ -30,16 +32,19 @@
         <record id="quality_alert_stage_sent_to_client" model="quality.alert.stage">
             <field name="name">Sent to client </field>
             <field name="sequence">60</field>
+            <field name="folded">1</field>
         </record>
 
         <record id="quality_alert_stage_sent_to_recycle" model="quality.alert.stage">
             <field name="name">Sent for Recycling</field>
             <field name="sequence">70</field>
+            <field name="folded">1</field>
         </record>
 
         <record id="quality_alert_stage_repair_cancelled" model="quality.alert.stage">
             <field name="name">Repair Cancelled</field>
             <field name="sequence">80</field>
+            <field name="folded">1</field>
         </record>
 
     </data>

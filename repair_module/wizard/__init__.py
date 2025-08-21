@@ -1,8 +1,1 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#
-# Copyright 2024 DaFe Solutions
-#
-##############################################################################
-
-# from . import base_wizard
+from . import repair_technician_change_wizard

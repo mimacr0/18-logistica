@@ -1,1 +1,6 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_repair_result_user,repair.result.user,model_repair_result,repair_module.group_repair_department,1,1,1,1
+access_repair_diagnosis_user,repair.diagnosis.user,model_repair_diagnosis,repair_module.group_repair_department,1,1,1,1
+access_quality_alert_after_sales,access_quality_alert_after_sales,quality_control.model_quality_alert,repair_module.group_after_sales_department,1,0,0,0
+access_quality_alert_repair,access_quality_alert_repair,quality_control.model_quality_alert,repair_module.group_repair_department,1,0,0,0
+access_repair_technician_change,access_repair_technician_change,model_repair_technician_change,repair_module.group_repair_department,1,1,1,1
