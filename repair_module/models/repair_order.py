@@ -18,7 +18,6 @@ class RepairOrder(models.Model):
         domain=lambda self: [('groups_id', 'in', [self.env.ref('repair_module.group_repair_department').id])]
     )    
     maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
-
     lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State')
     confirm_date = fields.Datetime(string='Confirm Date')
     assigned_date = fields.Datetime(string='Assigned Date')
@@ -58,7 +57,7 @@ class RepairOrder(models.Model):
                 'default_technician_id': self.technician_id.id,
             },
         }
-        
+
     def action_validate(self):
         if not self.technician_id:
             raise ValidationError(_('Please assign a technitian first'))

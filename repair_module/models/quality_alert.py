@@ -22,7 +22,13 @@ class QualityAlert(models.Model):
     schedule_date = fields.Date(string="Schedule Date")
     is_repair = fields.Boolean(string='Is Repair', default=False)
     is_locked = fields.Boolean(default=True)
-
+    
+    @api.model_create_multi
+    def create(self, vals):
+        """Override para asignar stage al crear un nuevo alert"""
+        record = super().create(vals)
+        record._set_default_stage()
+        return record
 
     def write(self, vals):
         for alert in self:
@@ -51,6 +57,14 @@ class QualityAlert(models.Model):
         """ Alterna el valor de is_locked """
         for record in self:
             record.is_locked = not record.is_locked
+
+    def _set_default_stage(self):
+        self.ensure_one()
+        default_stage = self.env.ref('repair_module.quality_alert_stage_received', raise_if_not_found=False)
+        if default_stage:
+            self.write({
+                'stage_id': default_stage.id
+            })
 
     @api.depends('picking_ids')
     def _compute_picking_id(self):
