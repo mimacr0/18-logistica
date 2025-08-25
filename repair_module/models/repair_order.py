@@ -9,7 +9,7 @@ class RepairOrder(models.Model):
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
     origin = fields.Char(string='Origin')
     repair_alert_id = fields.Many2one( comodel_name='quality.alert', string='Alerta de Calidad', help='Alerta de calidad que generó este movimiento.')
-    description = fields.Text(string="Problem Description")
+    description = fields.Html(string="Problem Description")
     diagnosis_ids = fields.Many2many(comodel_name='repair.diagnosis', string='Diagnosis', relation='repair_order_repair_diagnosis_rel', column1='repair_id', column2='diagnosis_id')
     result_ids = fields.Many2many(comodel_name='repair.result', string='Results', relation='repair_order_repair_result_rel', column1='repair_id', column2='result_id')
     technician_id = fields.Many2one(
@@ -96,11 +96,10 @@ class RepairOrder(models.Model):
 
     def action_repair_end(self):
         self.ensure_one()
-        if not self.lifecycle_state:
+        if not self.lifecycle_state and self.product_id.tracking == 'serial':
             raise ValidationError(_('Please assign a new lifecycle state'))
 
         res = super().action_repair_end()
-        print(res)
         if self.repair_alert_id:
             self.repair_alert_id.stage_id = self.env.ref('repair_module.quality_alert_stage_sent_to_postsale')
         
@@ -109,7 +108,6 @@ class RepairOrder(models.Model):
             'done_date': fields.Datetime.now(),
             'done_user_id': self.env.user.id,
         })
-
 
         if self.lot_id:
             self.lot_id.diagnosis_ids = [(6, 0, self.diagnosis_ids.ids)]
