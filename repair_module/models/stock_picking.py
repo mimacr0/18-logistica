@@ -47,6 +47,7 @@ class StockPicking(models.Model):
                     'maintenance_type': picking.maintenance_type,
                     'under_warranty': picking.maintenance_type == 'warranty',
                     'schedule_date': schedule_date,
+                    'description': alert_id.description if alert_id else False,
                 }
 
                 try:
@@ -63,13 +64,11 @@ class StockPicking(models.Model):
                             'lifecycle_state': move_line.lot_id.lifecycle_state,
                             'product_location_src_id': move_line.lot_id.location_id.id,
                         })
-                    elif tracking == 'lot':
+                    elif tracking == 'none':
                         # Para productos sin serial, usar directamente line.quantity
                         RepairOrder.create({
                             **common_vals,
                             'product_qty': line.quantity,
-                            'lot_id': line.lot_ids[0].id,
-                            'lifecycle_state': line.lot_ids[0].lifecycle_state,
                             'product_location_src_id': line.location_id.id,
                         })
 

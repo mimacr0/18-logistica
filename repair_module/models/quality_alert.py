@@ -83,7 +83,7 @@ class QualityAlert(models.Model):
             else:
                 sale.partner_id = False
 
-    def action_create_move_to_repair(self):
+    def action_create_move_to_repair(self, location_id=None):
         self.ensure_one()
         
         if self.quantity <= 0:
@@ -92,32 +92,32 @@ class QualityAlert(models.Model):
         if not self.product_id:
             raise ValidationError(_('A product must be selected.'))
 
-        if not self.lot_id:
-            raise ValidationError(_('A lot must be selected.'))
+        # Validación de lot solo si el producto es serial/lot
+        if self.product_id.tracking in ['serial', 'lot'] and not self.lot_id:
+            raise ValidationError(_('A lot/serial must be selected for this product.'))
+
         picking_type = self.env.ref('repair_module.stock_picking_type_move_to_repair')
-        
         total_qty_to_move = self.quantity
-        picking_created = False
         
-        # Crear el picking solo una vez
         picking = self.env['stock.picking'].create({
+            'account_partner_id': self.account_partner_id.id,
             'origin': self.name,
             'picking_type_id': picking_type.id,
-            'location_id':  self.env.ref('stock.stock_location_stock').id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
             'location_dest_id': picking_type.default_location_dest_id.id,
             'quality_alert_ids': [(6, 0, [self.id])],
             'maintenance_type': self.maintenance_type,
         })
-        
-        for quant in self.lot_id.quant_ids:
+    
+        quants = self._get_quants_for_move(location_id=location_id)
+        for quant in quants:
             available_qty = quant.quantity - quant.reserved_quantity
             if available_qty <= 0:
-                continue  # saltar quants sin stock disponible
-            
+                continue
+
             qty_to_move = min(total_qty_to_move, available_qty)
-            
-            # Crear move para cada quant
-            move = self.env['stock.move'].create({
+
+            move_vals = {
                 'name': quant.product_id.display_name,
                 'product_id': quant.product_id.id,
                 'product_uom_qty': qty_to_move,
@@ -125,28 +125,28 @@ class QualityAlert(models.Model):
                 'picking_id': picking.id,
                 'location_id': quant.location_id.id,
                 'location_dest_id': picking_type.default_location_dest_id.id,
-            })
-            
-            # Crear move line
-            self.env['stock.move.line'].create({
+            }
+            move = self.env['stock.move'].create(move_vals)
+
+            move_line_vals = {
                 'move_id': move.id,
                 'product_id': quant.product_id.id,
-                'lot_id': quant.lot_id.id,
                 'qty_done': qty_to_move,
                 'location_id': quant.location_id.id,
                 'location_dest_id': picking_type.default_location_dest_id.id,
-            })
-            
+                **({'lot_id': quant.lot_id.id} if quant.lot_id else {}),
+            }
+            self.env['stock.move.line'].create(move_line_vals)
+
             total_qty_to_move -= qty_to_move
             if total_qty_to_move <= 0:
-                break  # ya movimos toda la cantidad requerida
-        
+                break
+
         if total_qty_to_move > 0:
-            raise ValidationError(_('Not enough quantity available in the selected lots. Remaining: %s') % total_qty_to_move)
-        
-        # Asociar el picking al registro
+            raise ValidationError(_('Not enough quantity available. Remaining: %s') % total_qty_to_move)
+
         self.write({'picking_ids': [(4, picking.id)]})
-        
+
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'stock.picking',
@@ -154,8 +154,29 @@ class QualityAlert(models.Model):
             'res_id': picking.id,
             'target': 'current',
         }
-
+    def _get_quants_for_move(self, location_id=None):
+        """
+        Devuelve los quants disponibles para crear el stock.move.
+        - Si el producto tiene tracking serial/lot, usa self.lot_id.quant_ids
+        - Si no tiene tracking, filtra por location_id si se pasa, o toma todos los quants disponibles
+        """
+        self.ensure_one()
         
+        if self.product_id.tracking in ['serial', 'lot']:
+            quants = self.lot_id.quant_ids
+            # Filtrar quants con cantidad positiva
+            quants = quants.filtered(lambda q: (q.quantity - q.reserved_quantity) > 0)
+            return quants
+        else:
+            domain = [('product_id', '=', self.product_id.id)]
+            if location_id:
+                domain.append(('location_id', '=', int(location_id)))
+
+            quants = self.env['stock.quant'].search(domain)
+            # Filtrar cantidad realmente disponible (restando reserved_quantity)
+            quants = quants.filtered(lambda q: (q.quantity - q.reserved_quantity) > 0)
+            return quants
+            
     def open_stock_picking(self):
         self.ensure_one()
         action = self.env['ir.actions.actions']._for_xml_id('stock.stock_picking_action_picking_type')
