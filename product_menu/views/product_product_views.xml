@@ -122,6 +122,7 @@
         <field name="arch" type="xml">
             <xpath expr="//kanban" position="attributes">
                 <attribute name="js_class">product_menu_kanban_view</attribute>
+                <attribute name="create">0</attribute>
             </xpath>
         </field>
     </record>
