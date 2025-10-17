@@ -1,0 +1,188 @@
+// Variables de colores basadas en el logo
+$primary-color: #817204;       // Color oro/mostaza del logo
+$secondary-color: #000000;     // Color negro del logo
+$primary-light: #9a8a15;       // Variación más clara del primary
+$primary-dark: #635802;        // Variación más oscura del primary
+$text-color: #333333;
+$background-color: #f8f7f2;    // Fondo cálido que complementa el oro
+$card-background: #ffffff;
+$input-border: #e0e0e0;
+$input-focus: $primary-color;
+$accent-color: #5a5a5a;        // Color neutral para complementar
+
+// Fondo con gradiente elegante usando los colores del logo
+#wrapwrap > main {
+    background: linear-gradient(135deg, $background-color 0%, #f1efde 100%);
+//     min-height: 100vh;
+//     display: flex;
+//     align-items: flex-start;
+//     justify-content: center;
+//     padding-top: 8vh;
+}
+
+// Estilos generales refinados
+body {
+    font-family: 'Poppins', sans-serif !important;
+    color: $text-color;
+    -webkit-font-smoothing: antialiased;
+}
+
+// Tarjeta de login mejorada
+.card.o_database_list {
+    max-width: 420px !important;
+    margin: 0 auto;
+    border: none;
+    animation: fadeInUp 0.5s ease-out forwards;
+
+    .btn-secondary {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;  // Añade espacio entre el icono y el texto
+        margin-bottom: 22px;
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #9a8a15;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .card-body {
+        background-color: $card-background !important;
+        border-radius: 10px !important;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+        padding: 35px 40px;
+        transition: all 0.3s ease;
+        border-top: 4px solid $primary-color;
+
+        &:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+        }
+    }
+
+    .card-title {
+        color: $secondary-color;
+        font-weight: 600;
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+        text-align: center;
+        letter-spacing: -0.2px;
+    }
+}
+
+// Formulario de login con apariencia más profesional
+.oe_login_form {
+    // Inputs refinados
+    input {
+        height: 50px !important;
+        padding: 10px 16px;
+        font-size: 14px;
+        border: 1px solid $input-border !important;
+        border-radius: 8px;
+        transition: all 0.2s ease-in-out;
+        background-color: #f9f9f9;
+        margin-bottom: 22px !important;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+
+        &:focus {
+            border-color: $input-focus !important;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba($primary-color, 0.1) !important;
+        }
+    }
+
+    // Etiquetas mejoradas
+    label {
+        font-weight: 500 !important;
+        font-size: 14px;
+        color: $accent-color;
+        margin-bottom: 8px;
+        letter-spacing: 0.2px;
+    }
+
+    // Botón principal mejorado con los colores del logo
+    .btn-primary {
+        height: 50px;
+        background: linear-gradient(to right, $primary-color, $primary-light);
+        border: none;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+        width: 100%;
+        margin-top: 10px;
+        color: #fff;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba($primary-color, 0.25);
+            background: linear-gradient(to right, $primary-light, $primary-color);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    // Enlaces y textos secundarios
+    .btn-link {
+        color: $primary-dark;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+        font-size: 0.9rem;
+
+        &:hover {
+            color: $primary-color;
+        }
+    }
+}
+
+// Contenedor de "remember me" más limpio
+.oe_login_form .form-check {
+    margin-bottom: 15px;
+
+    .form-check-input {
+        height: 18px !important;
+        width: 18px;
+        margin-top: 0.2rem;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+
+        &:checked {
+            background-color: $primary-color;
+            border-color: $primary-color;
+        }
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+        color: $accent-color;
+    }
+}
+
+// Alertas y mensajes
+.alert-info {
+    background-color: rgba($primary-color, 0.08);
+    border-color: rgba($primary-color, 0.15);
+    color: darken($primary-color, 10%);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 0.9rem;
+}
+
+// Animación sutil
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

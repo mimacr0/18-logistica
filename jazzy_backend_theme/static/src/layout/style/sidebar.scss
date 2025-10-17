@@ -1,0 +1,160 @@
+// Variables complementarias (se combinan con las variables CSS del tema)
+$sidebar-width: 50px;
+$transition-speed: 0.3s;
+$border-radius: 8px;
+
+// Mejora del panel del sidebar
+#sidebar_panel {
+    height: 100%;
+    position: fixed;
+    background-color: var(--app-bar-accent);
+    width: $sidebar-width;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* Oculta scrollbar para IE y Edge */
+    scrollbar-width: none;  /* Oculta scrollbar para Firefox */
+    z-index: 999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+    transition: all $transition-speed ease;
+}
+
+#sidebar_panel::-webkit-scrollbar {
+    display: none; /* Oculta scrollbar para Chrome, Safari y Opera */
+}
+
+.sidebar_panel .sidebar {
+    padding: 0;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    padding-top: 5px;
+}
+
+// Mejora de la lista del menú del sidebar
+.sidebar_panel .sidebar .sidebar_menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+// Mejora de los elementos del menú
+.sidebar_panel .sidebar .sidebar_menu li {
+    margin: 4px 5px;
+    padding: 0;
+    border: 0;
+    display: block;
+    animation: fadeIn 0.3s ease forwards;
+    animation-delay: calc(0.05s * var(--item-index, 0));
+    border-radius: $border-radius;
+    transition: transform $transition-speed ease;
+
+    &:hover {
+        transform: translateX(2px);
+    }
+}
+
+// Mejora de los enlaces dentro del sidebar
+.sidebar_panel .sidebar .sidebar_menu li a {
+    margin: 0;
+    border: 0;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+    color: var(--appbar-text, #ffffff);
+    font-size: 13px;
+    transition: all $transition-speed ease;
+    border-radius: $border-radius 0 0 $border-radius; // Solo redondeado a la izquierda
+    padding: 10px;
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+// Mejora del efecto hover manteniendo el borde solo a la izquierda
+.sidebar_panel .sidebar .sidebar_menu li:hover a {
+    background: var(--secondary-hover) !important;
+    color: #fff;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius 0 0 $border-radius; // Mantiene consistencia en hover
+}
+
+// Mejora de las imágenes del sidebar
+.sidebar_panel .sidebar .sidebar_menu li a .sidebar_img {
+    width: 30px;
+    border-radius: $border-radius;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+// Marca de navegación
+.o_main_navbar .o_menu_brand {
+    text-decoration: none !important;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+// Mantenemos el margen para el gestor de acciones
+html .o_web_client > .o_action_manager {
+    margin-left: $sidebar-width;
+    transition: margin-left $transition-speed ease;
+}
+
+// Elementos dropdown
+.dropdown-item {
+    padding: 10px;
+    border-radius: $border-radius;
+    transition: background-color 0.2s ease;
+}
+
+// Animación para elementos del sidebar
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+// Efecto pulsante para notificaciones (opcional)
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.sidebar_notification {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        background-color: var(--primary-accent, #817204);
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+    }
+}
+
+// Responsive
+@media (max-width: 767px) {
+    #sidebar_panel {
+        display: none !important;
+    }
+
+    html .o_web_client > .o_action_manager,
+    html .o_web_client .o_action_manager {
+        margin-left: 0 !important;
+    }
+
+    .o_content.o_view_sample_data > div {
+        overflow: hidden !important;
+    }
+}

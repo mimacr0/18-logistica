@@ -1,0 +1,15 @@
+:root {
+    --primary_accent: black;
+    --secondary_accent: #ffffff;
+    --inverse_accent: #ffffff;
+    --kanban-bg-color: #f7f7f7;
+    --o-kanban-color-border-width: 8px;
+    --selected_row: #ffffff;
+    --bg_white: #ffffff;
+    --f_color: #555b6d;
+    --color_white: #ffffff;
+    --primary_hover: #00376e;
+    --light_hover: #d5d5d5;
+    --fullscreen-bg-color: #C5F0FC !important;
+    --badge-active-color: #000000;
+}
