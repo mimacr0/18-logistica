@@ -55,14 +55,13 @@ class StockPicking(models.Model):
                         move_line = line.move_line_ids
                         if not move_line.lot_id:
                             raise ValidationError(_("There are no selected lots"))
-
                         # Si tracking es 'serial', solo puede haber un lote por línea
                         RepairOrder.create({
                             **common_vals,
                             'product_qty': 1.0,
                             'lot_id': move_line.lot_id.id,
                             'lifecycle_state': move_line.lot_id.lifecycle_state,
-                            'product_location_src_id': move_line.lot_id.location_id.id,
+                            'product_location_src_id': move_line.location_id.id or self.env.ref('stock.stock_location_stock').id,
                         })
                     elif tracking == 'none':
                         # Para productos sin serial, usar directamente line.quantity

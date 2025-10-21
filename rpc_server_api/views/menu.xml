@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="rpc_server_api_menu_root" name="RPC Server API" parent="base.menu_administration" sequence="30"/>
+
+    <menuitem id="rpc_server_action_menu" name="Actions" parent="rpc_server_api_menu_root" action="rpc_server_action_action" sequence="10"/>
+
+    <menuitem id="rpc_server_key_menu" name="Keys" parent="rpc_server_api_menu_root" action="rpc_server_key_action" sequence="20"/>
+</odoo>

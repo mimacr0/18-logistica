@@ -12,7 +12,7 @@ class AddProductsWizard(models.TransientModel):
     image_1920 = fields.Binary(string='Image')
     storage_type = fields.Selection(selection=[
         ('storage_logistic', 'Serial Number'),
-        ('storage_lot', 'Lots')
+        ('storage_none', 'None')
     ], string='Storage Type')
     weight = fields.Float(string='Weight', digits='Stock Weight')
     volume = fields.Float(string='Volume', digits='Stock Volume')

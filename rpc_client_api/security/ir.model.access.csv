@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_create","perm_write","perm_unlink"
+"access_privilege_rpc_client_connection","Access rpc_client_connection","rpc_client_api.model_rpc_client_connection","base.group_user",1,1,1,1
+"access_privilege_rpc_auth_key","Access rpc_auth_key","rpc_client_api.model_rpc_auth_key","base.group_user",1,1,1,1

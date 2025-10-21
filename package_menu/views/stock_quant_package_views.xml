@@ -21,7 +21,7 @@
             <field name="name">stock.reception.view.quant.package.list</field>
             <field name="model">stock.quant.package</field>
             <field name="arch" type="xml">
-                <list string="Package" sample="1">
+                <list string="Package" sample="1" create="0">
                     <field name="display_name"/>
                     <field name="package_type_id"/>
                     <field name="account_partner_id"/>
