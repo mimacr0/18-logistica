@@ -1,0 +1,152 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* login_as_any_user
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-28 15:41+0000\n"
+"PO-Revision-Date: 2025-04-28 15:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.user_selection_view_form
+msgid ""
+"<br/>\n"
+"                        Do you wish to continue?"
+msgstr ""
+"<br/>\n"
+"                        还想继续吗？"
+
+#. module: login_as_any_user
+#: model:ir.model,name:login_as_any_user.model_res_groups
+msgid "Access Groups"
+msgstr "访问组"
+
+#. module: login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.user_selection_view_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.user_selection_view_form
+msgid "Continue"
+msgstr "继续"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__create_date
+msgid "Created on"
+msgstr "创建日期"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__display_name
+msgid "Display Name"
+msgstr "姓名"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__access_ids
+msgid "Group"
+msgstr "团体"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__id
+msgid "ID"
+msgstr ""
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__write_date
+msgid "Last Updated on"
+msgstr "最后更新日期"
+
+#. module: login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.res_users_view_list_inherit
+msgid "Log in"
+msgstr "登录"
+
+#. module: login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.res_users_view_form_inherit
+msgid "Log in with this user"
+msgstr "使用此用户登录"
+
+#. module: login_as_any_user
+#: model:ir.model.fields.selection,name:login_as_any_user.selection__user_selection__user_type__manager
+msgid "Manager"
+msgstr "经理"
+
+#. module: login_as_any_user
+#: model:ir.model.fields.selection,name:login_as_any_user.selection__user_selection__user_type__portal
+msgid "Portal"
+msgstr "门户"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,help:login_as_any_user.field_res_groups__user_id
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.user_selection_view_form
+msgid "Select User"
+msgstr "选择用户"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,help:login_as_any_user.field_user_selection__user_id
+msgid "Select the user here"
+msgstr "在此选择用户"
+
+#. module: login_as_any_user
+#. odoo-javascript
+#: code:addons/ecoeche_addons/login_as_any_user/static/src/js/systray_button.js:0
+#: code:addons/ecoeche_addons/login_as_any_user/static/src/xml/systray_button_templates.xml:0
+#: code:addons/login_as_any_user/static/src/js/systray_button.js:0
+#: code:addons/login_as_any_user/static/src/xml/systray_button_templates.xml:0
+#: model:ir.actions.act_window,name:login_as_any_user.action_login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.user_selection_view_form
+msgid "Switch User"
+msgstr "切换用户"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__user_type
+msgid "Tipo de Usuario"
+msgstr "用户类型"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,help:login_as_any_user.field_user_selection__user_type
+msgid "Tipo de acceso del usuario seleccionado"
+msgstr "所选用户的访问类型"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,field_description:login_as_any_user.field_res_groups__user_id
+#: model:ir.model.fields,field_description:login_as_any_user.field_user_selection__user_id
+msgid "User"
+msgstr "用户"
+
+#. module: login_as_any_user
+#: model:ir.model,name:login_as_any_user.model_user_selection
+msgid "User Selection"
+msgstr "用户选择"
+
+#. module: login_as_any_user
+#: model:ir.model.fields,help:login_as_any_user.field_user_selection__access_ids
+msgid "User groups for the selection"
+msgstr "可供选择的用户组"
+
+#. module: login_as_any_user
+#: model_terms:ir.ui.view,arch_db:login_as_any_user.user_selection_view_form
+msgid ""
+"You're about to switch to user. Please note that the current session will be closed,\n"
+"                        and a new session with:"
+msgstr ""
+"您即将切换到用户。请注意，当前会话将被关闭，\n"
+"                        并且将创建一个新的会话："

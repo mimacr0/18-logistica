@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="UserSwitchSystray" owl="1">
+        <div class="new_icon" style="display: flex; align-items: center; justify-content: center;" t-if="this.isAdmin">
+            <label class="user" title="Switch User">
+                <div class="icon_div">
+                    <div class="toggle-icon" role="button">
+                        <i id="switch_user" class="fa fa-user fa-lg user-switch-icon" role="img"
+                           aria-label="Switch User" t-on-click="() => this._onClick()"
+                           style="transition: transform 0.3s ease; color:white;"/>
+                    </div>
+                </div>
+            </label>
+            <style>
+                .user-switch-icon:hover {
+                    transform: scale(1.5);
+                    color: #007bff !important;
+                }
+            </style>
+        </div>
+    </t>
+</templates>

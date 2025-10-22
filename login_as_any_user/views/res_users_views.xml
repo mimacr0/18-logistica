@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_login_as_any_user" model="ir.actions.act_window">
+        <field name="name">Switch User</field>
+        <field name="res_model">user.selection</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="res_users_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.login_as_any_user</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(login_as_any_user.action_login_as_any_user)d"
+                        string="Log in with this user"
+                        type="action"
+                        class="btn-info"
+                        context="{'user_id': id, 'user_type': 'portal'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_users_view_list_inherit" model="ir.ui.view">
+        <field name="name">res.users.tree.inherit.login_as_any_user</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <button name="%(login_as_any_user.action_login_as_any_user)d"
+                        string="Log in"
+                        type="action" class="btn-link" icon="fa-external-link"
+                        context="{'user_id': id, 'user_type': 'portal'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
