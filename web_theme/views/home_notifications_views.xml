@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_home_notifications_tree" model="ir.ui.view">
+        <field name="name">home.notifications.tree</field>
+        <field name="model">home.notifications</field>
+        <field name="arch" type="xml">
+            <list string="Notifications">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="message_style" widget="badge"
+                    decoration-info="message_style == 'info'"
+                    decoration-warning="message_style == 'warning'"
+                    decoration-danger="message_style == 'danger'"
+                    decoration-success="message_style == 'success'"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_home_notifications_form" model="ir.ui.view">
+        <field name="name">home.notifications.form</field>
+        <field name="model">home.notifications</field>
+        <field name="arch" type="xml">
+            <form string="Home Notification">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <field name="active" invisible="1"/>
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" invisible="not active">
+                            <span>Deactivate</span>
+                        </button>
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" invisible="active">
+                            <span>Activate</span>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" placeholder="Notification Title"/>
+                        <field name="message_style" widget="selection_badge" options="{'classes': {'info': 'badge-info', 'warning': 'badge-warning', 'danger': 'badge-danger', 'success': 'badge-success'}}"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="show_title" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle"></i> Each notification has its own style and will be displayed separately.
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Message Content">
+                            <field name="message" placeholder="Enter notification message here..."/>
+                        </page>
+                        <page string="Visibility">
+                            <group>
+                                <field name="user_ids" widget="many2many_tags"/>
+                                <field name="group_ids" widget="many2many_tags"/>
+                                <field name="dismiss_user_ids" widget="many2many_tags"/>
+                            </group>
+                            <p class="text-muted">
+                                If no users or groups are specified, the notification will be visible to all users.
+                            </p>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_home_notifications_search" model="ir.ui.view">
+        <field name="name">home.notifications.search</field>
+        <field name="model">home.notifications</field>
+        <field name="arch" type="xml">
+            <search string="Notifications">
+                <field name="name"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Current" name="current" domain="[
+                    '|', ('start_date', '=', False), ('start_date', '&lt;=', context_today),
+                    '|', ('end_date', '=', False), ('end_date', '&gt;=', context_today)]"/>
+                <filter string="Upcoming" name="upcoming" domain="[('start_date', '&gt;', context_today)]"/>
+                <filter string="Expired" name="expired" domain="[('end_date', '&lt;', context_today)]"/>
+                <separator/>
+                <filter string="Info" name="info" domain="[('message_style', '=', 'info')]"/>
+                <filter string="Warning" name="warning" domain="[('message_style', '=', 'warning')]"/>
+                <filter string="Danger" name="danger" domain="[('message_style', '=', 'danger')]"/>
+                <filter string="Success" name="success" domain="[('message_style', '=', 'success')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_home_notifications" model="ir.actions.act_window">
+        <field name="name">Notifications</field>
+        <field name="res_model">home.notifications</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_home_notifications_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first home notification!
+            </p>
+            <p>
+                Notifications will be displayed on the home screen for the specified period.
+                Each notification can have a different style (info, warning, danger, success).
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item (Only visible in Developer Mode) -->
+    <menuitem id="menu_home_category_main"
+              name="Home"
+              parent="base.menu_custom"
+              sequence="30"/>
+
+    <menuitem id="menu_home_notifications"
+              name="Notifications"
+              parent="menu_home_category_main"
+              action="action_home_notifications"
+              sequence="200"/>
+
+    <!-- Security rule -->
+    <record id="home_notifications_admin_rule" model="ir.rule">
+        <field name="name">Notifications: Admin Only</field>
+        <field name="model_id" ref="model_home_notifications"/>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

@@ -1,0 +1,26 @@
+// Home Notifications Dark Mode Styling
+.home-notifications-container {
+    &.alert-info {
+        background-color: rgba(23, 162, 184, 0.2);
+        color: #9fcdff;
+        border-color: rgba(23, 162, 184, 0.5);
+    }
+
+    &.alert-warning {
+        background-color: rgba(255, 193, 7, 0.2);
+        color: #fff3cd;
+        border-color: rgba(255, 193, 7, 0.5);
+    }
+
+    &.alert-danger {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: #f8d7da;
+        border-color: rgba(220, 53, 69, 0.5);
+    }
+
+    &.alert-success {
+        background-color: rgba(40, 167, 69, 0.2);
+        color: #d4edda;
+        border-color: rgba(40, 167, 69, 0.5);
+    }
+}

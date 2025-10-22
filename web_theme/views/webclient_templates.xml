@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="webclient_login" inherit_id="web.login_layout">
+        <xpath expr="//t[@t-call='web.frontend_layout']/t[last()]" position="after">
+            <t t-set="body_classname" t-value="'o_home_menu_background'"/>
+            <t t-set="login_card_classes" t-value="'rounded-0 shadow-sm' + (' bg-dark text-white border-dark' if request.cookies.get('color_scheme') == 'dark' else ' bg-white')"/>
+        </xpath>
+    </template>
+
+    <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//meta[@name='theme-color']" position="replace">
+            <meta name="theme-color" t-att-content="'#242733' if request.cookies.get('color_scheme') == 'dark' else '#714B67'"/>
+        </xpath>
+        <xpath expr="//t[@t-set='head_web']" position="replace">
+            <t t-set="head_web">
+                <t t-set="company" t-value="request.env.company.sudo()"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                <meta name="theme-color" t-att-content="'#242733' if request.cookies.get('color_scheme') == 'dark' else '#714B67'"/>
+                <link rel="manifest" t-att-href="'/web_theme/%s/manifest' % (company.id) " crossorigin="use-credentials"/>
+                <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                <meta name="apple-mobile-web-app-title" t-att-content="company.pwa_app_name or 'Odoo'"/>
+
+                <link rel="apple-touch-icon" t-att-href="'/web/image/res.company/%s/web_app_icon_512_pwa/152x152' % (company.id)"/>
+                <meta name="mobile-web-app-capable" content="yes"/>
+                <script type="text/javascript">
+                    // Block to avoid leaking variables in the script scope
+                    {
+                        odoo.__session_info__ = <t t-out="json.dumps(session_info)"/>;
+                        const { user_context,  cache_hashes } = odoo.__session_info__;
+                        const lang = new URLSearchParams(document.location.search).get("lang");
+                        let menuURL = `/web/webclient/load_menus/${cache_hashes.load_menus}`;
+                        if (lang) {
+                            user_context.lang = lang;
+                            menuURL += `?lang=${lang}`
+                        }
+                        odoo.reloadMenus = () => fetch(menuURL).then(res => res.json());
+                        odoo.loadMenusPromise = odoo.reloadMenus();
+                        // Prefetch translations to speedup webclient. This is done in JS because link rel="prefetch"
+                        // is not yet supported on safari.
+                        fetch(`/web/webclient/translations/${cache_hashes.translations}?lang=${user_context.lang}`);
+                    }
+                </script>
+                <t t-if="request.httprequest.cookies.get('color_scheme') == 'dark'">
+                    <t t-call-assets="web.assets_web_dark"/>
+                </t>
+                <t t-else="">
+                    <t t-call-assets="web.assets_web"/>
+                </t>
+                <t t-call="web.conditional_assets_tests"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="frontend_layout_pwa" inherit_id="web.frontend_layout">
+        <xpath expr="//head" position="inside">
+            <t t-set="company" t-value="request.env.company.sudo()"/>
+            <link rel="manifest" t-att-href="'/web_theme/%s/manifest_frontend' % (company.id) " crossorigin="use-credentials"/>
+            <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+            <meta name="apple-mobile-web-app-title" t-att-content="company.pwa_app_name or 'Odoo'"/>
+            <link rel="apple-touch-icon" t-att-href="'/web/image/res.company/%s/web_app_icon_512_pwa_frontend/152x152' % (company.id)"/>
+            <meta name="mobile-web-app-capable" content="yes"/>
+        </xpath>
+    </template>
+</odoo>

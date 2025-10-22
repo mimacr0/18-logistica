@@ -1,0 +1,13 @@
+// = Home Menu Background
+// ============================================================================
+
+.o_dark_mode .o_home_menu_background,
+.o_dark_mode.o_home_menu_background,
+.o_home_menu_background.o_dark_mode {
+    background: {
+        size: cover;
+        attachment: fixed;
+        color: #242733;
+        image: linear-gradient(to right bottom, rgba(73, 64, 103, 0.8) 0%, rgba(56, 49, 79, 0.6) 50%), url("/web_theme/static/img/background-dark.svg"), url("/web_theme/static/img/home-menu-bg-overlay.svg");
+    }
+}

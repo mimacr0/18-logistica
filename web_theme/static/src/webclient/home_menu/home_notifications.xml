@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+<t t-name="HomeNotificationsPanel">
+    <div>
+        <t t-if="hasNotifications()">
+            <t t-foreach="state.notifications" t-as="notification" t-key="notification.id">
+                <div role="alert" class="home-notifications-container alert o-hidden-ios mt-1" t-attf-class="alert-{{notification.message_style || 'info'}}">
+                    <div class="notification-item position-relative">
+                        <span role="button" class="notification-close position-absolute top-0 end-0 alert-link px-2"
+                           t-on-click.prevent="() => dismissNotification(notification.id)"
+                           aria-label="Close notification">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </span>
+                        <h4 t-if="notification.show_title" t-esc="notification.name"/>
+                        <div class="message-content" t-out="notification.message"/>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </div>
+</t>
+
+</templates>

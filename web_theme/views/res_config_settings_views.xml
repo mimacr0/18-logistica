@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.web_theme.pwa</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="0"/>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pwa_settings']//setting" position="replace">
+                <setting help="This name will be used for the application when Odoo is installed through the browser." string="Backend Progressive Web App">
+                    <field name="pwa_app_name" placeholder="Odoo"/>
+                    <div class="w-50 row">
+                        <div class="col-12">
+                            <i class="fa fa-mobile" style="font-size: 1.5rem; margin-right: 0.5rem;"/>
+                            <label for="web_app_icon_192_pwa" string="192x192" class="o_light_label mb-1"/>
+                        </div>
+                        <div class="col-12">
+                            <field name='web_app_icon_192_pwa' widget="image" options="{'size': [100, 100]}"/>
+                        </div>
+                        <div class="w-100 mt-1"/>
+                        <div class="col-12">
+                            <i class="fa fa-desktop" style="margin-right: 0.5rem;"/>
+                            <label for="web_app_icon_512_pwa" string="512x512" class="o_light_label mb-1"/>
+                        </div>
+                        <div class="col-12">
+                            <field name='web_app_icon_512_pwa' widget="image" options="{'size': [100, 100]}"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting help="This name will be used for the application when Odoo is installed through the browser." string="Website Progressive Web App">
+                    <div class="w-50 row">
+                        <div class="col-12">
+                            <i class="fa fa-mobile" style="font-size: 1.5rem; margin-right: 0.5rem;"/>
+                            <label for="web_app_icon_192_pwa_frontend" string="192x192" class="o_light_label mb-1"/>
+                        </div>
+                        <div class="col-12">
+                            <field name='web_app_icon_192_pwa_frontend' widget="image" options="{'size': [100, 100]}"/>
+                        </div>
+                        <div class="w-100 mt-1"/>
+                        <div class="col-12">
+                            <i class="fa fa-desktop" style="margin-right: 0.5rem;"/>
+                            <label for="web_app_icon_512_pwa_frontend" string="512x512" class="o_light_label mb-1"/>
+                        </div>
+                        <div class="col-12">
+                            <field name='web_app_icon_512_pwa_frontend' widget="image" options="{'size': [100, 100]}"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

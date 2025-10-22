@@ -1,0 +1,13 @@
+// Handle color scheme transitions
+
+.o_home_menu_background {
+    transition: background 0.3s ease-in-out;
+}
+
+.o_app_icon {
+    transition: filter 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.o_caption {
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+}

@@ -1,0 +1,277 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_dingtalk
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-17 16:41+0000\n"
+"PO-Revision-Date: 2025-10-17 16:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__agent_id
+msgid "Agent Id"
+msgstr "ID del Agente"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__app_key
+msgid "App Key"
+msgstr "Clave de la Aplicación"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__app_secret
+msgid "App Secret"
+msgstr "Secreto de la Aplicación"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__create_uid
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__create_uid
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__create_date
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__create_date
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: odoo_dingtalk
+#: model:ir.model,name:odoo_dingtalk.model_hr_department
+msgid "Department"
+msgstr "Departamento"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__display_name
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__display_name
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: odoo_dingtalk
+#: model:ir.model,name:odoo_dingtalk.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__id
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__id
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__id
+msgid "ID"
+msgstr "ID"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__write_uid
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__write_uid
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__write_date
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__write_date
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: odoo_dingtalk
+#: model:ir.model,name:odoo_dingtalk.model_res_users
+msgid "User"
+msgstr "Usuario"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__corp_id
+msgid "企业CorpID"
+msgstr "Empresa"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__name
+msgid "企业名称"
+msgstr "Nombre de la Empresa"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_employee_synchronous_wizard__company_id
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__company_id
+msgid "公司"
+msgstr "Compañía"
+
+#. module: odoo_dingtalk
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_department_synchronous_form
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_employee_synchronous_form
+msgid "取消"
+msgstr "Cancelar"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_department_synchronous_wizard__company_id
+msgid "同步的公司"
+msgstr "Compañía a sincronizar"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__job_number
+msgid "员工工号"
+msgstr "Número de empleado"
+
+#. module: odoo_dingtalk
+#: model:ir.ui.menu,name:odoo_dingtalk.dingtalk_employee_synchronous_menu
+msgid "员工数据同步"
+msgstr "Sincronización de datos de empleados"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__description
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_setting_form
+msgid "备注"
+msgstr "Notas"
+
+#. module: odoo_dingtalk
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_setting_form
+msgid "已存档"
+msgstr "Archivado"
+
+#. module: odoo_dingtalk
+#: model:ir.actions.act_window,name:odoo_dingtalk.dingtalk_setting_act_window
+#: model:ir.ui.menu,name:odoo_dingtalk.menu_dingtalk_setting
+msgid "应用配置"
+msgstr "Configuración de la Aplicación"
+
+#. module: odoo_dingtalk
+#: model:ir.actions.act_window,name:odoo_dingtalk.dingtalk_department_synchronous_action
+msgid "微信部门同步"
+msgstr "Sincronización de Departamentos de WeChat"
+
+#. module: odoo_dingtalk
+#: model:ir.ui.menu,name:odoo_dingtalk.dingtalk_sync_menu
+msgid "数据同步"
+msgstr "Sincronización de Datos"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_exclusive_account
+msgid "是否专属帐号"
+msgstr "¿Cuenta exclusiva?"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_boss
+msgid "是否为企业的老板"
+msgstr "¿Es el jefe de la empresa?"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_admin
+msgid "是否为企业管理员"
+msgstr "¿Es administrador de la empresa?"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__is_get_emp_avatar
+msgid "是否使用钉钉头像"
+msgstr "¿Usar avatar de DingTalk?"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__is_create_dingtalk_user
+msgid "是否创建用户"
+msgstr "¿Crear usuario?"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_leader
+msgid "是否是部门的主管"
+msgstr "¿Es el jefe del departamento?"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_active
+msgid "激活状态"
+msgstr "Estado de Activación"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_department__dingtalk_parent_id
+msgid "父部门ID"
+msgstr "ID del Departamento Padre"
+
+#. module: odoo_dingtalk
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_department_synchronous_form
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_employee_synchronous_form
+msgid "立即同步"
+msgstr "Sincronizar Ahora"
+
+#. module: odoo_dingtalk
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_employee_synchronous_form
+msgid "系统即将从钉钉中同步<strong>员工数据</strong>至系统中，请等待系统同步完成！"
+msgstr "Será sincronizado desde DingTalk los <strong>datos de los empleados</strong> al sistema, ¡por favor espere a que se complete la sincronización!"
+
+#. module: odoo_dingtalk
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_dingtalk_department_synchronous_form
+msgid "系统将从钉钉中的同步<strong>部门数据</strong>至系统中，请等待系统同步完成！"
+msgstr "El sistema sincronizará los <strong>datos del departamento</strong> desde DingTalk al sistema, ¡por favor espere a que se complete la sincronización!"
+
+#. module: odoo_dingtalk
+#: model:ir.ui.menu,name:odoo_dingtalk.dingtalk_department_synchronous_menu
+msgid "部门数据同步"
+msgstr "Sincronización de datos del departamento"
+
+#. module: odoo_dingtalk
+#: model:ir.ui.menu,name:odoo_dingtalk.dingtalk_root_menu
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_employee_form_inherit
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_hr_department_form_inherit
+#: model_terms:ir.ui.view,arch_db:odoo_dingtalk.view_users_form
+msgid "钉钉"
+msgstr "DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.actions.server,name:odoo_dingtalk.odoo_ir_sync_dingtalk_data_cron_ir_actions_server
+msgid "钉钉-定时同步联系人数据"
+msgstr "DingTalk - Sincronización periódica de datos de contactos"
+
+#. module: odoo_dingtalk
+#: model:ir.actions.act_window,name:odoo_dingtalk.dingtalk_employee_synchronous_action
+#: model:ir.model,name:odoo_dingtalk.model_dingtalk_employee_synchronous_wizard
+msgid "钉钉员工同步向导"
+msgstr "Asistente de sincronización de empleados de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_avatar_url
+msgid "钉钉头像URL链接"
+msgstr "URL del Avatar de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model,name:odoo_dingtalk.model_dingtalk_setting
+msgid "钉钉应用配置"
+msgstr "Configuración de la Aplicación DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_id
+msgid "钉钉用户ID"
+msgstr "ID de Usuario de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_res_users__dingtalk_user_id
+msgid "钉钉用户Id"
+msgstr "ID de Usuario de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_department__dingtalk_id
+msgid "钉钉部门ID"
+msgstr "ID del Departamento de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_hr_employee__dingtalk_department_ids
+msgid "钉钉部门列表"
+msgstr "Lista de Departamentos de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model,name:odoo_dingtalk.model_dingtalk_department_synchronous_wizard
+msgid "钉钉部门同步向导"
+msgstr "Asistente de sincronización de departamentos de DingTalk"
+
+#. module: odoo_dingtalk
+#: model:ir.model.fields,field_description:odoo_dingtalk.field_dingtalk_setting__dingtalk_default_passwd
+msgid "默认登录密码"
+msgstr "Contraseña de inicio de sesión predeterminada"
