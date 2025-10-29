@@ -21,15 +21,46 @@ def get_emp_avatar(avatar_url, timeout=5):
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    job_number = fields.Char(string="员工工号", index=True)
-    dingtalk_id = fields.Char(string='钉钉用户ID', index=True)
-    dingtalk_avatar_url = fields.Char('钉钉头像URL链接')
-    dingtalk_department_ids = fields.Many2many('hr.department', 'hr_employee_and_wechat_department_rel', string='钉钉部门列表')
-    dingtalk_active = fields.Boolean(string='激活状态')
-    dingtalk_admin = fields.Boolean(string='是否为企业管理员')
-    dingtalk_boss = fields.Boolean(string='是否为企业的老板')
-    dingtalk_leader = fields.Boolean(string='是否是部门的主管')
-    dingtalk_exclusive_account = fields.Boolean(string='是否专属帐号')
+    job_number = fields.Char(
+        string="员工工号",
+        index=True,
+        groups='hr.group_hr_user'  # Solo accesible para usuarios de HR
+    )
+    dingtalk_id = fields.Char(
+        string='钉钉用户ID',
+        index=True,
+        groups='hr.group_hr_user'
+    )
+    dingtalk_avatar_url = fields.Char(
+        '钉钉头像URL链接',
+        groups='hr.group_hr_user'
+    )
+    dingtalk_department_ids = fields.Many2many(
+        'hr.department',
+        'hr_employee_and_wechat_department_rel',
+        string='钉钉部门列表',
+        groups='hr.group_hr_user'
+    )
+    dingtalk_active = fields.Boolean(
+        string='激活状态',
+        groups='hr.group_hr_user'
+    )
+    dingtalk_admin = fields.Boolean(
+        string='是否为企业管理员',
+        groups='hr.group_hr_user'
+    )
+    dingtalk_boss = fields.Boolean(
+        string='是否为企业的老板',
+        groups='hr.group_hr_user'
+    )
+    dingtalk_leader = fields.Boolean(
+        string='是否是部门的主管',
+        groups='hr.group_hr_user'
+    )
+    dingtalk_exclusive_account = fields.Boolean(
+        string='是否专属帐号',
+        groups='hr.group_hr_user'
+    )
 
     @api.model
     def request_dingtalk_employee_data(self, company_id):
