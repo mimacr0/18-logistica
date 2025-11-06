@@ -5,4 +5,5 @@
 #
 ##############################################################################
 
-from . import main
+from . import pwa_controller
+from . import signup_extended
