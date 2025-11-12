@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <record id="attendance_view_calendar" model="ir.ui.view">
+    <field name="name">attendance.view.calendar</field>
+    <field name="model">hr.attendance</field>
+     <field name="arch" type="xml">
+        <calendar string="Attendance"
+             date_start="check_in" 
+             color="employee_id">                
+             <field name="employee_id" filters="1" />
+        </calendar>   
+     </field>
+    </record>
+    
+    <record id="hr_attendance_actionss" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="dev_attendance_dashboard_advanced.attendance_view_calendar"/>
+        <field name="act_window_id" ref="hr_attendance.hr_attendance_action"/>
+    </record>
+</odoo> 
+ 
