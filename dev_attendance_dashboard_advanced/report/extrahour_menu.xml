@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <record id="action_report_extra_hours" model="ir.actions.report">
+        <field name="name">Extra Hours Report</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dev_attendance_dashboard_advanced.overtime_pdf_template</field>
+        <field name="report_file">dev_attendance_dashboard_advanced.overtime_pdf_template</field>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_type">report</field>
+    </record>
+
+<!--	<report -->
+<!--		id="action_report_extra_hours"-->
+<!--		string="Extra Hours Report"-->
+<!--		model="hr.employee"-->
+<!--		report_type="qweb-pdf"-->
+<!--		name="your_module.report_extra_hours"-->
+<!--		file="your_module.report_extra_hours"-->
+<!--		print_report_name="'Extra_Hours_Report_' + object.name"-->
+<!--/>-->
+</odoo>

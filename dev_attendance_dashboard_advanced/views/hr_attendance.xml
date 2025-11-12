@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <!--  Hr.attendance form view for adding delay_status field.  -->
+    <record id="hr_attendance_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="before">
+                <div style="display: flex; align-items: flex-start;" class="float-end">
+                    <field name="delay_status" widget="badge" decoration-success="delay_status == 'on_time'" decoration-warning="delay_status == 'minor'" decoration-danger="delay_status == 'major'"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_list_inherit" model="ir.ui.view">    
+        <field name="name">hr.attendance.view.list.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='validated_overtime_hours']" position="after">
+                <field name="delay_status" widget="badge" decoration-success="delay_status == 'on_time'" decoration-warning="delay_status == 'minor'" decoration-danger="delay_status == 'major'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
