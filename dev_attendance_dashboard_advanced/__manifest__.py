@@ -34,6 +34,7 @@ Additionally, the app provides a leave summary for the current month, which can 
         'views/attendance_calendar_view.xml',
         'views/hr_attendance.xml',
         'views/res_config_settings_view.xml',
+        'views/hr_employee.xml',
     ],
     'assets': {
        'web.assets_backend': [

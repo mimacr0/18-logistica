@@ -1,0 +1,756 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* dev_attendance_dashboard_advanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-13 09:32+0000\n"
+"PO-Revision-Date: 2025-11-13 09:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__allowed_entry_time_float
+msgid ""
+"Hora límite de entrada permitida en formato decimal (ej: 9.5 = 9:30 AM)"
+msgstr ""
+"Hora límite de entrada permitida en formato decimal (ej: 9.5 = 9:30 AM)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__delay_by_check_in
+msgid ""
+"Si está activado, las horas de retraso se calculan basándose en la hora de "
+"entrada (check_in)"
+msgstr ""
+"Si está activado, las horas de retraso se calculan basándose en la hora de "
+"entrada (check_in)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "<strong>Employee:</strong>"
+msgstr "<strong>Empleado:</strong>"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "A"
+msgstr "A"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "A:"
+msgstr "A:"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__absent
+msgid "Absent"
+msgstr "Ausente"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Absent]"
+msgstr "Ausente]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Absents"
+msgstr "Ausentes"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "All Departments"
+msgstr "Todos los Departamentos"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "All Employees"
+msgstr "Todos los Empleados"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:res.groups,name:dev_attendance_dashboard_advanced.group_allow_acess_attendance_dashboard
+msgid "Allow to Access Attendance Dashboard"
+msgstr "Permitir Acceso al Panel de Asistencia"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_hr_employee__allowed_companies
+msgid "Allowed Companies"
+msgstr "Empresas Permitidas"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__allowed_entry_time_float
+msgid "Allowed Entry Time (Float)"
+msgstr "Hora de Entrada Permitida (Decimal)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Allowed entry time (in hours, e.g. 9.5 = 9:30 AM)"
+msgstr "Hora de entrada permitida (en horas, ej: 9.5 = 9:30 AM)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "April"
+msgstr "Abril"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_hr_attendance
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.attendance_view_calendar
+msgid "Attendance"
+msgstr "Asistencia"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.actions.client,name:dev_attendance_dashboard_advanced.action_attendance_dashboard
+msgid "Attendance Dashboard"
+msgstr "Panel de Asistencia"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Attendance Delay Settings"
+msgstr "Configuración de Retrasos de Asistencia"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Attendance report sent successfully."
+msgstr "Informe de asistencia enviado correctamente."
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "August"
+msgstr "Agosto"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Booking"
+msgstr "Reserva"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Check In"
+msgstr "Entrada"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Check Out"
+msgstr "Salida"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.ui.menu,name:dev_attendance_dashboard_advanced.attendance_dashboard
+msgid "Dashboard"
+msgstr "Panel"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Date"
+msgstr "Fecha"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Days"
+msgstr "Días"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "December"
+msgstr "Diciembre"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__delay_by_check_in
+msgid "Delay Depends on Check-In Time"
+msgstr "El Retraso Depende de la Hora de Entrada"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Delay hours depend on check-in time"
+msgstr "Las horas de retraso dependen de la hora de entrada"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_hr_attendance__delay_status
+msgid "Delay Status"
+msgstr "Estado de Retraso"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Department:"
+msgstr "Departamento:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Download Attendance in Excel"
+msgstr "Descargar Asistencia en Excel"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Employee:"
+msgstr "Empleado:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Employees"
+msgstr "Empleados"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Extra Hours"
+msgstr "Horas Extra"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.actions.report,name:dev_attendance_dashboard_advanced.action_report_extra_hours
+msgid "Extra Hours Report"
+msgstr "Informe de Horas Extra"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Failed to send attendance report. "
+msgstr "Error al enviar el informe de asistencia. "
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "February"
+msgstr "Febrero"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Fri"
+msgstr "Vie"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "From Date"
+msgstr "Desde Fecha"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "GD:"
+msgstr "RG:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Good Afternoon"
+msgstr "Buenas Tardes"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Good Evening"
+msgstr "Buenas Noches"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Good Morning"
+msgstr "Buenos Días"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "H"
+msgstr "F"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "H:"
+msgstr "F:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Holiday]"
+msgstr "Festivo]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Holidays"
+msgstr "Festivos"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "January"
+msgstr "Enero"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "July"
+msgstr "Julio"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "June"
+msgstr "Junio"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "L"
+msgstr "L"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "L:"
+msgstr "L:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Late Check-In"
+msgstr "Entrada Tardía"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Late CheckIn (Today)"
+msgstr "Entrada Tardía (Hoy)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Leave"
+msgstr "Permiso"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Leave Summary"
+msgstr "Resumen de Permisos"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Leave Type"
+msgstr "Tipo de Permiso"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Leave]"
+msgstr "Permiso]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Leaves"
+msgstr "Permisos"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__major_delay_limit_float
+msgid "Límite de retraso mayor en formato decimal (ej: 10.5 = 10:30 AM)"
+msgstr "Límite de retraso mayor en formato decimal (ej: 10.5 = 10:30 AM)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__minor_delay_limit_float
+msgid "Límite de retraso menor en formato decimal (ej: 10.0 = 10:00 AM)"
+msgstr "Límite de retraso menor en formato decimal (ej: 10.0 = 10:00 AM)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__major
+msgid "Major Delay"
+msgstr "Retraso Grave"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Major delay limit (e.g. 10.5 = 10:30 AM)"
+msgstr "Límite de retraso grave (ej: 10.5 = 10:30 AM)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__major_delay_limit_float
+msgid "Major Delay Limit (Float)"
+msgstr "Límite de Retraso Grave (Decimal)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Major Delay]"
+msgstr "Retraso Grave]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "March"
+msgstr "Marzo"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "May"
+msgstr "Mayo"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "MD:"
+msgstr "RL:"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__minor
+msgid "Minor Delay"
+msgstr "Retraso Leve"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Minor delay limit (e.g. 10.0 = 10:00 AM)"
+msgstr "Límite de retraso leve (ej: 10.0 = 10:00 AM)"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__minor_delay_limit_float
+msgid "Minor Delay Limit (Float)"
+msgstr "Límite de Retraso Leve (Decimal)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Minor Delay]"
+msgstr "Retraso Leve]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Mon"
+msgstr "Lun"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Month:"
+msgstr "Mes:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "November"
+msgstr "Noviembre"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "October"
+msgstr "Octubre"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "of"
+msgstr "de"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "On Leave (Today)"
+msgstr "En Permisos (Hoy)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "On Leaves"
+msgstr "En Permisos"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__on_time
+msgid "On Time"
+msgstr "A Tiempo"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Overtime Report - Last Month"
+msgstr "Informe de Horas Extra - Mes Pasado"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "P"
+msgstr "P"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "P:"
+msgstr "P:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Page"
+msgstr "Página"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Please select an employee first."
+msgstr "Por favor, selecciona un empleado primero."
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Present"
+msgstr "Presente"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Present]"
+msgstr "Presente]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Presents"
+msgstr "Presentes"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_report_dev_attendance_dashboard_advanced_overtime_pdf_template
+msgid "report.dev_attendance_dashboard_advanced.overtime_pdf_template"
+msgstr ""
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "RG"
+msgstr "RG"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "RL"
+msgstr "RL"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Sat"
+msgstr "Sáb"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Send Attendance Email"
+msgstr "Enviar Correo de Asistencia"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "September"
+msgstr "Septiembre"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Something went wrong, while sending email."
+msgstr "Algo salió mal al enviar el correo electrónico."
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "State"
+msgstr "Estado"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Sun"
+msgstr "Dom"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-python
+#: code:addons/dev_attendance_dashboard_advanced/__init__.py:0
+msgid "This Application is only supported in 18.0 version of odoo !"
+msgstr "¡Esta aplicación solo es compatible con la versión 18.0 de Odoo!"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Thu"
+msgstr "Jue"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "To Date"
+msgstr "Hasta Fecha"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Today's Attendance Summary"
+msgstr "Resumen de Asistencia de Hoy"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Total Absent (Today)"
+msgstr "Total Ausentes (Hoy)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Total Present (Today)"
+msgstr "Total Presentes (Hoy)"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Tue"
+msgstr "Mar"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Unknown error occurred."
+msgstr "Ocurrió un error desconocido."
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "View"
+msgstr "Ver"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Wed"
+msgstr "Mié"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Welcome to your Attendance Dashboard."
+msgstr "Bienvenido a tu Panel de Asistencia."
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Year:"
+msgstr "Año:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "P:"
+msgstr "P:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Present"
+msgstr "Presente"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "A:"
+msgstr "A:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Absent"
+msgstr "Ausente"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "L:"
+msgstr "L:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Leave"
+msgstr "Permiso"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "H:"
+msgstr "F:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Holiday"
+msgstr "Festivo"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "MD:"
+msgstr "RL:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Minor Delay"
+msgstr "Retraso Leve"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "GD:"
+msgstr "RG:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Major Delay"
+msgstr "Retraso Grave"
+

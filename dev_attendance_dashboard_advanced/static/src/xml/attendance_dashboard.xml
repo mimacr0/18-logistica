@@ -158,22 +158,22 @@
         <div class="alert alert-primary mt-3" role="alert">
             <div class="row g-2 g-md-3">
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b>P: </b> Present]</div>
+                    <div>[<b t-esc="this.getLegendP()"/> <t t-esc="this.getLegendPresent()"/>]</div>
                 </div>
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b>A: </b> Absent]</div>
+                    <div>[<b t-esc="this.getLegendA()"/> <t t-esc="this.getLegendAbsent()"/>]</div>
                 </div>
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b>L: </b> Leave]</div>
+                    <div>[<b t-esc="this.getLegendL()"/> <t t-esc="this.getLegendLeave()"/>]</div>
                 </div>
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b>H: </b> Holiday]</div>
+                    <div>[<b t-esc="this.getLegendH()"/> <t t-esc="this.getLegendHoliday()"/>]</div>
                 </div>
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b>MD: </b> Minor Delay]</div>
+                    <div>[<b t-esc="this.getLegendMD()"/> <t t-esc="this.getLegendMinorDelay()"/>]</div>
                 </div>
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b>GD: </b> Major Delay]</div>
+                    <div>[<b t-esc="this.getLegendGD()"/> <t t-esc="this.getLegendMajorDelay()"/>]</div>
                 </div>
             </div>
         </div>
