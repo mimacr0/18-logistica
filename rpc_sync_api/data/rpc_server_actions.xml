@@ -1,5 +1,148 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo noupdate="1">
+    <!-- ORM SEARCH -->
+    <record id="action_rpc_api_orm_search" model="rpc.server.action">
+        <field name="name">ORM SEARCH</field>
+        <field name="reference">api.orm.search</field>
+        <field name="action">
+model = args.model()
+domain = args.domain() or []
+limit = args.limit()
+offset = args.offset()
+fields = args.fields()
+
+Table = env[model].sudo()
+
+result = Table.search_read(domain, fields, limit=limit, offset=offset)
+</field>
+    </record>
+
+    <!-- ORM SEARCH COUNT -->
+    <record id="action_rpc_api_orm_search_count" model="rpc.server.action">
+        <field name="name">ORM SEARCH COUNT</field>
+        <field name="reference">api.orm.search_count</field>
+        <field name="action">
+model = args.model()
+domain = args.domain() or []
+
+Table = env[model].sudo()
+
+result = Table.search_count(domain)
+</field>
+    </record>
+
+    <!-- MODEL SCHEMA -->
+    <record id="rpc_server_action_create_model_schema" model="rpc.server.action">
+        <field name="name">MODEL SCHEMA</field>
+        <field name="reference">model.schema</field>
+        <field name="action">
+model = args.model()
+ResModel = env['ir.model'].sudo()
+
+result = {}
+
+model = ResModel.search([('model', '=', model)], limit=1)
+
+if not model:
+    raise Exception(f'Model {model} not found')
+
+for field in model.field_id:
+    result[field.name] = {
+        'type': field.ttype,
+        'required': field.required,
+        'store': field.store,
+        'relation': field.relation
+    }
+        </field>
+    </record>
+
+    <!-- CREATE / UPDATE RECORD -->
+    <record id="rpc_server_action_create_update_record" model="rpc.server.action">
+        <field name="name">CREATE / UPDATE RECORD</field>
+        <field name="reference">create.update.record</field>
+        <field name="action">
+model = args.model()
+user_id = args.user_id()
+
+Table = env[model].sudo()
+
+if user_id:
+    user = env['res.users'].browse(user_id)
+    Table = Table.with_user(user)
+
+result = []
+
+for item in args.items():
+
+    table_name = Table._name.replace('.', '_')
+    values = item.get('item')
+    pre_sql = item.get('pre_sql') or []
+    post_sql = item.get('post_sql') or []
+
+    _item = Table.search([('id', '=', values.get('id'))], limit=1)
+
+    for sql in pre_sql:
+        env.cr.execute(sql)
+
+    if _item:
+        log.debug('%s => %s', _item.name, values)
+        values.pop('id')
+        _item.write(values)
+    else:
+        _item = Table.create(values)
+
+#    for sql in post_sql:
+#        env.cr.execute(sql)
+
+    result.append(_item.id)
+        </field>
+    </record>
+
+    <!-- SQL EXEC -->
+    <record id="rpc_server_action_create_sql_exec" model="rpc.server.action">
+        <field name="name">SQL EXEC</field>
+        <field name="reference">sql.exec</field>
+        <field name="action">
+sql = args.sql()
+env.cr.execute(sql)
+result = True
+        </field>
+    </record>
+
+    <!-- SQL QUERY -->
+    <record id="rpc_server_action_create_sql_query" model="rpc.server.action">
+        <field name="name">SQL QUERY</field>
+        <field name="reference">sql.query</field>
+        <field name="action">
+query = args.query()
+env.cr.execute(query)
+result = env.cr.dictfetchall()
+        </field>
+    </record>
+
+    <!-- ENV API REF -->
+    <record id="action_env_api_ref" model="rpc.server.action">
+        <field name="name">ENV API REF</field>
+        <field name="reference">env.api.ref</field>
+        <field name="action">
+ModelData = env['ir.model.data']
+
+xml_id = args.ref()
+
+if not xml_id or '.' not in xml_id:
+    raise ValueError("External ID must be in format 'module.identifier'")
+
+module, name = xml_id.split('.', 1)
+
+res = ModelData.search([('module', '=', module), ('name', '=', name)])
+
+if res:
+    result = (res.res_id, res.model)
+else:
+    result = False
+</field>
+    </record>
+
     <!-- PRODUCT UPDATE -->
     <record id="action_rpc_update_products" model="rpc.server.action">
         <field name="name">PRODUCT UPDATE</field>
@@ -187,46 +330,6 @@ log.debug('--------------------------------------------------')
 </field>
     </record>
 
-    <!-- ORM SEARCH -->
-    <record id="action_rpc_api_orm_search" model="rpc.server.action">
-        <field name="name">ORM SEARCH</field>
-        <field name="reference">api.orm.search</field>
-        <field name="action">
-model = args.model()
-domain = args.domain() or []
-limit = args.limit()
-offset = args.offset()
-fields = args.fields()
-
-Table = env[model].sudo()
-
-result = Table.search_read(domain, fields, limit=limit, offset=offset)
-</field>
-    </record>
-
-    <!-- ENV API REF -->
-    <record id="action_env_api_ref" model="rpc.server.action">
-        <field name="name">ENV API REF</field>
-        <field name="reference">env.api.ref</field>
-        <field name="action">
-ModelData = env['ir.model.data']
-
-xml_id = args.ref()
-
-if not xml_id or '.' not in xml_id:
-    raise ValueError("External ID must be in format 'module.identifier'")
-
-module, name = xml_id.split('.', 1)
-
-res = ModelData.search([('module', '=', module), ('name', '=', name)])
-
-if res:
-    result = (res.res_id, res.model)
-else:
-    result = False
-</field>
-    </record>
-
     <!-- PRODUCT IMAGES UPDATE -->
     <record id="action_rpc_product_images_update" model="rpc.server.action">
         <field name="name">PRODUCT IMAGES UPDATE</field>
@@ -375,20 +478,6 @@ if pickings:
             })
 
     result = pickings.button_validate()
-</field>
-    </record>
-
-    <!-- ORM SEARCH COUNT -->
-    <record id="action_rpc_api_orm_search_count" model="rpc.server.action">
-        <field name="name">ORM SEARCH COUNT</field>
-        <field name="reference">api.orm.search_count</field>
-        <field name="action">
-model = args.model()
-domain = args.domain() or []
-
-Table = env[model].sudo()
-
-result = Table.search_count(domain)
 </field>
     </record>
 
