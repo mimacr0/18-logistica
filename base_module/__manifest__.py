@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright 2024 DaFe Solutions
+# Copyright 2026 DaFe Solutions
 #
 ##############################################################################
 
@@ -11,8 +11,8 @@
     'version': '18.0.1.0.0',
     'author': 'Dafe Solutions LLC',
     'maintainer': 'Programador 1, Programador 2',
-    'summary': """Base para crear nuevos módulos de Odoo""",
-    'description': """
+    'description': """Base para crear nuevos módulos de Odoo""",
+    'summary': """
         Este es un ejemplo de como debería ser una descripción de un módulo
         - Los cambios del frontend deben ir en las carpetas 'controllers' y 'portal'
         - Los cambios del backend deben ir en las carpetas 'models' y 'views'
