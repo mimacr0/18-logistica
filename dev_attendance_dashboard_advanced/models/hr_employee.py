@@ -14,6 +14,7 @@ class hr_employee(models.Model):
     _inherit = 'hr.employee'
 
     allowed_companies = fields.Many2many('res.company', string="Allowed Companies", compute='_compute_companies', store=True)
+    tracking_required = fields.Boolean(string="Tracking Required", default=True)
 
     def _compute_companies(self):
         print("============================================")

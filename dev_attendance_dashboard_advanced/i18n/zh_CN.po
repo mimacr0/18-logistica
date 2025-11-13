@@ -1,0 +1,755 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* dev_attendance_dashboard_advanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-13 09:24+0000\n"
+"PO-Revision-Date: 2025-11-13 09:24+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__allowed_entry_time_float
+msgid ""
+"Hora límite de entrada permitida en formato decimal (ej: 9.5 = 9:30 AM)"
+msgstr ""
+"允许进入时间限制（十进制格式，例如：9.5 = 上午9:30）"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__delay_by_check_in
+msgid ""
+"Si está activado, las horas de retraso se calculan basándose en la hora de "
+"entrada (check_in)"
+msgstr ""
+"如果启用，延迟时间将根据签到时间（check_in）计算"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "<strong>Employee:</strong>"
+msgstr "<strong>员工：</strong>"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "A"
+msgstr "A"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "A:"
+msgstr "A:"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__absent
+msgid "Absent"
+msgstr "缺席"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Absent]"
+msgstr "缺席]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Absents"
+msgstr "缺席"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "All Departments"
+msgstr "所有部门"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "All Employees"
+msgstr "所有员工"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:res.groups,name:dev_attendance_dashboard_advanced.group_allow_acess_attendance_dashboard
+msgid "Allow to Access Attendance Dashboard"
+msgstr "允许访问考勤仪表板"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_hr_employee__allowed_companies
+msgid "Allowed Companies"
+msgstr "允许的公司"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__allowed_entry_time_float
+msgid "Allowed Entry Time (Float)"
+msgstr "允许进入时间（小数）"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Allowed entry time (in hours, e.g. 9.5 = 9:30 AM)"
+msgstr "允许进入时间（以小时为单位，例如：9.5 = 上午9:30）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "April"
+msgstr "四月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_hr_attendance
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.attendance_view_calendar
+msgid "Attendance"
+msgstr "出勤"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.actions.client,name:dev_attendance_dashboard_advanced.action_attendance_dashboard
+msgid "Attendance Dashboard"
+msgstr "考勤仪表板"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Attendance Delay Settings"
+msgstr "考勤延迟设置"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Attendance report sent successfully."
+msgstr "考勤报告发送成功。"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "August"
+msgstr "八月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Booking"
+msgstr "预订"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Check In"
+msgstr "签到"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Check Out"
+msgstr "签退"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设定"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.ui.menu,name:dev_attendance_dashboard_advanced.attendance_dashboard
+msgid "Dashboard"
+msgstr "仪表板"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Date"
+msgstr "日期"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Days"
+msgstr "天"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "December"
+msgstr "十二月"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__delay_by_check_in
+msgid "Delay Depends on Check-In Time"
+msgstr "延迟取决于签到时间"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Delay hours depend on check-in time"
+msgstr "延迟小时数取决于签到时间"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_hr_attendance__delay_status
+msgid "Delay Status"
+msgstr "延迟状态"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Department:"
+msgstr "部门："
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Description"
+msgstr "描述"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Download Attendance in Excel"
+msgstr "下载Excel考勤表"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_hr_employee
+msgid "Employee"
+msgstr "员工"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Employee:"
+msgstr "员工："
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Employees"
+msgstr "员工"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Extra Hours"
+msgstr "加班时间"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.actions.report,name:dev_attendance_dashboard_advanced.action_report_extra_hours
+msgid "Extra Hours Report"
+msgstr "加班时间报告"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Failed to send attendance report. "
+msgstr "发送考勤报告失败。 "
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "February"
+msgstr "二月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Fri"
+msgstr "周五"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "From Date"
+msgstr "开始日期"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "GD:"
+msgstr "GD:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Good Afternoon"
+msgstr "下午好"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Good Evening"
+msgstr "晚上好"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Good Morning"
+msgstr "早上好"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "H"
+msgstr "H"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "H:"
+msgstr "H:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Holiday]"
+msgstr "节假日]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Holidays"
+msgstr "节假日"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "January"
+msgstr "一月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "July"
+msgstr "七月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "June"
+msgstr "六月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "L"
+msgstr "L"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "L:"
+msgstr "L:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Late Check-In"
+msgstr "迟到签到"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Late CheckIn (Today)"
+msgstr "迟到签到（今天）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Leave"
+msgstr "请假"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Leave Summary"
+msgstr "请假摘要"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Leave Type"
+msgstr "请假类型"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Leave]"
+msgstr "请假]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Leaves"
+msgstr "请假"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__major_delay_limit_float
+msgid "Límite de retraso mayor en formato decimal (ej: 10.5 = 10:30 AM)"
+msgstr "严重延迟限制（十进制格式，例如：10.5 = 上午10:30）"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,help:dev_attendance_dashboard_advanced.field_res_config_settings__minor_delay_limit_float
+msgid "Límite de retraso menor en formato decimal (ej: 10.0 = 10:00 AM)"
+msgstr "轻微延迟限制（十进制格式，例如：10.0 = 上午10:00）"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__major
+msgid "Major Delay"
+msgstr "严重延迟"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Major delay limit (e.g. 10.5 = 10:30 AM)"
+msgstr "严重延迟限制（例如：10.5 = 上午10:30）"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__major_delay_limit_float
+msgid "Major Delay Limit (Float)"
+msgstr "严重延迟限制（小数）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Major Delay]"
+msgstr "严重延迟]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "March"
+msgstr "三月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "May"
+msgstr "五月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "MD:"
+msgstr "MD:"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__minor
+msgid "Minor Delay"
+msgstr "轻微延迟"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
+msgid "Minor delay limit (e.g. 10.0 = 10:00 AM)"
+msgstr "轻微延迟限制（例如：10.0 = 上午10:00）"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__minor_delay_limit_float
+msgid "Minor Delay Limit (Float)"
+msgstr "轻微延迟限制（小数）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Minor Delay]"
+msgstr "轻微延迟]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Mon"
+msgstr "周一"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Month:"
+msgstr "月份："
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "November"
+msgstr "十一月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "October"
+msgstr "十月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "of"
+msgstr "的"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "On Leave (Today)"
+msgstr "请假（今天）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "On Leaves"
+msgstr "请假中"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__on_time
+msgid "On Time"
+msgstr "准时"
+
+#. module: dev_attendance_dashboard_advanced
+#: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.report_last_month_overtime
+msgid "Overtime Report - Last Month"
+msgstr "加班报告 - 上个月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "P"
+msgstr "P"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "P:"
+msgstr "P:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Page"
+msgstr "页"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Please select an employee first."
+msgstr "请先选择一名员工。"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Present"
+msgstr "出勤"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Present]"
+msgstr "出勤]"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Presents"
+msgstr "出勤"
+
+#. module: dev_attendance_dashboard_advanced
+#: model:ir.model,name:dev_attendance_dashboard_advanced.model_report_dev_attendance_dashboard_advanced_overtime_pdf_template
+msgid "report.dev_attendance_dashboard_advanced.overtime_pdf_template"
+msgstr ""
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "RG"
+msgstr "RG"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "RL"
+msgstr "RL"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Sat"
+msgstr "周六"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Send Attendance Email"
+msgstr "发送考勤邮件"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "September"
+msgstr "九月"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Something went wrong, while sending email."
+msgstr "发送邮件时出错。"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "State"
+msgstr "状态"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Sun"
+msgstr "周日"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-python
+#: code:addons/dev_attendance_dashboard_advanced/__init__.py:0
+msgid "This Application is only supported in 18.0 version of odoo !"
+msgstr "此应用程序仅支持 Odoo 18.0 版本！"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Thu"
+msgstr "周四"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "To Date"
+msgstr "结束日期"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Today's Attendance Summary"
+msgstr "今日考勤摘要"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "TOTAL"
+msgstr "总计"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Total Absent (Today)"
+msgstr "总缺席（今天）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Total Present (Today)"
+msgstr "总出勤（今天）"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Tue"
+msgstr "周二"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Unknown error occurred."
+msgstr "发生未知错误。"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "View"
+msgstr "查看"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Wed"
+msgstr "周三"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Welcome to your Attendance Dashboard."
+msgstr "欢迎使用考勤仪表板。"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
+msgid "Year:"
+msgstr "年份："
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "P:"
+msgstr "P:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Present"
+msgstr "出勤"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "A:"
+msgstr "A:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Absent"
+msgstr "缺席"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "L:"
+msgstr "L:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Leave"
+msgstr "请假"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "H:"
+msgstr "H:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Holiday"
+msgstr "节假日"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "MD:"
+msgstr "MD:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Minor Delay"
+msgstr "轻微延迟"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "GD:"
+msgstr "GD:"
+
+#. module: dev_attendance_dashboard_advanced
+#. odoo-javascript
+#: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
+msgid "Major Delay"
+msgstr "严重延迟"
+

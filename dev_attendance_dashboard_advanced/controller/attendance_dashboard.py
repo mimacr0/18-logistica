@@ -42,7 +42,9 @@ class AttendanceDashboard(http.Controller):
             dept_id = department_domain[0][2]
             department_name = request.env['hr.department'].browse(dept_id).name
 
-        employee_ids = request.env['hr.employee'].search(employee_domain + department_domain)
+        # Filtrar solo empleados con tracking_required = True
+        tracking_domain = [('tracking_required', '=', True)]
+        employee_ids = request.env['hr.employee'].search(employee_domain + department_domain + tracking_domain)
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output)
         sheet = workbook.add_worksheet('Attendance Report')
@@ -194,7 +196,9 @@ class AttendanceDashboard(http.Controller):
             year = int(domains.get('year_domain') or datetime.date.today().year)
             days_in_month = calendar.monthrange(year, month)[1]
 
-            employees = request.env['hr.employee'].search(employee_domain + department_domain)
+            # Filtrar solo empleados con tracking_required = True
+            tracking_domain = [('tracking_required', '=', True)]
+            employees = request.env['hr.employee'].search(employee_domain + department_domain + tracking_domain)
 
             if not employees:
                 return {'success': False, 'message': 'No matching employees found.'}
@@ -397,7 +401,9 @@ class AttendanceDashboard(http.Controller):
                 year_domain = domains['year_domain']
 
         response = [[]]
-        employee_ids = request.env['hr.employee'].search(employee_domain + department_domain)
+        # Filtrar solo empleados con tracking_required = True
+        tracking_domain = [('tracking_required', '=', True)]
+        employee_ids = request.env['hr.employee'].search(employee_domain + department_domain + tracking_domain)
 
         days = calendar.monthrange(year_domain, month_domain)[1]
 
@@ -623,16 +629,20 @@ class AttendanceDashboard(http.Controller):
         department_ids = []
 
         is_admin = user.has_group('base.group_system')
+        
+        # Filtrar solo empleados con tracking_required = True
+        tracking_domain = [('tracking_required', '=', True)]
 
         if is_admin:
-            employee_ids = request.env['hr.employee'].sudo().search_read([], ['id', 'name'])
+            employee_ids = request.env['hr.employee'].sudo().search_read(tracking_domain, ['id', 'name'])
             department_ids = request.env['hr.department'].sudo().search_read([], ['id', 'name'])
         else:
             current_employee = request.env['hr.employee'].sudo().search([('user_id', '=', user.id)], limit=1)
 
             if current_employee and current_employee.department_id:
                 dept = current_employee.department_id
-                employee_ids = request.env['hr.employee'].sudo().search_read([('department_id', '=', dept.id)],['id', 'name'])
+                domain = [('department_id', '=', dept.id)] + tracking_domain
+                employee_ids = request.env['hr.employee'].sudo().search_read(domain, ['id', 'name'])
                 department_ids = [{'id': dept.id, 'name': dept.name}]
         
         return [employee_ids, department_ids]
@@ -649,21 +659,24 @@ class AttendanceDashboard(http.Controller):
 
         # Default to empty result
         domain = [('id', '=', -1)]
+        
+        # Filtrar solo empleados con tracking_required = True
+        tracking_domain = [('tracking_required', '=', True)]
 
         if is_admin:
             if department_id and department_id != 'all':
-                domain = [('department_id', '=', int(department_id))]
+                domain = [('department_id', '=', int(department_id))] + tracking_domain
             elif department_id == 'all':
-                domain = []  # all employees
+                domain = tracking_domain  # all employees with tracking_required
         else:
             if department_id and department_id != 'all':
                 # Allow only their department
                 if int(department_id) == allowed_dept_id:
-                    domain = [('department_id', '=', allowed_dept_id)]
+                    domain = [('department_id', '=', allowed_dept_id)] + tracking_domain
             else:
                 # Even if user tries "all", restrict to only their department
                 if allowed_dept_id:
-                    domain = [('department_id', '=', allowed_dept_id)]
+                    domain = [('department_id', '=', allowed_dept_id)] + tracking_domain
 
         employees = request.env['hr.employee'].sudo().search_read(domain, ['id', 'name'])
         return employees
@@ -728,7 +741,9 @@ class AttendanceDashboard(http.Controller):
         today_start_utc = today_start.astimezone(pytz.utc).replace(tzinfo=None)
         today_end_utc = today_end.astimezone(pytz.utc).replace(tzinfo=None)
 
-        all_employee_data = request.env['hr.employee'].search(employee_domain + department_domain)
+        # Filtrar solo empleados con tracking_required = True
+        tracking_domain = [('tracking_required', '=', True)]
+        all_employee_data = request.env['hr.employee'].search(employee_domain + department_domain + tracking_domain)
 
         for employee in all_employee_data:
             # Attendance in filtered month

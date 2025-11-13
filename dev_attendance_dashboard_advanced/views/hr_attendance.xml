@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
-
-For Module Support : devintelle@gmail.com  or Skype : devintelle
- -->
 <odoo>
     <!--  Hr.attendance form view for adding delay_status field.  -->
     <record id="hr_attendance_view_form_inherit" model="ir.ui.view">

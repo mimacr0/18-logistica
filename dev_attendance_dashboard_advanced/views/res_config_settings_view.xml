@@ -31,7 +31,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_left_pane">
                             </div>
@@ -41,7 +40,6 @@
                                 <field name="minor_delay_limit_float" widget="float_time_selection"/>
                             </div>
                         </div>
-
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_left_pane">
                             </div>
@@ -51,8 +49,6 @@
                                 <field name="major_delay_limit_float" widget="float_time_selection"/>
                             </div>
                         </div>
-
-                       
                     </div>
                 </div>
             </xpath>

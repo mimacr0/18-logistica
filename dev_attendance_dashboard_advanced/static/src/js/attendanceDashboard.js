@@ -87,11 +87,60 @@ export class AttendanceDashboard extends Component {
 
     getDayName(day, month, year) {
         console.log("called");
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const days = [_t('Sun'), _t('Mon'), _t('Tue'), _t('Wed'), _t('Thu'), _t('Fri'), _t('Sat')];
         const date = new Date(parseInt(year), parseInt(month), day);
         const dayIndex = date.getDay();
         const dayName = days[dayIndex];
         return dayName
+    }
+
+    // Métodos para traducciones de la leyenda del calendario
+    getLegendP() {
+        return _t('P:');
+    }
+
+    getLegendPresent() {
+        return _t('Present');
+    }
+
+    getLegendA() {
+        return _t('A:');
+    }
+
+    getLegendAbsent() {
+        return _t('Absent');
+    }
+
+    getLegendL() {
+        return _t('L:');
+    }
+
+    getLegendLeave() {
+        return _t('Leave');
+    }
+
+    getLegendH() {
+        return _t('H:');
+    }
+
+    getLegendHoliday() {
+        return _t('Holiday');
+    }
+
+    getLegendMD() {
+        return _t('MD:');
+    }
+
+    getLegendMinorDelay() {
+        return _t('Minor Delay');
+    }
+
+    getLegendGD() {
+        return _t('GD:');
+    }
+
+    getLegendMajorDelay() {
+        return _t('Major Delay');
     }
 
     _downloadExcelReport() {
@@ -103,7 +152,7 @@ export class AttendanceDashboard extends Component {
     _printReport() {
         const attendanceId = this.state.selectedAttendanceId; // set this when a record is selected
         if (!attendanceId) {
-            alert("Please select an employee first.");
+            alert(_t("Please select an employee first."));
             return;
         }
         const url = `/dashboard/attendance/${attendanceId}?report_type=pdf`;
@@ -119,16 +168,16 @@ export class AttendanceDashboard extends Component {
         }).then(response => {
             
             if (response.success) {
-                self.notification.add("Attendance report sent successfully.", {
+                self.notification.add(_t("Attendance report sent successfully."), {
                     type: "success",
                 });
             } else {
-                self.notification.add("Failed to send attendance report. "+ (response.message || "Unknown error occurred."), {
+                self.notification.add(_t("Failed to send attendance report. ") + (response.message || _t("Unknown error occurred.")), {
                     type: "danger",
                 });
             }
         }).catch(error => {
-            self.notification.add("Something went wrong, while sending email.", {
+            self.notification.add(_t("Something went wrong, while sending email."), {
                 type: "danger",
             });
         });
@@ -148,34 +197,34 @@ export class AttendanceDashboard extends Component {
         if (action == 'all_employee_data1')
         {
             domain = [["id", "in", this.state.all_employee_data]];
-            title_name = 'All Employees'
+            title_name = _t('All Employees')
         }
         else if (action == 'all_present1')
         {
             domain = [["id", "in", this.state.all_present_today]];
-            title_name = 'Total Present (Today)'
+            title_name = _t('Total Present (Today)')
         }
         else if (action == 'all_absent1')
         {
             domain = [["id", "in", this.state.all_absent_today]];
-            title_name = 'Total Absent (Today)'
+            title_name = _t('Total Absent (Today)')
         }
         else if (action == 'on_leave1')
         {
             domain = [["id", "in", this.state.on_leave_today]];
-            title_name = 'On Leave (Today)'
+            title_name = _t('On Leave (Today)')
         }
         else if (action == 'late_checkin1')
         {
             domain = [["id", "in", this.state.late_checkin_today]];
-            title_name = 'Late CheckIn (Today)'
+            title_name = _t('Late CheckIn (Today)')
         }
         
         else if (rec_id != 'undefined') {
             domain = [["id", "=", rec_id]]
         }
         this.action.doAction({
-            name: _t(title_name),
+            name: title_name,
             type: 'ir.actions.act_window',
             res_model: 'hr.employee',
             domain: domain,
@@ -220,10 +269,19 @@ export class AttendanceDashboard extends Component {
         // creating header 
         var self = this;
         var thead = document.querySelector("#attendanceCalender thead");
+        var monthSelect = document.querySelector("#month_selection");
+        var yearSelect = document.querySelector('#year_selection');
+        
+        // Verificar que los elementos existan antes de continuar
+        if (!thead || !monthSelect || !yearSelect) {
+            console.warn("Elementos del calendario no encontrados. El componente puede haber sido desmontado.");
+            return;
+        }
+        
         thead.innerHTML = ' ';
         var tr = document.createElement('tr')
-        var month = document.querySelector("#month_selection").value
-        var year = document.querySelector('#year_selection').value
+        var month = monthSelect.value
+        var year = yearSelect.value
 
         
         var days = self.state.days.value
@@ -233,25 +291,25 @@ export class AttendanceDashboard extends Component {
             let th = document.createElement('th')
             if (i == 0) {
                 th.style = "width:100px; min-width:100px; max-width:100px; background: #E0dfdf; border:1px solid #525252; text-align:center;  position: sticky; top: 0; z-index: 1;"
-                th.textContent = "Employees"
+                th.textContent = _t("Employees")
             } else if (i == days + 1) {
                 th.style = "background: #e2ebb9; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0; z-index: 1;"
-                th.innerHTML = "&nbsp;P&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("P") + "&nbsp;";
             } else if (i == days + 2) {
                 th.style = "background: #ffc9c4; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0; z-index: 1;"
-                th.innerHTML = "&nbsp;A&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("A") + "&nbsp;";
             } else if (i == days + 3) {
                 th.style = "background: #ffe4b8; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0; z-index: 1;"
-                th.innerHTML = "&nbsp;L&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("L") + "&nbsp;";
             } else if (i == days + 4) {
                 th.style = "background:#bfd2ff; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0;z-index: 1;"
-                th.innerHTML = "&nbsp;H&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("H") + "&nbsp;";
             } else if (i == days + 5) {
                 th.style = "background:#ffeb3b; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0;z-index: 1;"
-                th.innerHTML = "&nbsp;MD&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("RL") + "&nbsp;";
             } else if (i == days + 6) {
                 th.style = "background:#ff9800; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0;z-index: 1;"
-                th.innerHTML = "&nbsp;GD&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("RG") + "&nbsp;";
             } else {
                 var day = this.getDayName(i, month, year)
                 th.style = "background: #Eeeeee; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0;z-index: 1;"
@@ -265,6 +323,10 @@ export class AttendanceDashboard extends Component {
 
         // creating rows of table body
         var tbody = document.querySelector("#attendanceCalender tbody");
+        if (!tbody) {
+            console.warn("Tbody del calendario no encontrado. El componente puede haber sido desmontado.");
+            return;
+        }
         tbody.innerHTML = ' ';
 
         // Variables para calcular los totales
@@ -524,7 +586,7 @@ export class AttendanceDashboard extends Component {
             var td = document.createElement('td');
             if (j === 0) {
                 td.style = "width:100px; min-width:100px; max-width:100px; border:1px solid white; padding:5px; text-align:center; background-color: white; font-weight: bold;";
-                td.textContent = "TOTAL";
+                td.textContent = _t("TOTAL");
             } else if (j === days + 1) {
                 td.style = "text-align:center; background-color:#e2ebb9; font-weight:700; font-size:15px; border:1px solid white;";
                 td.textContent = total_p;
@@ -558,13 +620,13 @@ export class AttendanceDashboard extends Component {
         const now = new Date();
         const hours = now.getHours();
         if (hours >= 5 && hours < 12) {
-            self.greetings = "Good Morning";
+            self.greetings = _t("Good Morning");
         }
         else if (hours >= 12 && hours < 18) {
-            self.greetings = "Good Afternoon";
+            self.greetings = _t("Good Afternoon");
         }
         else {
-            self.greetings = "Good Evening";
+            self.greetings = _t("Good Evening");
         }
     }
 
@@ -652,7 +714,7 @@ export class AttendanceDashboard extends Component {
             
 
             const date = new Date();
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthNames = [_t("January"), _t("February"), _t("March"), _t("April"), _t("May"), _t("June"), _t("July"), _t("August"), _t("September"), _t("October"), _t("November"), _t("December")];
 
             var monthSelection = document.getElementById("month_selection")
             for (var i = 0; i < monthNames.length; i++) {
@@ -709,7 +771,7 @@ export class AttendanceDashboard extends Component {
         
                 const allOption = document.createElement('option');
                 allOption.value = 'all';
-                allOption.textContent = 'All Employees';
+                allOption.textContent = _t('All Employees');
                 employeeSelect.appendChild(allOption);
         
                 result.forEach(emp => {
@@ -798,7 +860,7 @@ export class AttendanceDashboard extends Component {
             for (var i = 0; i < paginatedData.length; i++) { // CHANGE HERE: 'i <' instead of 'i <='
                 var tr = document.createElement('tr');
                 const newBtn = document.createElement('button');
-                newBtn.textContent = 'View';
+                newBtn.textContent = _t('View');
                 newBtn.style = "background-color: #71639e; color: white;";
                 newBtn.className = "btn btn-primary";
                 
