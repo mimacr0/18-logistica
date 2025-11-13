@@ -1,453 +1,455 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
-# 
-# Translators:
-# Wil Odoo, 2024
-# Larissa Manderfeld, 2024
-# 
+# 	* web_theme
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+t\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:29+0000\n"
-"PO-Revision-Date: 2024-09-25 09:44+0000\n"
-"Last-Translator: Larissa Manderfeld, 2024\n"
-"Language-Team: Spanish (https://app.transifex.com/odoo/teams/41243/es/)\n"
+"POT-Creation-Date: 2025-11-06 12:25+0000\n"
+"PO-Revision-Date: 2025-11-06 12:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: \n"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "%s days"
-msgstr "%s días"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.res_config_settings_view_form
+msgid "192x192"
+msgstr ""
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
-msgid "(Enterprise Edition)"
-msgstr "(Edición Enterprise)"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.res_config_settings_view_form
+msgid "512x512"
+msgstr ""
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "1 month"
-msgstr "1 mes"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid ""
+"<i class=\"fa fa-info-circle\"/> Each notification has its own style and "
+"will be displayed separately."
+msgstr ""
+"<i class=\"fa fa-info-circle\"/> Cada notificación tiene su propio estilo y se "
+"mostrará por separado."
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.xml:0
-msgid "Add Custom Field"
-msgstr "Añadir campo personalizado"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "<span>Activate</span>"
+msgstr "<span>Activar</span>"
 
-#. module: web_enterprise
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "<span>Deactivate</span>"
+msgstr "<span>Desactivar</span>"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__active
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Active"
+msgstr "Activo"
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/kanban/kanban_header_patch.js:0
+#: code:addons/web_theme/static/src/views/kanban/kanban_header_patch.js:0
 msgid "Automations"
 msgstr "Automatizaciones"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Build new apps from scratch"
-msgstr "Cree nuevas aplicaciones desde cero"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.res_config_settings_view_form
+msgid "Backend Progressive Web App"
+msgstr "Aplicación web progresiva de backend"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Build new reports"
-msgstr "Elabore nuevos informes"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/share_url/burger_menu.xml:0
+#: code:addons/web_theme/static/src/webclient/share_url/burger_menu.xml:0
 msgid "Close menu"
 msgstr "Cerrar menú"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid ""
-"Contact your sales representative to help you to unlink your previous "
-"database"
-msgstr ""
-"Póngase en contacto con su representante de ventas para que lo ayude a "
-"desvincular su base de datos anterior"
+#: code:addons/web_theme/static/src/webclient/home_menu/home_notifications.xml:0
+msgid "Close notification"
+msgstr "Cerrar notificación"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Create automation rules"
-msgstr "Cree reglas de automatización"
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_res_company
+msgid "Companies"
+msgstr "Compañías"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Customize Reports"
-msgstr "Personalice los informes"
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Customize any screen"
-msgstr "Personalice cualquier pantalla"
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
 
-#. module: web_enterprise
+#. module: web_theme
+#: model_terms:ir.actions.act_window,help:web_theme.action_home_notifications
+msgid "Create your first home notification!"
+msgstr "¡Crea tu primera notificación de inicio!"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Current"
+msgstr "Actual"
+
+#. module: web_theme
+#: model:ir.model.fields.selection,name:web_theme.selection__home_notifications__message_style__danger
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Danger"
+msgstr "Peligro"
+
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/color_scheme/color_scheme_menu_items.js:0
+#: code:addons/web_theme/static/src/webclient/color_scheme/color_scheme_menu_items.js:0
 msgid "Dark Mode"
 msgstr "Modo oscuro"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
-msgid "Database expiration:"
-msgstr "Vencimiento de la base de datos:"
+#. module: web_theme
+#: model:ir.model.fields,help:web_theme.field_home_notifications__sequence
+msgid "Determine the display order"
+msgstr "Determinar el orden de visualización"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Define webhooks"
-msgstr "Defina webhooks"
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__dismiss_user_ids
+msgid "Dismissed by Users"
+msgstr "Descartado por usuarios"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Discard"
-msgstr "Descartar"
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Dismiss"
-msgstr "Descartar"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.login
+msgid "Email / Mobile"
+msgstr "Email / Teléfono"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Error reason:"
-msgstr "Razón del error:"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.login
+msgid "Email address or Phone number"
+msgstr "Correo o teléfono"
 
-#. module: web_enterprise
-#: model:ir.model,name:web_enterprise.model_ir_http
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__end_date
+msgid "End Date"
+msgstr "Fecha de finalización"
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "Enter notification message here..."
+msgstr "Ingrese el mensaje de notificación aquí..."
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Expired"
+msgstr "Expirado"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_res_company__web_app_icon_192_pwa_frontend
+#: model:ir.model.fields,field_description:web_theme.field_res_config_settings__web_app_icon_192_pwa_frontend
+msgid "Frontend Image 192px"
+msgstr "Imagen frontal 192px"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_res_company__web_app_icon_512_pwa_frontend
+#: model:ir.model.fields,field_description:web_theme.field_res_config_settings__web_app_icon_512_pwa_frontend
+msgid "Frontend Image 512px"
+msgstr "Imagen frontal 512px"
+
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_ir_http
 msgid "HTTP Routing"
 msgstr "Enrutamiento HTTP "
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu_service.js:0
+#: code:addons/web_theme/static/src/webclient/home_menu/home_menu_service.js:0
+#: model:ir.ui.menu,name:web_theme.menu_home_category_main
 msgid "Home"
 msgstr "Inicio"
 
-#. module: web_enterprise
-#: model:ir.model.fields,field_description:web_enterprise.field_res_users_settings__homemenu_config
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_res_users_settings__homemenu_config
 msgid "Home Menu Configuration"
-msgstr "Configuración del menú principal"
+msgstr "Configuración del menú de inicio"
 
-#. module: web_enterprise
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "Home Notification"
+msgstr "Notificación de inicio"
+
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_home_notifications
+msgid "Home Screen Notifications"
+msgstr "Notificaciones de la pantalla de inicio"
+
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
+#: code:addons/web_theme/static/src/webclient/navbar/navbar.js:0
 msgid "Home menu"
 msgstr "Menú de inicio"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "I paid, please recheck!"
-msgstr "Ya he realizado el pago, vuelva a comprobarlo."
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__id
+msgid "ID"
+msgstr ""
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Install Odoo Studio and its dependencies"
-msgstr "Instale Studio de Odoo y sus dependencias"
+#. module: web_theme
+#: model:ir.model.fields,help:web_theme.field_home_notifications__group_ids
+msgid "If empty, the notification will be visible to all groups"
+msgstr "Si está vacío, la notificación será visible para todos los grupos"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Learn More"
-msgstr "Aprenda más"
+#. module: web_theme
+#: model:ir.model.fields,help:web_theme.field_home_notifications__user_ids
+msgid "If empty, the notification will be visible to all users"
+msgstr "Si está vacío, la notificación será visible para todos los usuarios"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Log in as an administrator to correct the issue."
-msgstr "Identifíquese como administrador para corregir la incidiencia"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid ""
+"If no users or groups are specified, the notification will be visible to all"
+" users."
+msgstr ""
+"Si no se especifican usuarios o grupos, la notificación será visible para todos "
+"los usuarios."
 
-#. module: web_enterprise
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_res_company__web_app_icon_192_pwa
+#: model:ir.model.fields,field_description:web_theme.field_res_config_settings__web_app_icon_192_pwa
+msgid "Image 192px"
+msgstr "Imagen 192px"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_res_company__web_app_icon_512_pwa
+#: model:ir.model.fields,field_description:web_theme.field_res_config_settings__web_app_icon_512_pwa
+msgid "Image 512px"
+msgstr "Imagen 512px"
+
+#. module: web_theme
+#: model:ir.model.fields.selection,name:web_theme.selection__home_notifications__message_style__info
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Info"
+msgstr "Información"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__message
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "Message Content"
+msgstr "Contenido del mensaje"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__message_style
+msgid "Message Style"
+msgstr "Estilo de mensaje"
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.fields
+msgid "Mobile Number"
+msgstr "Número de móvil"
+
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
+#: code:addons/web_theme/static/src/webclient/home_menu/home_menu.xml:0
 msgid "No result"
 msgstr "Sin resultado"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "Notification Title"
+msgstr "Título de la notificación"
+
+#. module: web_theme
+#: model:ir.actions.act_window,name:web_theme.action_home_notifications
+#: model:ir.ui.menu,name:web_theme.menu_home_notifications
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_tree
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#. module: web_theme
+#: model_terms:ir.actions.act_window,help:web_theme.action_home_notifications
+msgid ""
+"Notifications will be displayed on the home screen for the specified period.\n"
+"                Each notification can have a different style (info, warning, danger, success)."
+msgstr ""
+"Las notificaciones se mostrarán en la pantalla de inicio durante el período "
+"especificado.\n"
+"                Cada notificación puede tener un estilo diferente (información, "
+"advertencia, peligro, éxito)."
+
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.res_config_settings_view_form
 msgid "Odoo"
 msgstr "Odoo"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
-msgid "Odoo Enterprise Edition License V1.0"
-msgstr "Licencia de Odoo Enterprise Edición v1.0"
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_res_company__pwa_app_name
+#: model:ir.model.fields,field_description:web_theme.field_res_config_settings__pwa_app_name
+msgid "PWA App Name"
+msgstr "Nombre de la aplicación PWA"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.js:0
-msgid "Odoo Studio - Add new fields to any view"
-msgstr "Odoo Studio - Añadir nuevos campos a cualquier vista"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.login
+msgid "Password"
+msgstr "Contraseña"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/kanban/kanban_header_patch.js:0
-msgid "Odoo Studio - Customize workflows in minutes"
-msgstr "Odoo Studio - Personalizar flujos de trabajo en minutos"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Odoo Support"
-msgstr "Soporte de Odoo"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Paste code here"
-msgstr "Pegar el código aquí"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
+#: code:addons/web_theme/static/src/webclient/navbar/navbar.js:0
 msgid "Previous view"
 msgstr "Vista anterior"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "Register"
-msgstr "Registrar"
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__sequence
+msgid "Sequence"
+msgstr "Secuencia"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Register your subscription"
-msgstr "Registre su suscripción"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Renew your subscription"
-msgstr "Renueve su suscripción"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "Retry"
-msgstr "Volver a intentar"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Send an email"
-msgstr "Enviar un correo"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Sending the instructions by email ..."
-msgstr "Enviando las instrucciones por correo electrónico..."
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/share_url/share_url.js:0
+#: code:addons/web_theme/static/src/webclient/share_url/share_url.js:0
 msgid "Share"
 msgstr "Compartir"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/share_url/burger_menu.xml:0
+#: code:addons/web_theme/static/src/webclient/share_url/burger_menu.xml:0
 msgid "Share URL"
 msgstr "Compartir URL"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__show_title
+msgid "Show Title"
+msgstr "Mostrar título"
+
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__start_date
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+#. module: web_theme
+#: model:ir.model.fields,help:web_theme.field_home_notifications__message_style
 msgid ""
-"Something went wrong while registering your database. You can try again or "
-"contact"
+"Style of notification: info (blue), warning (yellow), danger (red), success "
+"(green)"
 msgstr ""
-"Algo salió mal al registrar su base de datos. Puede intentarlo de nuevo o "
-"contactar "
+"Estilo de notificación: información (azul), advertencia (amarillo), peligro (rojo),"
+"éxito (verde)"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Start using Odoo Studio"
-msgstr "Comience a usar la aplicación Studio de Odoo"
+#. module: web_theme
+#: model:ir.model.fields.selection,name:web_theme.selection__home_notifications__message_style__success
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Success"
+msgstr "Éxito"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Subscription Code:"
-msgstr "Código de suscripción:"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
+#: code:addons/web_theme/static/src/webclient/home_menu/home_menu.xml:0
 msgid "TIP"
 msgstr "CONSEJO"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.res_config_settings_view_form
 msgid ""
-"Thank you, your registration was successful! Your database is valid until"
+"This name will be used for the application when Odoo is installed through "
+"the browser."
 msgstr ""
-"Gracias, su registración fue exitosa. Su base de datos es válida hasta"
+"Este nombre se utilizará para la aplicación cuando Odoo se instale a través "
+"del navegador."
 
-#. module: web_enterprise
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__name
+msgid "Title"
+msgstr "Título"
+
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
-msgid ""
-"Thank you, your registration was successful! Your database is valid until "
-"%s."
-msgstr "Gracias, se registró con éxito. Su base de datos es válida hasta %s."
+#: code:addons/web_theme/static/src/xml/password_eyes_icon.xml:0
+msgid "Toggle visibility"
+msgstr "Alternar visibilidad"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid ""
-"The instructions to unlink your subscription from the previous database(s) "
-"have been sent"
-msgstr ""
-"Se han enviado las instrucciones para desvincular su suscripción de las "
-"bases de datos anteriores"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Upcoming"
+msgstr "Próximo"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "This database has expired. "
-msgstr "Esta base de datos ha vencido."
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_res_users
+msgid "User"
+msgstr "Usuario"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "This database will expire in %s. "
-msgstr "Esta base de datos expirará en %s."
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
-msgid "This demo database will expire in %s. "
-msgstr "Esta base de datos de prueba expirará en %s."
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Unable to send the instructions by email, please contact the"
-msgstr ""
-"No se pueden enviar las instrucciones por correo electrónico, póngase en "
-"contacto con"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Unleash the power of Odoo Studio:"
-msgstr "Libere el poder de Odoo Studio:"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Upgrade your subscription"
-msgstr "Renueve su suscripción"
-
-#. module: web_enterprise
-#: model:ir.model,name:web_enterprise.model_res_users_settings
+#. module: web_theme
+#: model:ir.model,name:web_theme.model_res_users_settings
 msgid "User Settings"
 msgstr "Ajustes de usuario"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "Want to tailor-make your Odoo?"
-msgstr "¿Desea personalizar Odoo a sus necesidades?"
+#. module: web_theme
+#: model:ir.model.fields,help:web_theme.field_home_notifications__dismiss_user_ids
+msgid "Users who have dismissed this notification"
+msgstr "Usuarios que han descartado esta notificación"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid ""
-"You have more users or more apps installed than your subscription allows."
-msgstr ""
-"Tiene más usuarios o más aplicaciones instaladas de lo que permite su "
-"suscripción."
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_form
+msgid "Visibility"
+msgstr "Visibilidad"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid ""
-"You will be able to register your database once you have installed your "
-"first app."
-msgstr ""
-"Tendrá la posibilidad de registrar su base de datos una vez instalada la "
-"primera aplicación."
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__group_ids
+msgid "Visible to Groups"
+msgstr "Visible para grupos"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Your subscription code"
-msgstr "Su código de suscripción"
+#. module: web_theme
+#: model:ir.model.fields,field_description:web_theme.field_home_notifications__user_ids
+msgid "Visible to Users"
+msgstr "Visible para usuarios"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Your subscription is already linked to a database."
-msgstr "Su suscripción ya está vinculada a una base de datos."
+#. module: web_theme
+#: model:ir.model.fields.selection,name:web_theme.selection__home_notifications__message_style__warning
+#: model_terms:ir.ui.view,arch_db:web_theme.view_home_notifications_search
+msgid "Warning"
+msgstr "Advertencia"
 
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Your subscription was updated and is valid until"
-msgstr "Su código de suscripción ha sido actualizado y es válido hasta"
+#. module: web_theme
+#: model_terms:ir.ui.view,arch_db:web_theme.res_config_settings_view_form
+msgid "Website Progressive Web App"
+msgstr "Aplicación web progresiva del sitio web"
 
-#. module: web_enterprise
+#. module: web_theme
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
-msgid "and more!"
-msgstr "y más"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "buy a subscription"
-msgstr "compre una suscripción"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "buy a subscription."
-msgstr "compre una suscripción."
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "or"
-msgstr "o"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "to the subscription owner to confirm the change, enter a new code or"
-msgstr ""
-"al dueño de la suscripción para confirmar el cambio, ingrese un código nuevo"
-" o"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
+#: code:addons/web_theme/static/src/webclient/home_menu/home_menu.xml:0
 msgid "— open me anywhere with"
 msgstr "— puede abrirme donde quiera con"
