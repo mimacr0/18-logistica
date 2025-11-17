@@ -31,6 +31,28 @@ result = Table.search_count(domain)
 </field>
     </record>
 
+    <!-- ORM WRITE -->
+    <record id="action_rpc_api_orm_write" model="rpc.server.action">
+        <field name="name">ORM WRITE</field>
+        <field name="reference">api.orm.write</field>
+        <field name="action">
+model = args.model()
+ids = args.ids()
+values = args.values()
+
+Table = env[model].sudo()
+
+records = Table.browse(ids)
+
+if not records.exists():
+    raise Exception(f'Records not found: {ids}')
+
+records.write(values)
+
+result = True
+</field>
+    </record>
+
     <!-- MODEL SCHEMA -->
     <record id="rpc_server_action_create_model_schema" model="rpc.server.action">
         <field name="name">MODEL SCHEMA</field>
