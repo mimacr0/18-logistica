@@ -7,6 +7,7 @@
 
 import requests
 import logging
+from markupsafe import Markup
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -29,45 +30,63 @@ class QualityCheckImei(models.Model):
             'quality_control_imei.validation_required',
             default='True'
         ) == 'True'
-        
-        for check in self:
+
+        for line in self.picking_id.move_ids.move_line_ids:
             # Get IMEI from lot name
-            imei = check._get_imei_from_lot()
-            
+            imei = line.lot_name
+
+            if not imei and validation_required:
+                raise UserError(_(
+                    'No IMEI found in lot/serial number for this quality check.\n'
+                    'Cannot pass quality check without IMEI.'
+                ))
+
             # If IMEI is present and validation is required, validate it before passing
             if imei and validation_required:
-                validation_result = check._validate_imei_via_api(imei)
+                validation_result = self._validate_imei_via_api(imei)
                 if not validation_result.get('success', False):
                     raise UserError(_(
                         'IMEI validation failed: %s\nPlease verify the IMEI before passing the quality check.'
                     ) % validation_result.get('message', 'Unknown error'))
-                
+
+                result = validation_result.get('result') or {}
+
                 # Check if IMEI is actually valid
-                if not validation_result.get('valid', False):
+                if not result.get('imei', False):
                     raise UserError(_(
                         'IMEI is not valid: %s\nCannot pass quality check with invalid IMEI.'
                     ) % validation_result.get('message', 'IMEI validation failed'))
-        
+
+                # Post formatted message to picking
+                imei_value = result.get('imei', 'N/A')
+                brand_value = result.get('brand_name', 'N/A')
+                model_value = result.get('model', 'N/A')
+                
+                message_body = Markup(
+                    "<p><strong>%s</strong></p>"
+                    "<ul>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "</ul>"
+                ) % (
+                    _('IMEI Validation Successful'),
+                    _('IMEI'), imei_value,
+                    _('Brand'), brand_value,
+                    _('Model'), model_value
+                )
+                
+                self.picking_id.message_post(body=message_body)
+
         # Call parent method
         return super(QualityCheckImei, self).do_pass()
-    
-    def _get_imei_from_lot(self):
-        """
-        Get IMEI from lot name (lot_line_id.name or lot_name)
-        """
-        self.ensure_one()
-        if self.lot_line_id:
-            return self.lot_line_id.name
-        elif self.lot_name:
-            return self.lot_name
-        return False
 
     @api.model
-    def call_api_validate_imei(self, imei, api_url=None, api_key=None, timeout=None):
+    def call_api_validate_imei(self, imei):
         """
         API method to validate IMEI externally
         Can be called from RPC or other modules
-        
+
         :param imei: IMEI number to validate
         :param api_url: Optional API URL (if not provided, uses from settings)
         :param api_key: Optional API key (if not provided, uses from settings)
@@ -84,57 +103,57 @@ class QualityCheckImei(models.Model):
 
         # Get API configuration from system parameters if not provided
         IrConfigParameter = self.env['ir.config_parameter'].sudo()
+        api_url = IrConfigParameter.get_param('quality_control_imei.api_url')
         if not api_url:
-            api_url = IrConfigParameter.get_param('quality_control_imei.api_url')
-            if not api_url:
-                raise UserError(_(
-                    'IMEI Validation API URL is not configured.\n'
-                    'Please configure it in Settings > Inventory > Quality Control IMEI.'
-                ))
-        
+            raise UserError(_(
+                'IMEI Validation API URL is not configured.\n'
+                'Please configure it in Settings > Inventory > Quality Control IMEI.'
+            ))
+
+        api_key = IrConfigParameter.get_param('quality_control_imei.api_key')
+
         if not api_key:
-            api_key = IrConfigParameter.get_param(
-                'quality_control_imei.api_key',
-                default=''
-            )
-        if not timeout:
-            timeout_param = IrConfigParameter.get_param(
-                'quality_control_imei.api_timeout',
-                default='10'
-            )
-            timeout = int(timeout_param) if timeout_param else 10
+            raise UserError(_(
+                'IMEI Validation API Key is not configured.\n'
+                'Please configure it in Settings > Inventory > Quality Control IMEI.'
+            ))
+
+        timeout_param = IrConfigParameter.get_param(
+            'quality_control_imei.api_timeout',
+            default='10'
+        )
+        timeout = int(timeout_param) if timeout_param else 10
 
         try:
             # Prepare API request
             headers = {
                 'Content-Type': 'application/json',
             }
-            if api_key:
-                headers['Authorization'] = f'Bearer {api_key}'
 
             payload = {
+                'API_KEY': api_key,
                 'imei': imei
             }
 
             _logger.info(f'Validating IMEI: {imei} via API: {api_url}')
 
             # Make API call
-            response = requests.post(
+            response = requests.get(
                 api_url,
-                json=payload,
+                params=payload,
                 headers=headers,
                 timeout=timeout
             )
 
             # Parse response
-            if response.status_code == 200:
+            if response.ok:
                 data = response.json()
                 return {
                     'success': True,
                     'valid': data.get('valid', False),
                     'message': data.get('message', 'IMEI validated successfully'),
                     'status': 'valid' if data.get('valid', False) else 'invalid',
-                    'raw_response': response.text
+                    'result': data.get('result', {})
                 }
             else:
                 _logger.error(f'API validation failed with status {response.status_code}: {response.text}')
@@ -177,7 +196,7 @@ class QualityCheckImei(models.Model):
         Validates lot name against API without storing status on stock.lot
         """
         self.ensure_one()
-        
+
         if not imei:
             return {
                 'success': True,
@@ -186,7 +205,7 @@ class QualityCheckImei(models.Model):
 
         # Call API validation
         result = self.call_api_validate_imei(imei)
-        
+
         _logger.info(f'IMEI validation result for {imei}: {result.get("status", "unknown")}')
 
         return result
@@ -197,7 +216,7 @@ class QualityCheckImei(models.Model):
         Can be called from button in UI
         """
         self.ensure_one()
-        
+
         imei = self._get_imei_from_lot()
         if not imei:
             raise UserError(_('No lot/serial number found for this quality check.'))
