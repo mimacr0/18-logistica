@@ -48,5 +48,7 @@ Quality Control
         'web.assets_unit_tests': [
             'quality_control/static/tests/**/*',
         ],
-    }
+    },
+    'images': ['static/description/logo.png'],
+
 }
