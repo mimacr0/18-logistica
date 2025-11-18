@@ -1,15 +1,4 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
-#
-#    For Module Support : devintelle@gmail.com  or Skype : devintelle
-#
-##############################################################################
-
 from odoo import api, models
-
 
 class AttendanceReport(models.AbstractModel):
     _name = 'report.dev_attendance_dashboard_advanced.overtime_pdf_template'

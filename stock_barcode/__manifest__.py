@@ -50,5 +50,7 @@ This module enables the barcode scanning feature for the warehouse management sy
         'web.assets_tests': [
             'stock_barcode/static/tests/tours/**/*',
         ],
-    }
+    },
+    'images': ['static/description/logo.png'],
+
 }
