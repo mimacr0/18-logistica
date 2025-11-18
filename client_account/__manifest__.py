@@ -12,7 +12,7 @@
     'author': 'DaFe Solutions',
     'description': """Modulo para la gestión de clientes y cuentas en el portal""",
     'summary': """Gestión de los Contactos y los creditos de los clientes""",
-    'depends': ['sale_management'],
+    'depends': ['base', 'account', 'sale_management'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
@@ -36,7 +36,7 @@
             'client_account/static/src/list/account_carrier_select_list_view.xml'
         ],
     },
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/logo.png'],
     'installable': True,
     'auto_install': False,
     'application': False,

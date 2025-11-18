@@ -1,14 +1,4 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
-#
-#    For Module Support : devintelle@gmail.com  or Skype : devintelle
-#
-##############################################################################
-import datetime
-from datetime import date,timedelta
+from datetime import date, timedelta, datetime
 from odoo import http
 from odoo.http import request
 import math, calendar
@@ -30,8 +20,8 @@ class AttendanceDashboard(http.Controller):
         domains = self.roomDashboardFilterApply({'request': request_data})
         employee_domain = domains.get('employee_domain', [])
         department_domain = domains.get('department_domain', [])
-        month = int(domains.get('month_domain') or datetime.date.today().month)
-        year = int(domains.get('year_domain') or datetime.date.today().year)
+        month = int(domains.get('month_domain') or date.today().month)
+        year = int(domains.get('year_domain') or date.today().year)
 
         employee_name = "All"
         department_name = "All"
@@ -92,7 +82,7 @@ class AttendanceDashboard(http.Controller):
         days = calendar.monthrange(year, month)[1]
         start_col = 2
         for day in range(1, days + 1):
-            date = datetime.date(year, month, day)
+            date = date(year, month, day)
             weekday = calendar.day_name[date.weekday()][:3].upper()
             col = start_col + day - 1
             sheet.write(6, col, f'{date.strftime("%d/%m/%Y")} - {weekday}', header_format)
@@ -106,7 +96,7 @@ class AttendanceDashboard(http.Controller):
             sheet.write(row, 1, employee.name,center_format)
 
             for day in range(1, days + 1):
-                date = datetime.datetime(year, month, day)
+                date = datetime(year, month, day)
                 check_in = date.replace(hour=0, minute=0, second=1)
                 check_out = date.replace(hour=23, minute=59, second=59)
                 weekday = date.weekday()
@@ -192,8 +182,8 @@ class AttendanceDashboard(http.Controller):
             domains = self.roomDashboardFilterApply({'request': request_data})
             employee_domain = domains.get('employee_domain', [])
             department_domain = domains.get('department_domain', [])
-            month = int(domains.get('month_domain') or datetime.date.today().month)
-            year = int(domains.get('year_domain') or datetime.date.today().year)
+            month = int(domains.get('month_domain') or date.today().month)
+            year = int(domains.get('year_domain') or date.today().year)
             days_in_month = calendar.monthrange(year, month)[1]
 
             # Filtrar solo empleados con tracking_required = True
@@ -212,8 +202,8 @@ class AttendanceDashboard(http.Controller):
                 working_days = [int(x.dayofweek) for x in employee.resource_calendar_id.attendance_ids]
 
                 for day in range(1, days_in_month + 1):
-                    dt_in = datetime.datetime(year, month, day, 0, 0, 1)
-                    dt_out = datetime.datetime(year, month, day, 23, 59, 59)
+                    dt_in = datetime(year, month, day, 0, 0, 1)
+                    dt_out = datetime(year, month, day, 23, 59, 59)
                     date_str = dt_in.strftime("%d %b - %A")
 
                     status = "-"
@@ -382,8 +372,8 @@ class AttendanceDashboard(http.Controller):
         user_tz = request.env.user.tz or pytz.utc  # Get user's timezone or default to UTC
         local = pytz.timezone(user_tz)
         employee_domain = []
-        month_domain = datetime.date.today().month
-        year_domain = datetime.date.today().year
+        month_domain = date.today().month
+        year_domain = date.today().year
         department_domain = []
         domains = self.roomDashboardFilterApply(kw)
 
@@ -430,8 +420,8 @@ class AttendanceDashboard(http.Controller):
             emp_dict['job'] = employee.job_id.name
 
             for day in range(1,days+1):
-                check_in = datetime.datetime(year_domain, month_domain, day, 00, 00, 1)
-                check_out = datetime.datetime(year_domain, month_domain, day, 23, 59, 59)
+                check_in = datetime(year_domain, month_domain, day, 00, 00, 1)
+                check_out = datetime(year_domain, month_domain, day, 23, 59, 59)
                 employee_work_schedule = employee.resource_calendar_id.attendance_ids
                 workingdays = list(set([int(schedule.dayofweek) for schedule in employee_work_schedule]))
 
@@ -583,8 +573,8 @@ class AttendanceDashboard(http.Controller):
         domains = self.roomDashboardFilterApply(kw)
         employee_domain = []
         department_filter_id = None
-        month_domain = datetime.datetime.today().month
-        year_domain = datetime.datetime.today().year
+        month_domain = datetime.today().month
+        year_domain = datetime.today().year
 
         if domains:
             if domains['employee_domain']:
@@ -709,8 +699,8 @@ class AttendanceDashboard(http.Controller):
         # Fallback to current date if no filter
         today = date.today()
         month = domains.get('month_domain') or today.month
-        # month = domains.get('month_domain') or datetime.date.today().month
-        # year = domains.get('year_domain') or datetime.date.today().year
+        # month = domains.get('month_domain') or date.today().month
+        # year = domains.get('year_domain') or date.today().year
         year = domains.get('year_domain') or today.year
 
         start_date = date(year, month, 1)
@@ -731,12 +721,12 @@ class AttendanceDashboard(http.Controller):
         late_checkin_today = []
         
         # Fecha de hoy en la zona horaria del usuario
-        now_utc = pytz.utc.localize(datetime.datetime.utcnow())
+        now_utc = pytz.utc.localize(datetime.utcnow())
         now_local = now_utc.astimezone(local)
         today_date = now_local.date()
         # Convertir a datetime con timezone
-        today_start = local.localize(datetime.datetime.combine(today_date, datetime.datetime.min.time()))
-        today_end = local.localize(datetime.datetime.combine(today_date, datetime.datetime.max.time()))
+        today_start = local.localize(datetime.combine(today_date, datetime.min.time()))
+        today_end = local.localize(datetime.combine(today_date, datetime.max.time()))
         # Convertir a UTC para la búsqueda en la base de datos
         today_start_utc = today_start.astimezone(pytz.utc).replace(tzinfo=None)
         today_end_utc = today_end.astimezone(pytz.utc).replace(tzinfo=None)

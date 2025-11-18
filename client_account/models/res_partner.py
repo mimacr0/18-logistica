@@ -42,6 +42,13 @@ class ResPartnerInh(models.Model):
         store=True
     )
 
+    contact_ids = fields.One2many(
+        'res.partner',
+        'parent_id',
+        string='Contacts',
+        domain=[('type', '=', 'contact')]
+    )
+
     def check_portal_user_ids(self):
         self.ensure_one()
         self._compute_portal_user_ids()

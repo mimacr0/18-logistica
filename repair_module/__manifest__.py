@@ -20,7 +20,7 @@
           donde tendremos una carpeta para el JS 'static/src/js', otra para los QWeb 'static/src/xml'
           y otra para los estilos 'static/src/scss'.
     """,
-    'depends': ['base', 'client_account', 'quality', 'repair', 'stock_expedition'],
+    'depends': ['base', 'client_account', 'quality', 'quality_control', 'repair', 'stock_expedition'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
@@ -35,7 +35,7 @@
         'wizard/repair_technician_change_wizard.xml',
         'security/ir.model.access.csv',
     ],   
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/logo.png'],
     'installable': True, #Este campo se debe cambiar a True cuando se quiera que el modulo sea instalable
     'auto_install': False,
     'application': False,
