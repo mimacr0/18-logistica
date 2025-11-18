@@ -1,0 +1,655 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    <!-- ORM SEARCH -->
+    <record id="action_rpc_api_orm_search" model="rpc.server.action">
+        <field name="name">ORM SEARCH</field>
+        <field name="reference">api.orm.search</field>
+        <field name="action">
+model = args.model()
+domain = args.domain() or []
+limit = args.limit()
+offset = args.offset()
+fields = args.fields()
+
+Table = env[model].sudo()
+
+result = Table.search_read(domain, fields, limit=limit, offset=offset)
+</field>
+    </record>
+
+    <!-- ORM SEARCH COUNT -->
+    <record id="action_rpc_api_orm_search_count" model="rpc.server.action">
+        <field name="name">ORM SEARCH COUNT</field>
+        <field name="reference">api.orm.search_count</field>
+        <field name="action">
+model = args.model()
+domain = args.domain() or []
+
+Table = env[model].sudo()
+
+result = Table.search_count(domain)
+</field>
+    </record>
+
+    <!-- ORM WRITE -->
+    <record id="action_rpc_api_orm_write" model="rpc.server.action">
+        <field name="name">ORM WRITE</field>
+        <field name="reference">api.orm.write</field>
+        <field name="action">
+model = args.model()
+ids = args.ids()
+values = args.values()
+
+Table = env[model].sudo()
+
+records = Table.browse(ids)
+
+if not records.exists():
+    raise Exception(f'Records not found: {ids}')
+
+records.write(values)
+
+result = True
+</field>
+    </record>
+
+    <!-- MODEL SCHEMA -->
+    <record id="rpc_server_action_create_model_schema" model="rpc.server.action">
+        <field name="name">MODEL SCHEMA</field>
+        <field name="reference">model.schema</field>
+        <field name="action">
+model = args.model()
+ResModel = env['ir.model'].sudo()
+
+result = {}
+
+model = ResModel.search([('model', '=', model)], limit=1)
+
+if not model:
+    raise Exception(f'Model {model} not found')
+
+for field in model.field_id:
+    result[field.name] = {
+        'type': field.ttype,
+        'required': field.required,
+        'store': field.store,
+        'relation': field.relation
+    }
+        </field>
+    </record>
+
+    <!-- CREATE / UPDATE RECORD -->
+    <record id="rpc_server_action_create_update_record" model="rpc.server.action">
+        <field name="name">CREATE / UPDATE RECORD</field>
+        <field name="reference">create.update.record</field>
+        <field name="action">
+model = args.model()
+user_id = args.user_id()
+
+Table = env[model].sudo()
+
+if user_id:
+    user = env['res.users'].browse(user_id)
+    Table = Table.with_user(user)
+
+result = []
+
+for item in args.items():
+
+    table_name = Table._name.replace('.', '_')
+    values = item.get('item')
+    pre_sql = item.get('pre_sql') or []
+    post_sql = item.get('post_sql') or []
+
+    _item = Table.search([('id', '=', values.get('id'))], limit=1)
+
+    for sql in pre_sql:
+        env.cr.execute(sql)
+
+    if _item:
+        log.debug('%s => %s', _item.name, values)
+        values.pop('id')
+        _item.write(values)
+    else:
+        _item = Table.create(values)
+
+#    for sql in post_sql:
+#        env.cr.execute(sql)
+
+    result.append(_item.id)
+        </field>
+    </record>
+
+    <!-- SQL EXEC -->
+    <record id="rpc_server_action_create_sql_exec" model="rpc.server.action">
+        <field name="name">SQL EXEC</field>
+        <field name="reference">sql.exec</field>
+        <field name="action">
+sql = args.sql()
+env.cr.execute(sql)
+result = True
+        </field>
+    </record>
+
+    <!-- SQL QUERY -->
+    <record id="rpc_server_action_create_sql_query" model="rpc.server.action">
+        <field name="name">SQL QUERY</field>
+        <field name="reference">sql.query</field>
+        <field name="action">
+query = args.query()
+env.cr.execute(query)
+result = env.cr.dictfetchall()
+        </field>
+    </record>
+
+    <!-- ENV API REF -->
+    <record id="action_env_api_ref" model="rpc.server.action">
+        <field name="name">ENV API REF</field>
+        <field name="reference">env.api.ref</field>
+        <field name="action">
+ModelData = env['ir.model.data']
+
+xml_id = args.ref()
+
+if not xml_id or '.' not in xml_id:
+    raise ValueError("External ID must be in format 'module.identifier'")
+
+module, name = xml_id.split('.', 1)
+
+res = ModelData.search([('module', '=', module), ('name', '=', name)])
+
+if res:
+    result = (res.res_id, res.model)
+else:
+    result = False
+</field>
+    </record>
+
+    <!-- PRODUCT UPDATE -->
+    <record id="action_rpc_update_products" model="rpc.server.action">
+        <field name="name">PRODUCT UPDATE</field>
+        <field name="reference">rpc.update.products</field>
+        <field name="action">
+bot = env.ref('base.user_root')
+ProductTemplate = env['product.template'].sudo().with_user(bot)
+ProductAttribute = env['product.attribute'].sudo().with_user(bot)
+ProductAttributeValue = env['product.attribute.value'].sudo().with_user(bot)
+StockQuant = env['stock.quant'].sudo().with_user(bot)
+
+result = []
+
+for p in args.products():
+    # Extract the Odoo ID from the input
+    pid = p.get('oid')
+    external_id = p.get('id')
+    stock_available = p.pop('stock_available') or []
+    total_stock = sum(item.get('stock') for item in stock_available)
+    gallery_images_data = p.pop('image_ids', [])
+    attribute_variants = []
+    template = ProductTemplate.search([('id', '=', external_id)], limit=1)
+
+    # Skip if product already exists in the external system with same external ID
+    if external_id and template.exists():
+        # Product already exists in the external system
+        variants = template.product_variant_ids
+
+        # Handle single variant products differently
+        if len(variants) == 1:
+            result.append((pid, external_id, variants[0].id))
+            continue
+
+        # Initialize attribute type groups (only for multi-variant products)
+        attribute_type_groups = {}
+
+        # Collect attribute variants information
+        for variant in variants:
+            for attr_value in variant.product_template_attribute_value_ids:
+                attr_name = attr_value.attribute_id.name
+
+                # Initialize the attribute type group if it doesn't exist
+                if attr_name not in attribute_type_groups:
+                    attribute_type_groups[attr_name] = {
+                        'name': attr_name,
+                        'attributes': {}  # Use dict to avoid duplicates
+                    }
+
+                # Add the value to the attribute group
+                value_name = attr_value.name
+                if value_name not in attribute_type_groups[attr_name]['attributes']:
+                    attribute_type_groups[attr_name]['attributes'][value_name] = {
+                        'name': value_name,
+                        'variant_ids': []
+                    }
+
+                # Add variant ID if not already present
+                if variant.id not in attribute_type_groups[attr_name]['attributes'][value_name]['variant_ids']:
+                    attribute_type_groups[attr_name]['attributes'][value_name]['variant_ids'].append(variant.id)
+
+        # Convert the attribute groups to the final format
+        attribute_variants = []
+        for attr_type, attr_data in attribute_type_groups.items():
+            attribute_variants.append({
+                'name': attr_type,
+                'attributes': list(attr_data['attributes'].values())
+            })
+
+        result.append((pid, external_id, attribute_variants))
+        continue
+
+    # Check if we already have a product with the same Odoo ID in our database
+    # We need to use a different approach since rpc_external_id doesn't exist in the remote system
+    # The external system might be storing the Odoo ID in a custom field or we could check by name/SKU
+
+    # Check by name and default_code (SKU) as an alternative to rpc_external_id
+    existing_product = False
+    if p.get('default_code'):
+        existing_product = ProductTemplate.search([('default_code', '=', p.get('default_code'))], limit=1)
+
+    if not existing_product and p.get('name'):
+        existing_product = ProductTemplate.search([('name', '=', p.get('name'))], limit=1)
+
+    if existing_product:
+        result.append((pid, existing_product.id))
+        continue
+
+    # Pop oid, we don't need it for creation
+    p.pop('oid', None)  # Added None as default value to avoid KeyError
+
+    # Extract attributes, main image, and gallery images from the input data
+    attributes_data = p.pop('attributes', [])
+    image_data = p.pop('image', False)
+
+    # Handle type field change in v18: 'product' -> 'consu'
+    if 'type' in p and p['type'] == 'product':
+        p['type'] = 'consu'
+
+    # Process main image data if provided
+    if image_data:
+        p['image_1920'] = image_data
+
+    p.update({ 'is_published': total_stock > 0, 'is_storable': True })
+
+    # Create the product without attributes and gallery images first
+    product = ProductTemplate.create(p)
+
+    # Now handle attributes if any
+    for attr_data in attributes_data:
+        # Find or create the attribute
+        attribute = ProductAttribute.search([('name', '=', attr_data['name'])], limit=1)
+        if not attribute:
+            attribute = ProductAttribute.create({'name': attr_data['name']})
+
+        # Find or create attribute values
+        value_ids = []
+        for val_data in attr_data.get('values', []):
+            value = ProductAttributeValue.search([
+                ('name', '=', val_data['name']),
+                ('attribute_id', '=', attribute.id)
+            ], limit=1)
+            if not value:
+                value = ProductAttributeValue.create({
+                    'name': val_data['name'],
+                    'attribute_id': attribute.id
+                })
+            value_ids.append(value.id)
+
+        # Create attribute line
+        if value_ids:
+            product.write({
+                'attribute_line_ids': [(0, 0, {
+                    'attribute_id': attribute.id,
+                    'value_ids': [(6, 0, value_ids)]
+                })]
+            })
+
+    variants = product.product_variant_ids
+
+    # Handle single variant products differently
+    if len(variants) == 1:
+        result.append((pid, product.id, variants[0].id))
+        continue
+
+    # Initialize attribute type groups (only for multi-variant products)
+    attribute_type_groups = {}
+
+    # Collect attribute variants information
+    for variant in variants:
+        for attr_value in variant.product_template_attribute_value_ids:
+            attr_name = attr_value.attribute_id.name
+
+            # Initialize the attribute type group if it doesn't exist
+            if attr_name not in attribute_type_groups:
+                attribute_type_groups[attr_name] = {
+                    'name': attr_name,
+                    'attributes': {}  # Use dict to avoid duplicates
+                }
+
+            # Add the value to the attribute group
+            value_name = attr_value.name
+            if value_name not in attribute_type_groups[attr_name]['attributes']:
+                attribute_type_groups[attr_name]['attributes'][value_name] = {
+                    'name': value_name,
+                    'variant_ids': []
+                }
+
+            # Add variant ID if not already present
+            if variant.id not in attribute_type_groups[attr_name]['attributes'][value_name]['variant_ids']:
+                attribute_type_groups[attr_name]['attributes'][value_name]['variant_ids'].append(variant.id)
+
+    # Convert the attribute groups to the final format
+    attribute_variants = []
+    for attr_type, attr_data in attribute_type_groups.items():
+        attribute_variants.append({
+            'name': attr_type,
+            'attributes': list(attr_data['attributes'].values())
+        })
+
+    # Removing stock update code from here since it should only happen during image updates
+
+    result.append((pid, product.id, attribute_variants))
+
+log.debug('--------------------------------------------------')
+</field>
+    </record>
+
+    <!-- PRODUCT IMAGES UPDATE -->
+    <record id="action_rpc_product_images_update" model="rpc.server.action">
+        <field name="name">PRODUCT IMAGES UPDATE</field>
+        <field name="reference">product.images.update</field>
+        <field name="action">
+bot = env.ref('base.user_root')
+ProductTemplate = env['product.template'].sudo().with_user(bot)
+ProductProduct = env['product.product'].sudo().with_user(bot)
+StockQuant = env['stock.quant'].sudo().with_user(bot)
+
+
+result = []
+stock_location = env.ref('stock.stock_location_stock')
+
+for p in args.products():
+    product_template = ProductTemplate.search([('id', '=', p.get('id'))], limit=1)
+
+    # Skip if product already exists in the external system with same external ID
+    if not product_template.exists():
+        raise Exception(f"Product template not found: {p.get('id')}")
+
+    # Get stock data if available
+    stock_available = product_template.is_storable and p.get('stock_available', []) or []
+
+    # Update stock for variants if stock data is provided
+    for variant_stock in stock_available:
+        pvariant = ProductProduct.browse([variant_stock.get('product_id')])
+
+        if not pvariant.exists():
+            raise Exception(f"Product variant not found: {variant_stock.get('product_id')}")
+
+        # Update stock quantity
+        quant = StockQuant.search([
+            ('product_id', '=', pvariant.id),
+            ('location_id', '=', stock_location.id)
+        ], limit=1)
+
+        if not quant:
+            quant = StockQuant.create({
+                'product_id': pvariant.id,
+                'location_id': stock_location.id
+            })
+
+        quant.action_set_inventory_quantity()
+
+        quant.write({
+            'inventory_quantity_set': True,
+            'inventory_quantity': variant_stock.get('stock', 0)
+        })
+
+        quant.action_apply_inventory()
+
+    gallery_images_data = p.get('image_ids', {})  # Changed to dict default
+
+    # Skip if no image data
+    if not gallery_images_data:
+        continue
+
+    image_type = gallery_images_data.get('type')
+    images = gallery_images_data.get('images', [])
+
+    if image_type == 'template':
+        product_images = []
+
+        for idx, img_data in enumerate(images):
+            # Ensure name is never empty - use product name with index if name is not provided
+            image_name = img_data.get('name')
+            if not image_name or not image_name.strip():
+                image_name = f"{product_template.name} - Image {idx + 1}"
+
+            image_data = {
+                'name': image_name,
+                'image_1920': img_data.get('image'),
+                'sequence': img_data.get('sequence', 10),
+                'product_tmpl_id': product_template.id
+            }
+
+            product_images.append((0, 0, image_data))
+
+        log.debug(product_images)
+
+        if product_images and not product_template.product_template_image_ids:
+            product_template.write({'product_template_image_ids': product_images})
+
+    elif image_type == 'variant':
+
+        for var_data in images:
+
+            variant = ProductProduct.search([('id', '=', var_data.get('variant_id'))], limit=1)
+
+            if not variant.exists():
+                raise Exception(f"Product variant not found: {var_data.get('variant_id')}")
+
+            product_images = []
+
+            for idx, img_data in enumerate(var_data['images']):
+                image_name = img_data.get('name')
+                if not image_name or not image_name.strip():
+                    image_name = f"{variant.name} - Image {idx + 1}"
+
+                image_data = {
+                    'name': image_name,
+                    'image_1920': img_data.get('image'),
+                    'sequence': img_data.get('sequence', 10),
+                    'product_variant_id': variant.id
+                }
+
+                product_images.append((0, 0, image_data))
+
+            log.debug(product_images)
+
+            if product_images and not variant.product_variant_image_ids:
+                variant.write({'product_variant_image_ids': product_images})
+
+result = True
+
+log.debug('--------------------------------------------------')
+</field>
+    </record>
+
+    <!-- UPDATE SALE ORDER -->
+    <record id="action_rpc_update_after_sale_order_data" model="rpc.server.action">
+        <field name="name">UPDATE SALE ORDER</field>
+        <field name="reference">rpc.update.after.sale.order.data</field>
+        <field name="action">
+bot = env.ref('base.user_root')
+SaleOrder = env['sale.order'].sudo().with_user(bot)
+
+order = SaleOrder.search([('id', '=', args.order_id())], limit=1)
+
+if not order:
+    raise Exception('Order not found')
+
+order.write(args.carrier_data())
+
+pickings = order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state == 'assigned')
+
+result = False
+
+if pickings:
+    for company in pickings.company_id:
+        if not company.has_received_warning_stock_sms:
+            company.sudo().write({
+                'has_received_warning_stock_sms': True,
+                'stock_move_sms_validation': False,
+            })
+
+    result = pickings.button_validate()
+</field>
+    </record>
+
+    <!-- ORM SEARCH CREATE -->
+    <record id="action_rpc_api_orm_search_create" model="rpc.server.action">
+        <field name="name">ORM SEARCH CREATE</field>
+        <field name="reference">api.orm.create</field>
+        <field name="action">
+model = args.model()
+values = args.values()
+
+Table = env[model].sudo()
+
+item = Table.create(values)
+
+result = item.id
+</field>
+    </record>
+
+    <!-- PRODUCT SYNC -->
+    <record id="action_rpc_product_sync" model="rpc.server.action">
+        <field name="name">PRODUCT SYNC</field>
+        <field name="reference">api.product.sync</field>
+        <field name="action">
+bot = env.ref('base.user_root')
+ProductTemplate = env['product.template'].sudo().with_user(bot)
+ProductProduct = env['product.product'].sudo().with_user(bot)
+
+product_id = args.product_id()
+values = args.values()
+product = ProductProduct.browse(product_id)
+images = values.pop('images', [])
+
+if not product.exists():
+    raise Exception('Product not found')
+
+product.write(values)
+
+result = {
+    'template_image_ids': product.product_tmpl_id.product_template_image_ids.ids,
+    'variant_image_ids': product.product_variant_image_ids.ids
+}
+</field>
+    </record>
+
+    <!-- ORM SEARCH UNLINK -->
+    <record id="action_rpc_api_orm_search_unlink" model="rpc.server.action">
+        <field name="name">ORM SEARCH UNLINK</field>
+        <field name="reference">api.orm.unlink</field>
+        <field name="action">
+model = args.model()
+ids = args.ids()
+
+Table = env[model].sudo()
+
+Table.browse(ids).unlink()
+
+result = True
+</field>
+    </record>
+
+    <!-- UPDATE PRODUCT STOCK -->
+    <record id="action_rpc_update_product_stock" model="rpc.server.action">
+        <field name="name">UPDATE PRODUCT STOCK</field>
+        <field name="reference">rpc.update.product.stock</field>
+        <field name="action">
+pid = args.product_id()
+ptid = args.product_template_id()
+qty = args.qty()
+user_id = args.user_id()
+ctx = args.context()
+
+if not pid and not ptid:
+    raise Exception('Product ID or Product Template ID is required')
+
+if not qty or qty == 0:
+    raise Exception('Quantity is required')
+
+ProductProduct = env['product.product'].sudo()
+ProductTemplate = env['product.template'].sudo()
+Table = env['stock.change.product.qty'].sudo()
+
+if user_id:
+    user = env['res.users'].browse(user_id)
+    Table = Table.with_user(user)
+    ProductProduct = ProductProduct.with_user(user)
+    ProductTemplate = ProductTemplate.with_user(user)
+
+if ctx:
+    Table = Table.with_context(ctx)
+    ProductProduct = ProductProduct.with_context(ctx)
+    ProductTemplate = ProductTemplate.with_context(ctx)
+
+values = {
+    'new_quantity': qty
+}
+
+if pid:
+    product = ProductProduct.browse(pid)
+    values['product_id'] = pid
+    values['product_tmpl_id'] = product.product_tmpl_id.id
+
+if ptid:
+    product = ProductTemplate.browse(ptid)
+    values['product_id'] = product.product_variant_ids.ids[0]
+    values['product_tmpl_id'] = ptid
+
+change_wizard = Table.create(values)
+
+result = change_wizard.change_product_qty()
+        </field>
+    </record>
+
+    <!-- UPDATE PRODUCT STOCK QUANT -->
+    <record id="action_rpc_update_product_stock_quant" model="rpc.server.action">
+        <field name="name">UPDATE PRODUCT STOCK QUANT</field>
+        <field name="reference">rpc.update.product.stock.quant</field>
+        <field name="action">
+pid = args.product_id()
+qty = args.qty() or 0
+user_id = args.user_id()
+ctx = args.context()
+
+if not pid:
+    raise Exception('Product ID is required')
+
+ProductProduct = env['product.product'].sudo()
+Table = env['stock.quant'].sudo()
+
+if user_id:
+    user = env['res.users'].browse(user_id)
+    Table = Table.with_user(user)
+    ProductProduct = ProductProduct.with_user(user)
+
+if ctx:
+    Table = Table.with_context(ctx)
+    ProductProduct = ProductProduct.with_context(ctx)
+
+product = ProductProduct.browse(pid)
+
+stock_loaction = env.ref('stock.stock_location_stock')
+
+quant = Table.search([('location_id', '=', stock_loaction.id), ('product_id', '=', product.id)], limit=1)
+
+if quant.id:
+    quant.write({ 'inventory_quantity': qty })
+    quant.action_apply_inventory()
+
+result = quant.id
+        </field>
+    </record>
+
+</odoo>
