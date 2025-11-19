@@ -6,6 +6,8 @@
 ##############################################################################
 
 import logging
+import requests
+from markupsafe import Markup
 from odoo import models, _
 from odoo.tools.float_utils import float_is_zero, float_compare
 from odoo.exceptions import UserError
@@ -76,13 +78,17 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         """
-        Override button_validate to check for missing serial/lot numbers:
+        Override button_validate to check for missing serial/lot numbers and validate IMEI:
         1. First check IMEI validation products - raise error if missing serials
-        2. Then check non-IMEI products - show wizard for auto-generation
+        2. Validate IMEI numbers via API for IMEI products
+        3. Then check non-IMEI products - show wizard for auto-generation
         After user generates serials and closes wizard, they can validate again manually.
         """
         # First, check for IMEI validation products without serials (must raise error)
         self._check_imei_products_serials()
+        
+        # Second, validate IMEI numbers via API (must be done before allowing validation)
+        self._validate_imei_via_api()
         
         # Then, check for non-IMEI products without serials (show wizard)
         pickings_without_lots = self._check_missing_lots()
@@ -162,6 +168,219 @@ class StockPicking(models.Model):
                         products=products_list,
                     )
                 )
+
+    def _validate_imei_via_api(self):
+        """
+        Validate IMEI numbers via API for all products requiring IMEI validation.
+        This must be done BEFORE allowing picking validation.
+        Raises error if any IMEI validation fails.
+        """
+        IrConfigParameter = self.env['ir.config_parameter'].sudo()
+        validation_required = IrConfigParameter.get_param(
+            'quality_control_imei.validation_required',
+            default='True'
+        ) == 'True'
+        
+        # Skip if validation is not required
+        if not validation_required:
+            _logger.info('IMEI validation is disabled in settings')
+            return
+        
+        precision_digits = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        
+        for picking in self:
+            # Only check pickings that use create or existing lots
+            if not (picking.picking_type_id.use_create_lots or picking.picking_type_id.use_existing_lots):
+                continue
+
+            # Get move lines that need to be checked
+            move_lines = picking.move_line_ids.filtered(
+                lambda ml: ml.state not in ('done', 'cancel')
+            )
+
+            # Validate IMEI for each line requiring it
+            for ml in move_lines:
+                # Check if quantity is positive
+                qty_done_float_compared = float_compare(
+                    ml.quantity, 0, 
+                    precision_rounding=ml.product_uom_id.rounding
+                )
+                
+                if qty_done_float_compared <= 0:
+                    continue
+
+                # Skip if product doesn't require tracking
+                if ml.product_id.tracking == 'none':
+                    continue
+
+                # Skip if no lot_name (already checked in _check_imei_products_serials)
+                if not ml.lot_name:
+                    continue
+
+                # Check exclusions (inventory adjustments and scrap don't require IMEI)
+                if ml.is_inventory or ml.move_id.scrap_id:
+                    continue
+
+                # Check if this product requires IMEI validation
+                if not self._should_validate_imei_for_product(ml.product_id):
+                    continue
+
+                # At this point, we have an IMEI product with a lot_name - validate it
+                imei = ml.lot_name
+                _logger.info(f'Validating IMEI "{imei}" for product {ml.product_id.display_name}')
+                
+                # Call API to validate IMEI
+                validation_result = self._call_imei_validation_api(imei)
+                
+                if not validation_result.get('success', False):
+                    raise UserError(_(
+                        'IMEI validation failed for product "%(product)s":\n\n'
+                        'IMEI: %(imei)s\n'
+                        'Error: %(error)s\n\n'
+                        'Please verify the IMEI number before validating the picking.',
+                        product=ml.product_id.display_name,
+                        imei=imei,
+                        error=validation_result.get('message', 'Unknown error')
+                    ))
+
+                result = validation_result.get('result') or {}
+
+                # Check if IMEI is actually valid
+                if not result.get('imei', False):
+                    raise UserError(_(
+                        'IMEI is not valid for product "%(product)s":\n\n'
+                        'IMEI: %(imei)s\n'
+                        'Error: %(error)s\n\n'
+                        'Cannot validate picking with invalid IMEI.',
+                        product=ml.product_id.display_name,
+                        imei=imei,
+                        error=validation_result.get('message', 'IMEI validation failed')
+                    ))
+
+                # Post success message to picking
+                imei_value = result.get('imei', 'N/A')
+                brand_value = result.get('brand_name', 'N/A')
+                model_value = result.get('model', 'N/A')
+                
+                message_body = Markup(
+                    "<p><strong>%s</strong></p>"
+                    "<ul>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "<li><strong>%s:</strong> %s</li>"
+                    "</ul>"
+                ) % (
+                    _('IMEI Validation Successful'),
+                    _('Product'), ml.product_id.display_name,
+                    _('IMEI'), imei_value,
+                    _('Brand'), brand_value,
+                    _('Model'), model_value
+                )
+                
+                picking.message_post(body=message_body)
+                _logger.info(f'IMEI "{imei}" validated successfully for product {ml.product_id.display_name}')
+
+    def _call_imei_validation_api(self, imei):
+        """
+        Call external API to validate IMEI number.
+        Returns dict with validation result.
+        """
+        if not imei:
+            return {
+                'success': False,
+                'valid': False,
+                'message': 'IMEI is required',
+                'status': 'error'
+            }
+
+        # Get API configuration from system parameters
+        IrConfigParameter = self.env['ir.config_parameter'].sudo()
+        api_url = IrConfigParameter.get_param('quality_control_imei.api_url')
+        if not api_url:
+            raise UserError(_(
+                'IMEI Validation API URL is not configured.\n'
+                'Please configure it in Settings > Inventory > Quality Control IMEI.'
+            ))
+
+        api_key = IrConfigParameter.get_param('quality_control_imei.api_key')
+        if not api_key:
+            raise UserError(_(
+                'IMEI Validation API Key is not configured.\n'
+                'Please configure it in Settings > Inventory > Quality Control IMEI.'
+            ))
+
+        timeout_param = IrConfigParameter.get_param(
+            'quality_control_imei.api_timeout',
+            default='10'
+        )
+        timeout = int(timeout_param) if timeout_param else 10
+
+        try:
+            # Prepare API request
+            headers = {
+                'Content-Type': 'application/json',
+            }
+
+            payload = {
+                'API_KEY': api_key,
+                'imei': imei
+            }
+
+            _logger.info(f'Validating IMEI: {imei} via API: {api_url}')
+
+            # Make API call
+            response = requests.get(
+                api_url,
+                params=payload,
+                headers=headers,
+                timeout=timeout
+            )
+
+            # Parse response
+            if response.ok:
+                data = response.json()
+                return {
+                    'success': True,
+                    'valid': data.get('valid', False),
+                    'message': data.get('message', 'IMEI validated successfully'),
+                    'status': 'valid' if data.get('valid', False) else 'invalid',
+                    'result': data.get('result', {})
+                }
+            else:
+                _logger.error(f'API validation failed with status {response.status_code}: {response.text}')
+                return {
+                    'success': False,
+                    'valid': False,
+                    'message': f'API returned status code {response.status_code}',
+                    'status': 'error',
+                    'raw_response': response.text
+                }
+
+        except requests.exceptions.Timeout:
+            _logger.error(f'API timeout while validating IMEI: {imei}')
+            return {
+                'success': False,
+                'valid': False,
+                'message': 'API request timeout',
+                'status': 'error'
+            }
+        except requests.exceptions.RequestException as e:
+            _logger.error(f'API request error: {str(e)}')
+            return {
+                'success': False,
+                'valid': False,
+                'message': f'API request error: {str(e)}',
+                'status': 'error'
+            }
+        except Exception as e:
+            _logger.error(f'Unexpected error validating IMEI: {str(e)}')
+            return {
+                'success': False,
+                'valid': False,
+                'message': f'Unexpected error: {str(e)}',
+                'status': 'error'
+            }
 
     def _check_missing_lots(self):
         """

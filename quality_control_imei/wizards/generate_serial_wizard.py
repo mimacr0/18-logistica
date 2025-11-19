@@ -109,7 +109,12 @@ class GenerateSerialWizard(models.TransientModel):
 
     def action_generate_serials(self):
         """
-        Generate automated serial numbers for move lines without lots.
+        Generate automated serial number TEXT for move lines without lots.
+        
+        IMPORTANT: This method ONLY sets the lot_name field (text field).
+        It does NOT create stock.lot records. The actual lot records will be
+        created by Odoo's standard validation process (_create_and_assign_production_lot).
+        
         Excludes products that require IMEI validation - those must be entered manually.
         After generating, closes the wizard without validating the picking.
         """
@@ -137,32 +142,39 @@ class GenerateSerialWizard(models.TransientModel):
             lambda ml: not self._should_validate_imei_for_product(ml.product_id)
         )
 
-        _logger.info(f'Generating automatic serial numbers for {len(move_lines)} product lines (excluded {len(all_tracked_lines) - len(move_lines)} IMEI products)')
+        _logger.info(f'Generating automatic serial number text for {len(move_lines)} product lines (excluded {len(all_tracked_lines) - len(move_lines)} IMEI products)')
 
-        # Generate serial numbers for each line
+        # Generate serial number TEXT for each line
+        # IMPORTANT: We ONLY set lot_name (text), NOT creating stock.lot records
         generated_count = 0
         for line in move_lines:
-            # Try to get next sequence number
+            # Generate unique serial number using sequence or timestamp
             sequence = self.env['ir.sequence'].next_by_code('stock.lot.serial')
             if not sequence:
                 # Fallback to timestamp-based serial if sequence doesn't exist
                 from datetime import datetime
                 sequence = datetime.now().strftime('%Y%m%d%H%M%S%f')
             
-            # Create serial number with product code or name as prefix
+            # Format: ProductCode/SequenceNumber
             product_code = line.product_id.default_code or line.product_id.name[:10]
-            line.lot_name = f"{product_code}/{sequence}"
-            _logger.info(f'Generated serial {line.lot_name} for product {line.product_id.display_name}')
+            serial_name = f"{product_code}/{sequence}"
+            
+            # ONLY SET LOT_NAME TEXT FIELD - DO NOT CREATE STOCK.LOT RECORD
+            # Odoo will create the stock.lot record during validation
+            line.lot_name = serial_name
+            
+            _logger.info(f'Set lot_name to "{serial_name}" for product {line.product_id.display_name} (lot record will be created during validation)')
             generated_count += 1
         
         # Show notification and close wizard without validating
+        # User must click Validate again to complete the picking
         if generated_count > 0:
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',
                 'params': {
                     'title': _('Serial Numbers Generated'),
-                    'message': _('%s serial number(s) have been generated successfully. You can now validate the picking.') % generated_count,
+                    'message': _('%s serial number(s) have been generated. Click Validate again to complete the transfer.') % generated_count,
                     'type': 'success',
                     'sticky': False,
                     'next': {'type': 'ir.actions.act_window_close'},
