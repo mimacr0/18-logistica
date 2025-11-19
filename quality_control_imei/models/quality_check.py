@@ -20,6 +20,61 @@ class QualityCheckImei(models.Model):
     # IMEI is retrieved from lot_name field
     # No inheritance of stock.lot - validation uses existing lot records
 
+    def _should_validate_imei_for_product(self, product):
+        """
+        Check if IMEI validation is required for this product based on configured categories
+        Returns True if:
+        - No categories are configured (validate all products)
+        - Product belongs to one of the configured categories or their subcategories
+        """
+        IrConfigParameter = self.env['ir.config_parameter'].sudo()
+        category_ids_str = IrConfigParameter.get_param('quality_control_imei.category_ids', default='')
+        
+        # If no categories configured, validate all products
+        if not category_ids_str:
+            return True
+        
+        # Parse configured category IDs
+        configured_category_ids = [int(id_str) for id_str in category_ids_str.split(',') if id_str.strip()]
+        if not configured_category_ids:
+            return True
+        
+        # Get all parent categories of the product's category (including the category itself)
+        product_category = product.categ_id
+        category_path = []
+        current_category = product_category
+        
+        while current_category:
+            category_path.append(current_category.id)
+            current_category = current_category.parent_id
+        
+        # Check if any of the product's categories (or parent categories) match configured ones
+        for category_id in category_path:
+            if category_id in configured_category_ids:
+                return True
+        
+        # Also check if product category is a child of any configured category
+        configured_categories = self.env['product.category'].browse(configured_category_ids)
+        for configured_cat in configured_categories:
+            if product_category.id == configured_cat.id:
+                return True
+            # Check if product category is descendant of configured category
+            if self._is_category_descendant(product_category, configured_cat):
+                return True
+        
+        return False
+
+    def _is_category_descendant(self, category, parent_category):
+        """
+        Check if category is a descendant of parent_category
+        """
+        current = category.parent_id
+        while current:
+            if current.id == parent_category.id:
+                return True
+            current = current.parent_id
+        return False
+
     def do_pass(self):
         """
         Override do_pass to validate IMEI before passing the quality check
@@ -32,30 +87,41 @@ class QualityCheckImei(models.Model):
         ) == 'True'
 
         for line in self.picking_id.move_ids.move_line_ids:
+            product = line.product_id
+            
+            # Check if this product requires IMEI validation based on configured categories
+            should_validate = self._should_validate_imei_for_product(product)
+            
+            # Skip validation if product is not in configured categories
+            if not should_validate:
+                continue
+            
             # Get IMEI from lot name
             imei = line.lot_name
 
             if not imei and validation_required:
                 raise UserError(_(
-                    'No IMEI found in lot/serial number for this quality check.\n'
-                    'Cannot pass quality check without IMEI.'
-                ))
+                    'No IMEI found in lot/serial number for product "%s".\n'
+                    'Cannot pass quality check without IMEI for products in configured categories.'
+                ) % product.display_name)
 
             # If IMEI is present and validation is required, validate it before passing
             if imei and validation_required:
                 validation_result = self._validate_imei_via_api(imei)
                 if not validation_result.get('success', False):
                     raise UserError(_(
-                        'IMEI validation failed: %s\nPlease verify the IMEI before passing the quality check.'
-                    ) % validation_result.get('message', 'Unknown error'))
+                        'IMEI validation failed for product "%s": %s\n'
+                        'Please verify the IMEI before passing the quality check.'
+                    ) % (product.display_name, validation_result.get('message', 'Unknown error')))
 
                 result = validation_result.get('result') or {}
 
                 # Check if IMEI is actually valid
                 if not result.get('imei', False):
                     raise UserError(_(
-                        'IMEI is not valid: %s\nCannot pass quality check with invalid IMEI.'
-                    ) % validation_result.get('message', 'IMEI validation failed'))
+                        'IMEI is not valid for product "%s": %s\n'
+                        'Cannot pass quality check with invalid IMEI.'
+                    ) % (product.display_name, validation_result.get('message', 'IMEI validation failed')))
 
                 # Post formatted message to picking
                 imei_value = result.get('imei', 'N/A')
@@ -68,9 +134,11 @@ class QualityCheckImei(models.Model):
                     "<li><strong>%s:</strong> %s</li>"
                     "<li><strong>%s:</strong> %s</li>"
                     "<li><strong>%s:</strong> %s</li>"
+                    "<li><strong>%s:</strong> %s</li>"
                     "</ul>"
                 ) % (
                     _('IMEI Validation Successful'),
+                    _('Product'), product.display_name,
                     _('IMEI'), imei_value,
                     _('Brand'), brand_value,
                     _('Model'), model_value
