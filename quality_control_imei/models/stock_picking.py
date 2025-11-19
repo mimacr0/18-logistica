@@ -76,10 +76,15 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         """
-        Override button_validate to check for missing serial/lot numbers
-        and show automatic serial number generation wizard instead of raising error.
+        Override button_validate to check for missing serial/lot numbers:
+        1. First check IMEI validation products - raise error if missing serials
+        2. Then check non-IMEI products - show wizard for auto-generation
         After user generates serials and closes wizard, they can validate again manually.
         """
+        # First, check for IMEI validation products without serials (must raise error)
+        self._check_imei_products_serials()
+        
+        # Then, check for non-IMEI products without serials (show wizard)
         pickings_without_lots = self._check_missing_lots()
         if pickings_without_lots:
             # Open wizard to prompt user to generate automated serial numbers
@@ -98,6 +103,65 @@ class StockPicking(models.Model):
 
         # Call parent method
         return super(StockPicking, self).button_validate()
+
+    def _check_imei_products_serials(self):
+        """
+        Check for IMEI validation products without serial numbers and raise error.
+        This must be done BEFORE allowing validation, as IMEI serials must be entered manually.
+        """
+        precision_digits = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        
+        for picking in self:
+            # Only check pickings that use create or existing lots
+            if not (picking.picking_type_id.use_create_lots or picking.picking_type_id.use_existing_lots):
+                continue
+
+            # Get move lines that need to be checked
+            move_lines = picking.move_line_ids.filtered(
+                lambda ml: ml.state not in ('done', 'cancel')
+            )
+
+            # Collect products requiring IMEI validation without serials
+            missing_imei_products = []
+            
+            for ml in move_lines:
+                # Check if quantity is positive
+                qty_done_float_compared = float_compare(
+                    ml.quantity, 0, 
+                    precision_rounding=ml.product_uom_id.rounding
+                )
+                
+                if qty_done_float_compared <= 0:
+                    continue
+
+                # Skip if product doesn't require tracking
+                if ml.product_id.tracking == 'none':
+                    continue
+
+                # Check if lot/serial is already provided
+                if ml.lot_id or ml.lot_name:
+                    continue
+
+                # Check exclusions (inventory adjustments and scrap don't require IMEI)
+                if ml.is_inventory or ml.move_id.scrap_id:
+                    continue
+
+                # Check if this product requires IMEI validation
+                if self._should_validate_imei_for_product(ml.product_id):
+                    missing_imei_products.append(ml.product_id.display_name)
+                    _logger.warning(f'Product {ml.product_id.display_name} requires IMEI validation but no serial/lot number provided')
+
+            # If any IMEI products are missing serials, raise error
+            if missing_imei_products:
+                products_list = "\n".join(f"- {product_name}" for product_name in missing_imei_products)
+                raise UserError(
+                    _(
+                        "The following products require IMEI validation and must have serial/lot numbers entered manually:\n\n"
+                        "%(products)s\n\n"
+                        "Please enter the IMEI as the Lot/Serial Number for these products before validating.",
+                        products=products_list,
+                    )
+                )
 
     def _check_missing_lots(self):
         """
