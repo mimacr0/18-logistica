@@ -76,13 +76,16 @@ class StockPicking(models.Model):
             current = current.parent_id
         return False
 
-    def button_validate(self):
+    def _pre_action_done_hook(self):
         """
-        Override button_validate to check for missing serial/lot numbers and validate IMEI:
+        Override _pre_action_done_hook to check for missing serial/lot numbers and validate IMEI
+        BEFORE the standard quality check flow:
         1. First check IMEI validation products - raise error if missing serials
         2. Validate IMEI numbers via API for IMEI products
         3. Then check non-IMEI products - show wizard for auto-generation
-        After user generates serials and closes wizard, they can validate again manually.
+        4. Finally, let parent handle quality checks if configured
+        
+        This ensures IMEI validation happens before quality checks are shown.
         """
         # First, check for IMEI validation products without serials (must raise error)
         self._check_imei_products_serials()
@@ -107,8 +110,9 @@ class StockPicking(models.Model):
                 'target': 'new',
             }
 
-        # Call parent method
-        return super(StockPicking, self).button_validate()
+        # Call parent method to handle quality checks and other validations
+        # This will check for quality check points and show them if configured
+        return super(StockPicking, self)._pre_action_done_hook()
 
     def _check_imei_products_serials(self):
         """
