@@ -23,10 +23,22 @@
             <field name="arch" type="xml">
                 <list string="Package" sample="1" create="0">
                     <field name="display_name"/>
+
                     <field name="package_type_id"/>
-                    <field name="account_partner_id"/>
-                    <field name="location_id" options="{'no_create': True}"/>
+                    <field name="carrier_id"/>
+                    <field name="global_tracking_ref"/>
+                    <field name="optional_tracking_ref"/>
+                    <field name="weight"/>
+                    <field name="account_partner_id" optional="hide"/>
+                    <field name="location_id" options="{'no_create': True}" optional="hide"/>
                     <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="reception_hours" column_invisible="1"/>
+                    <field name="reception_hours_label"
+                        widget="badge"
+                        decoration-success="reception_hours &gt;= 0 and reception_hours &lt; 24"
+                        decoration-warning="reception_hours &gt; 24 and reception_hours &lt; 48"
+                        decoration-danger="reception_hours &gt; 48"/>
+                    <field name="state" widget="badge" decoration-success="state == 'done'" decoration-warning="state == 'in_progress'" decoration-danger="state == 'with_incidence'"/>
                 </list>
             </field>
         </record>
