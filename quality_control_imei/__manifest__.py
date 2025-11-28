@@ -20,6 +20,7 @@
     },
     'data': [
         'security/ir.model.access.csv',
+        'data/stock_sequence_data.xml',
         'wizards/generate_serial_wizard_views.xml',
         'views/res_config_settings_views.xml',
         'views/quality_check_views.xml',

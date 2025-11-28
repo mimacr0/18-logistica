@@ -35,11 +35,11 @@
         'views/hr_employee.xml',
     ],
     'assets': {
-        'web.assets_backend': [
-            'dev_attendance_dashboard_advanced/static/src/css/dashboard_new.css',
-            'dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js',
+       'web.assets_backend': [
+           'dev_attendance_dashboard_advanced/static/src/css/dashboard_new.css',
+           'dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js',
             'dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml',
-        ],
+       ],
     },
     'images': ['static/description/icon.png'],
     'installable': True,

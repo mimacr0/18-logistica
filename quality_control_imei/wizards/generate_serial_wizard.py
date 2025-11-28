@@ -6,6 +6,7 @@
 ##############################################################################
 
 import logging
+from collections import defaultdict
 from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_compare
 
@@ -144,27 +145,46 @@ class GenerateSerialWizard(models.TransientModel):
 
         _logger.info(f'Generating automatic serial number text for {len(move_lines)} product lines (excluded {len(all_tracked_lines) - len(move_lines)} IMEI products)')
 
-        # Generate serial number TEXT for each line
+        # Group lines by package (result_package_id or package_id)
+        # Each package will have its own sequence starting from 1
+        lines_by_package = defaultdict(list)
+        for line in move_lines:
+            # Determine package key (use result_package_id first, then package_id, then None for no package)
+            package_key = None
+            if line.result_package_id:
+                package_key = ('result', line.result_package_id.id)
+            elif line.package_id:
+                package_key = ('source', line.package_id.id)
+            else:
+                # Lines without package grouped by picking_id
+                package_key = ('no_package', line.picking_id.id if line.picking_id else None)
+            
+            lines_by_package[package_key].append(line)
+
+        # Generate serial number TEXT for each line grouped by package
         # IMPORTANT: We ONLY set lot_name (text), NOT creating stock.lot records
         generated_count = 0
-        for line in move_lines:
-            # Generate unique serial number using sequence or timestamp
-            sequence = self.env['ir.sequence'].next_by_code('stock.lot.serial')
-            if not sequence:
-                # Fallback to timestamp-based serial if sequence doesn't exist
-                from datetime import datetime
-                sequence = datetime.now().strftime('%Y%m%d%H%M%S%f')
-            
-            # Format: ProductCode/SequenceNumber
-            product_code = line.product_id.default_code or line.product_id.name[:10]
-            serial_name = f"{product_code}/{sequence}"
-            
-            # ONLY SET LOT_NAME TEXT FIELD - DO NOT CREATE STOCK.LOT RECORD
-            # Odoo will create the stock.lot record during validation
-            line.lot_name = serial_name
-            
-            _logger.info(f'Set lot_name to "{serial_name}" for product {line.product_id.display_name} (lot record will be created during validation)')
-            generated_count += 1
+        for package_key, package_lines in lines_by_package.items():
+            sequence = 1
+            for line in package_lines:
+                # Get package name
+                if line.result_package_id and line.result_package_id.name:
+                    package_name = line.result_package_id.name
+                elif line.package_id and line.package_id.name:
+                    package_name = line.package_id.name
+                else:
+                    # Fallback to product code if no package
+                    package_name = line.product_id.default_code or line.product_id.name[:10]
+                
+                serial_name = f"{package_name}-{str(sequence).zfill(3)}"
+                
+                # ONLY SET LOT_NAME TEXT FIELD - DO NOT CREATE STOCK.LOT RECORD
+                # Odoo will create the stock.lot record during validation
+                line.lot_name = serial_name
+                
+                _logger.info(f'Set lot_name to "{serial_name}" for product {line.product_id.display_name} (package: {package_name}, sequence: {sequence})')
+                generated_count += 1
+                sequence += 1
         
         # Show notification and close wizard without validating
         # User must click Validate again to complete the picking
