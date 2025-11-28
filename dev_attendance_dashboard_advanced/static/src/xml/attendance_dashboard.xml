@@ -2,7 +2,7 @@
 <!-- Template for the project dashboard -->
 <templates id="AttendanceDashboard" xml:space="preserve">
     <t t-name="AttendanceDashboard">
-        <div style="height:1000px; max-height: -webkit-fill-available; overflow-y: scroll;">
+        <div style="min-height:100vh; height:auto; max-height: -webkit-fill-available; overflow-y: scroll;">
             <div class="mx-5">
                 <div class="row gx-0 mt-3">
                     <div class="col-12 d-flex justify-content-end ">
