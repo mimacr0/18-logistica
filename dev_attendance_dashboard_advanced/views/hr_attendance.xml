@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet/group" position="before">
                 <div style="display: flex; align-items: flex-start;" class="float-end">
-                    <field name="delay_status" widget="badge" decoration-success="delay_status == 'on_time'" decoration-warning="delay_status == 'minor'" decoration-danger="delay_status == 'major'"/>
+                    <field name="delay_status" widget="badge" decoration-success="delay_status == 'on_time'" decoration-warning="delay_status == 'minor'" decoration-danger="delay_status == 'unjustified_abs'"/>
                 </div>
             </xpath>
         </field>
@@ -20,7 +20,7 @@
         <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//list/field[@name='validated_overtime_hours']" position="after">
-                <field name="delay_status" widget="badge" decoration-success="delay_status == 'on_time'" decoration-warning="delay_status == 'minor'" decoration-danger="delay_status == 'major'"/>
+                <field name="delay_status" widget="badge" decoration-success="delay_status == 'on_time'" decoration-warning="delay_status == 'minor'" decoration-danger="delay_status == 'unjustified_abs'"/>
             </xpath>
         </field>
     </record>

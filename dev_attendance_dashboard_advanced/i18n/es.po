@@ -270,8 +270,8 @@ msgstr "Desde Fecha"
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
 #: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
-msgid "GD:"
-msgstr "RG:"
+msgid "UA:"
+msgstr "AI:"
 
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
@@ -398,25 +398,25 @@ msgid "Límite de retraso menor en formato decimal (ej: 10.0 = 10:00 AM)"
 msgstr "Límite de retraso menor en formato decimal (ej: 10.0 = 10:00 AM)"
 
 #. module: dev_attendance_dashboard_advanced
-#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__major
-msgid "Major Delay"
-msgstr "Retraso Grave"
+#: model:ir.model.fields.selection,name:dev_attendance_dashboard_advanced.selection__hr_attendance__delay_status__absence
+msgid "Unjustified Absence"
+msgstr "Ausencia Injustificada"
 
 #. module: dev_attendance_dashboard_advanced
 #: model_terms:ir.ui.view,arch_db:dev_attendance_dashboard_advanced.view_hr_attendance_config_settings
-msgid "Major delay limit (e.g. 10.5 = 10:30 AM)"
-msgstr "Límite de retraso grave (ej: 10.5 = 10:30 AM)"
+msgid "Unjustified absence limit (e.g. 10.5 = 10:30 AM)"
+msgstr "Límite de ausencia injustificada (ej: 10.5 = 10:30 AM)"
 
 #. module: dev_attendance_dashboard_advanced
 #: model:ir.model.fields,field_description:dev_attendance_dashboard_advanced.field_res_config_settings__major_delay_limit_float
-msgid "Major Delay Limit (Float)"
-msgstr "Límite de Retraso Grave (Decimal)"
+msgid "Unjustified Absence Limit (Float)"
+msgstr "Límite de Ausencia Injustificada (Decimal)"
 
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
 #: code:addons/dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml:0
-msgid "Major Delay]"
-msgstr "Retraso Grave]"
+msgid "Unjustified Absence]"
+msgstr "Ausencia Injustificada]"
 
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
@@ -559,8 +559,8 @@ msgstr ""
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
 #: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
-msgid "RG"
-msgstr "RG"
+msgid "UA"
+msgstr "UA"
 
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
@@ -745,12 +745,12 @@ msgstr "Retraso Leve"
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
 #: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
-msgid "GD:"
-msgstr "RG:"
+msgid "UA:"
+msgstr "AI:"
 
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
 #: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
-msgid "Major Delay"
-msgstr "Retraso Grave"
+msgid "Unjustified Absence"
+msgstr "Ausencia Injustificada"
 
