@@ -173,7 +173,7 @@
                     <div>[<b t-esc="this.getLegendMD()"/> <t t-esc="this.getLegendMinorDelay()"/>]</div>
                 </div>
                 <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
-                    <div>[<b t-esc="this.getLegendGD()"/> <t t-esc="this.getLegendMajorDelay()"/>]</div>
+                    <div>[<b t-esc="this.getLegendUA()"/> <t t-esc="this.getLegendUnjustifiedAbsence()"/>]</div>
                 </div>
             </div>
         </div>
@@ -184,7 +184,7 @@
                <style>
                    /* Ocultar columnas de días en pantallas pequeñas, mantener empleado y resumen */
                    @media (max-width: 768px) {
-                       /* Ocultar todas las columnas excepto la primera (empleado) y las últimas 6 (resumen: P, A, L, H, MD, GD) */
+                       /* Ocultar todas las columnas excepto la primera (empleado) y las últimas 6 (resumen: P, A, L, H, MD, UA) */
                        #attendanceCalender th:not(:first-child):not(:nth-last-child(-n+6)),
                        #attendanceCalender td:not(:first-child):not(:nth-last-child(-n+6)) {
                            display: none;

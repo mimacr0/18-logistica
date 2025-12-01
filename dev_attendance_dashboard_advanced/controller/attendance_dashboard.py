@@ -22,6 +22,10 @@ class AttendanceDashboard(http.Controller):
         department_domain = domains.get('department_domain', [])
         month = int(domains.get('month_domain') or date.today().month)
         year = int(domains.get('year_domain') or date.today().year)
+        
+        # Obtener la hora actual para el día de hoy
+        today = date.today()
+        now = datetime.now()
 
         employee_name = "All"
         department_name = "All"
@@ -68,10 +72,11 @@ class AttendanceDashboard(http.Controller):
         sheet.write('D4', '[H-Holiday]', bold_wrap)
         sheet.write('D5', '[L-Leave]', bold_wrap)
         sheet.write('D6', '[MD-Minor Delay]', bold_wrap)
-        sheet.write('D7', '[GD-Major Delay]', bold_wrap)
+        sheet.write('D7', '[UA-Unjustified Absence]', bold_wrap)
+        sheet.write('D8', '[JA-Justified Absence]', bold_wrap)
         
-        sheet.write('A7', 'Seq.', bold)
-        sheet.write('B7', 'Employee', bold)
+        sheet.write('A8', 'Seq.', bold)
+        sheet.write('B8', 'Employee', bold)
 
         # Set column widths
         sheet.set_column('A:A', 15)
@@ -82,24 +87,24 @@ class AttendanceDashboard(http.Controller):
         days = calendar.monthrange(year, month)[1]
         start_col = 2
         for day in range(1, days + 1):
-            date = date(year, month, day)
-            weekday = calendar.day_name[date.weekday()][:3].upper()
+            current_date = date(year, month, day)
+            weekday = calendar.day_name[current_date.weekday()][:3].upper()
             col = start_col + day - 1
-            sheet.write(6, col, f'{date.strftime("%d/%m/%Y")} - {weekday}', header_format)
+            sheet.write(7, col, f'{current_date.strftime("%d/%m/%Y")} - {weekday}', header_format)
             sheet.set_column(col, col, 20, center_format)
 
         # Employee data
-        row = 7
+        row = 8
         seq = 1
         for employee in employee_ids:
             sheet.write(row, 0, seq,center_format)
             sheet.write(row, 1, employee.name,center_format)
 
             for day in range(1, days + 1):
-                date = datetime(year, month, day)
-                check_in = date.replace(hour=0, minute=0, second=1)
-                check_out = date.replace(hour=23, minute=59, second=59)
-                weekday = date.weekday()
+                current_date = datetime(year, month, day)
+                check_in = current_date.replace(hour=0, minute=0, second=1)
+                check_out = current_date.replace(hour=23, minute=59, second=59)
+                weekday = current_date.weekday()
 
                 # Check if weekend
                 workdays = [int(wd.dayofweek) for wd in employee.resource_calendar_id.attendance_ids]
@@ -121,11 +126,19 @@ class AttendanceDashboard(http.Controller):
                 ])
 
                 # Check attendance
-                attendance_ids = request.env['hr.attendance'].search([
-                    ('employee_id', '=', employee.id),
-                    ('check_in', '>=', check_in),
-                    ('check_out', '<=', check_out)
-                ])
+                # Si es el día de hoy, no filtrar por check_out porque puede que aún no haya hecho check_out
+                if current_date.date() == today:
+                    attendance_ids = request.env['hr.attendance'].search([
+                        ('employee_id', '=', employee.id),
+                        ('check_in', '>=', check_in),
+                        ('check_in', '<=', check_out)
+                    ])
+                else:
+                    attendance_ids = request.env['hr.attendance'].search([
+                        ('employee_id', '=', employee.id),
+                        ('check_in', '>=', check_in),
+                        ('check_out', '<=', check_out)
+                    ])
 
                 if is_holiday:
                     sheet.write(row, col, 'H', holiday_format)
@@ -137,6 +150,17 @@ class AttendanceDashboard(http.Controller):
                     for att in attendance_ids:
                         if att.check_in and att.check_out:
                             total_seconds += (att.check_out - att.check_in).total_seconds()
+                        elif att.check_in and not att.check_out:
+                            # Si hay check_in pero no check_out, calcular horas trabajadas
+                            # Si es el día de hoy, usar hora actual, sino usar 17:30
+                            att_date = att.check_in.date()
+                            if att_date == today:
+                                # Es el día actual, usar hora actual
+                                day_end = now
+                            else:
+                                # Es un día pasado, usar 17:30 como hora de salida por defecto
+                                day_end = datetime.combine(att_date, datetime.min.time()).replace(hour=17, minute=30, second=0)
+                            total_seconds += (day_end - att.check_in).total_seconds()
                         # Obtener delay_status de la primera asistencia
                         if delay_status is None and att.delay_status:
                             delay_status = att.delay_status
@@ -151,9 +175,9 @@ class AttendanceDashboard(http.Controller):
                     if delay_status == 'minor':
                         cell_format = minor_delay_format
                         status_prefix = 'MD'
-                    elif delay_status == 'major':
+                    elif delay_status == 'unjustified_abs':
                         cell_format = major_delay_format
-                        status_prefix = 'GD'
+                        status_prefix = 'UA'
 
                     if hours > 0 or minutes > 0:
                         sheet.write(row, col, f"{status_prefix} {hours_worked}", cell_format)
@@ -254,8 +278,8 @@ class AttendanceDashboard(http.Controller):
                             if delay_status == 'minor':
                                 status = "Present (Minor Delay)"
                                 color = "#ffeb3b"
-                            elif delay_status == 'major':
-                                status = "Present (Major Delay)"
+                            elif delay_status == 'unjustified_abs':
+                                status = "Present (Unjustified Absence)"
                                 color = "#ff9800"
                             else:
                                 status = "Present"
@@ -265,8 +289,8 @@ class AttendanceDashboard(http.Controller):
                             summary['p'] += 1
                             if delay_status == 'minor':
                                 summary['md'] += 1
-                            elif delay_status == 'major':
-                                summary['gd'] += 1
+                            elif delay_status == 'unjustified_abs':
+                                summary['ua'] += 1
                         elif dt_in.weekday() not in working_days:
                             status = "Week Off"
                             details = "-"
@@ -311,7 +335,7 @@ class AttendanceDashboard(http.Controller):
                                     <th style="padding: 8px;">Week Off</th>
                                     <th style="padding: 8px;">Holiday</th>
                                     <th style="padding: 8px;">Minor Delay</th>
-                                    <th style="padding: 8px;">Major Delay</th>
+                                    <th style="padding: 8px;">Unjustified Absence</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -371,6 +395,9 @@ class AttendanceDashboard(http.Controller):
     def employee_attendance(self, **kw):
         user_tz = request.env.user.tz or pytz.utc  # Get user's timezone or default to UTC
         local = pytz.timezone(user_tz)
+        # Obtener la hora actual en la zona horaria del usuario
+        now_utc = pytz.utc.localize(datetime.utcnow())
+        now_local = now_utc.astimezone(local)
         employee_domain = []
         month_domain = date.today().month
         year_domain = date.today().year
@@ -409,7 +436,7 @@ class AttendanceDashboard(http.Controller):
             weekoff = 0
             t_holiday = 0
             minor_delay = 0
-            major_delay = 0
+            absence_delay = 0
             emp_dict['id'] = employee.id
 
             if employee.image_1920 and len(employee.image_1920) > 1000:
@@ -454,9 +481,21 @@ class AttendanceDashboard(http.Controller):
                             if att.worked_hours:
                                 total_hours += att.worked_hours
                             elif att.check_in and not att.check_out:
-                                # Si hay check_in pero no check_out, calcular hasta el final del día
-                                day_end = check_out
-                                total_hours += (day_end - att.check_in).total_seconds() / 3600.0
+                                # Si hay check_in pero no check_out, usar hora actual si es hoy, sino final del día
+                                # Convertir check_in de UTC a hora local para comparar fechas
+                                check_in_utc = pytz.utc.localize(att.check_in) if att.check_in.tzinfo is None else att.check_in.astimezone(pytz.utc)
+                                check_in_local = check_in_utc.astimezone(local)
+                                current_day = now_local.date()
+                                if check_in_local.date() == current_day:
+                                    # Es el día actual, usar hora actual
+                                    # Convertir ambos a UTC para hacer la resta correctamente
+                                    day_end_utc = now_utc
+                                else:
+                                    # Es un día pasado, usar final del día en hora local, luego convertir a UTC
+                                    day_end_local = local.localize(check_out.replace(hour=23, minute=59, second=59))
+                                    day_end_utc = day_end_local.astimezone(pytz.utc)
+                                # Restar ambos en UTC (ambos son timezone-aware)
+                                total_hours += (day_end_utc - check_in_utc).total_seconds() / 3600.0
                         
                         td = timedelta(hours=total_hours)
                         hours, remainder = divmod(td.total_seconds(), 3600)
@@ -473,8 +512,8 @@ class AttendanceDashboard(http.Controller):
                         present+=1
                         if delay_status == 'minor':
                             minor_delay += 1
-                        elif delay_status == 'major':
-                            major_delay += 1
+                        elif delay_status == 'unjustified_abs':
+                            absence_delay += 1
                     else:
                         att_dict[day] = {'status':'W'}
                         weekoff+=1
@@ -495,9 +534,9 @@ class AttendanceDashboard(http.Controller):
                                 td = timedelta(hours=total_hours)
                                 hours, remainder = divmod(td.total_seconds(), 3600)
                                 minutes = remainder // 60
-                                att_dict[day] = {'status':'l', 'hours': '{:02}:{:02} H'.format(int(hours), int(minutes)), 'ids': leave_ids.id}
+                                att_dict[day] = {'status':'l', 'hours': '{:02}:{:02} H'.format(int(hours), int(minutes)), 'ids': leave_ids.id, 'delay_status': 'justified_abs'}
                             else:
-                                att_dict[day] = {'status':'l', 'hours': 'L', 'ids': leave_ids.id}
+                                att_dict[day] = {'status':'l', 'hours': 'L', 'ids': leave_ids.id, 'delay_status': 'justified_abs'}
 
                             leave+=1
                         else:
@@ -516,9 +555,21 @@ class AttendanceDashboard(http.Controller):
                                     if att.worked_hours:
                                         total_hours += att.worked_hours
                                     elif att.check_in and not att.check_out:
-                                        # Si hay check_in pero no check_out, calcular hasta el final del día
-                                        day_end = check_out
-                                        total_hours += (day_end - att.check_in).total_seconds() / 3600.0
+                                        # Si hay check_in pero no check_out, usar hora actual si es hoy, sino final del día
+                                        # Convertir check_in de UTC a hora local para comparar fechas
+                                        check_in_utc = pytz.utc.localize(att.check_in) if att.check_in.tzinfo is None else att.check_in.astimezone(pytz.utc)
+                                        check_in_local = check_in_utc.astimezone(local)
+                                        current_day = now_local.date()
+                                        if check_in_local.date() == current_day:
+                                            # Es el día actual, usar hora actual
+                                            # Convertir ambos a UTC para hacer la resta correctamente
+                                            day_end_utc = now_utc
+                                        else:
+                                            # Es un día pasado, usar final del día en hora local, luego convertir a UTC
+                                            day_end_local = local.localize(check_out.replace(hour=23, minute=59, second=59))
+                                            day_end_utc = day_end_local.astimezone(pytz.utc)
+                                        # Restar ambos en UTC (ambos son timezone-aware)
+                                        total_hours += (day_end_utc - check_in_utc).total_seconds() / 3600.0
                                 
                                 td = timedelta(hours=total_hours)
                                 hours, remainder = divmod(td.total_seconds(), 3600)
@@ -535,8 +586,8 @@ class AttendanceDashboard(http.Controller):
                                 present+=1
                                 if delay_status == 'minor':
                                     minor_delay += 1
-                                elif delay_status == 'major':
-                                    major_delay += 1
+                                elif delay_status == 'unjustified_abs':
+                                    absence_delay += 1
                             else:
                                 att_dict[day] = {'status':'absent'}
                                 absent+=1
@@ -548,7 +599,7 @@ class AttendanceDashboard(http.Controller):
                 emp_dict['all_present'] = all_present
             if all_holidays:
                 emp_dict['all_holidays'] = all_holidays
-            emp_dict['summary'] = {'w':weekoff, 'l':leave, 'p':present, 'a':absent-t_holiday, 'h':t_holiday, 'md':minor_delay, 'gd':major_delay}
+            emp_dict['summary'] = {'w':weekoff, 'l':leave, 'p':present, 'a':absent-t_holiday, 'h':t_holiday, 'md':minor_delay, 'ua':absence_delay}
             response[0].append(emp_dict)
         response.append({'days':days})
         return response
@@ -744,9 +795,9 @@ class AttendanceDashboard(http.Controller):
             ], order='check_in asc')
 
             if attendances:
-                # Buscar asistencias con retraso (minor o major)
+                # Buscar asistencias con retraso (minor o unjustified_abs)
                 late_attendances = attendances.filtered(
-                    lambda a: a.delay_status in ('minor', 'major')
+                    lambda a: a.delay_status in ('minor', 'unjustified_abs')
                 )
                 if late_attendances and employee.id not in late_checkin:
                     late_checkin.append(employee.id)
@@ -773,9 +824,9 @@ class AttendanceDashboard(http.Controller):
             ], order='check_in asc')
             
             if attendances_today:
-                # Buscar asistencias con retraso (minor o major) para hoy
+                # Buscar asistencias con retraso (minor o unjustified_abs) para hoy
                 late_attendances_today = attendances_today.filtered(
-                    lambda a: a.delay_status in ('minor', 'major')
+                    lambda a: a.delay_status in ('minor', 'unjustified_abs')
                 )
                 if late_attendances_today and employee.id not in late_checkin_today:
                     late_checkin_today.append(employee.id)
@@ -858,6 +909,29 @@ class AttendanceDashboard(http.Controller):
             'department_domain': department_domain,
             'month_domain': month_domain,
             'year_domain': year_domain
+        }
+
+    @http.route('/attendance/check_system_time', auth='user', type='json')
+    def check_system_time(self):
+        """Endpoint para verificar la hora del sistema"""
+        user_tz = request.env.user.tz or 'UTC'
+        local = pytz.timezone(user_tz) if user_tz else pytz.utc
+        
+        # Hora UTC del servidor
+        now_utc = pytz.utc.localize(datetime.utcnow())
+        # Hora local del servidor (sin timezone)
+        now_local_system = datetime.now()
+        # Hora en la zona horaria del usuario
+        now_user_tz = now_utc.astimezone(local)
+        
+        return {
+            'server_utc': now_utc.strftime('%Y-%m-%d %H:%M:%S %Z'),
+            'server_local': now_local_system.strftime('%Y-%m-%d %H:%M:%S'),
+            'user_timezone': user_tz,
+            'user_local_time': now_user_tz.strftime('%Y-%m-%d %H:%M:%S %Z'),
+            'date_today': date.today().strftime('%Y-%m-%d'),
+            'datetime_utcnow': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),
+            'datetime_now': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         }
 
     

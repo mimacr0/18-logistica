@@ -1,5 +1,7 @@
 from odoo import fields, models, api
 from datetime import time
+from pytz import timezone
+import pytz
 
 
 class HrAttendance(models.Model):
@@ -9,8 +11,8 @@ class HrAttendance(models.Model):
     delay_status = fields.Selection([
             ('on_time', 'On Time'),
             ('minor', 'Minor Delay'),
-            ('major', 'Major Delay'),
-            ('absent', 'Absent'),
+            ('unjustified_abs', 'Unjustified Absence'),
+            ('justified_abs', 'Justified Absence'),
         ], string='Delay Status', compute='_compute_delay_status_float', store=True)
 
     @api.depends('check_in')
@@ -20,12 +22,10 @@ class HrAttendance(models.Model):
         # Leer los valores de configuración como float (ya calculados en settings)
         allowed_entry_float_str = params.get_param('attendance.allowed_entry_time_float')
         minor_delay_float_str = params.get_param('attendance.minor_delay_limit_float')
-        major_delay_float_str = params.get_param('attendance.major_delay_limit_float')
 
         # Convertir strings a float
-        allowed_entry_float = float(allowed_entry_float_str) if allowed_entry_float_str else 9.5
-        minor_delay_float = float(minor_delay_float_str) if minor_delay_float_str else 10.0
-        major_delay_float = float(major_delay_float_str) if major_delay_float_str else 10.5
+        allowed_entry_float = float(allowed_entry_float_str) if allowed_entry_float_str else 8.5
+        minor_delay_float = float(minor_delay_float_str) if minor_delay_float_str else 9.0
 
         # Convertir float a time (ej: 9.5 = 9:30)
         def float_to_time(hour_float):
@@ -35,15 +35,31 @@ class HrAttendance(models.Model):
 
         allowed_time_default = float_to_time(allowed_entry_float)
         minor_time_default = float_to_time(minor_delay_float)
-        major_time_default = float_to_time(major_delay_float)
 
         for record in self:
             if not record.check_in:
                 record.delay_status = False
                 continue
 
-            check_in_time = record.check_in.time()  # Hora del empleado
-            check_in_date = record.check_in.date()  # Fecha de la asistencia
+            # Obtener la zona horaria del empleado o del calendario
+            if record.employee_id:
+                calendar = record.employee_id.resource_calendar_id or record.employee_id.company_id.resource_calendar_id
+                tz_name = calendar.tz if calendar and calendar.tz else (record.employee_id.tz or self.env.user.tz or 'UTC')
+            else:
+                tz_name = self.env.user.tz or 'UTC'
+            
+            # Convertir check_in de UTC a la zona horaria del empleado
+            tz = timezone(tz_name) if tz_name else pytz.utc
+            # check_in está almacenado en UTC (naive datetime), convertirlo a timezone-aware y luego a la zona del empleado
+            if record.check_in.tzinfo is None:
+                # Si es naive, asumir que está en UTC
+                check_in_utc = pytz.utc.localize(record.check_in)
+            else:
+                check_in_utc = record.check_in.astimezone(pytz.utc)
+            
+            check_in_local = check_in_utc.astimezone(tz)
+            check_in_time = check_in_local.time()  # Hora local del empleado
+            check_in_date = check_in_local.date()  # Fecha local de la asistencia
 
             # Buscar si hay un permiso (hr.leave) para este empleado y fecha
             allowed_time = None
@@ -72,7 +88,6 @@ class HrAttendance(models.Model):
             if allowed_time is None:
                 allowed_time = allowed_time_default
                 minor_time = minor_time_default
-                major_time = major_time_default
             else:
                 # Si hay permiso que cambia la hora de entrada, recalcular los límites basándose en esa hora
                 # Leer el campo booleano para saber si debemos recalcular
@@ -84,15 +99,11 @@ class HrAttendance(models.Model):
                     allowed_hour_float = allowed_time.hour + (allowed_time.minute / 60.0)
                     # Minor delay = allowed_time + 0.5 horas
                     minor_hour_float = allowed_hour_float + 0.5
-                    # Major delay = allowed_time + 1.0 horas
-                    major_hour_float = allowed_hour_float + 1.0
                     # Convertir de vuelta a time
                     minor_time = float_to_time(minor_hour_float)
-                    major_time = float_to_time(major_hour_float)
                 else:
                     # Usar los valores configurados manualmente
                     minor_time = minor_time_default
-                    major_time = major_time_default
 
             # Comparar directamente horas y minutos
             if check_in_time <= allowed_time:
@@ -100,11 +111,8 @@ class HrAttendance(models.Model):
             # Si llega entre la hora de inicio y el límite de retraso menor: retraso leve
             elif allowed_time <= check_in_time < minor_time:
                 record.delay_status = 'minor'
-            # Si llega entre el límite menor y el mayor: retraso grave
-            elif minor_time <= check_in_time < major_time:
-                record.delay_status = 'major'
-            # Si llega después del límite mayor: ausente
+            # Si llega después del límite menor: ausencia injustificada
             else:
-                record.delay_status = 'absent'
+                record.delay_status = 'unjustified_abs'
 
 

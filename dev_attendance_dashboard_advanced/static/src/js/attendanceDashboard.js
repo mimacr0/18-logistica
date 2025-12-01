@@ -135,12 +135,12 @@ export class AttendanceDashboard extends Component {
         return _t('Minor Delay');
     }
 
-    getLegendGD() {
-        return _t('GD:');
+    getLegendUA() {
+        return _t('UA:');
     }
 
-    getLegendMajorDelay() {
-        return _t('Major Delay');
+    getLegendUnjustifiedAbsence() {
+        return _t('Unjustified Absence');
     }
 
     _downloadExcelReport() {
@@ -309,7 +309,7 @@ export class AttendanceDashboard extends Component {
                 th.innerHTML = "&nbsp;" + _t("RL") + "&nbsp;";
             } else if (i == days + 6) {
                 th.style = "background:#ff9800; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0;z-index: 1;"
-                th.innerHTML = "&nbsp;" + _t("RG") + "&nbsp;";
+                th.innerHTML = "&nbsp;" + _t("UA") + "&nbsp;";
             } else {
                 var day = this.getDayName(i, month, year)
                 th.style = "background: #Eeeeee; height:35px; border:1px solid #525252; text-align:center;  position: sticky; top: 0;z-index: 1;"
@@ -335,7 +335,7 @@ export class AttendanceDashboard extends Component {
         var total_l = 0;
         var total_h = 0;
         var total_md = 0;
-        var total_gd = 0;
+        var total_ua = 0;
 
         for (var i = 0; i < employee_data.length; i++) {
             var tr = document.createElement('tr');
@@ -480,10 +480,10 @@ export class AttendanceDashboard extends Component {
                     td.textContent = md_value;
                     tr.appendChild(td);
                 } else if (j == days + 6) {
-                    var gd_value = parseInt(employee_data[i].summary['gd']) || 0;
-                    total_gd += gd_value;
+                    var ua_value = parseInt(employee_data[i].summary['ua']) || 0;
+                    total_ua += ua_value;
                     td.style = "text-align:center; background-color:#ff9800; font-weight:600; font-size:15px; border-bottom:1px #525252 solid;";
-                    td.textContent = gd_value;
+                    td.textContent = ua_value;
                     tr.appendChild(td);
                 }
                 else {
@@ -545,7 +545,7 @@ export class AttendanceDashboard extends Component {
                             if (delay_status === 'minor') {
                                 bg_color = '#ffeb3b';
                                 text_color = 'black';
-                            } else if (delay_status === 'major') {
+                            } else if (delay_status === 'unjustified_abs') {
                                 bg_color = '#ff9800';
                                 text_color = 'white';
                             }
@@ -604,7 +604,7 @@ export class AttendanceDashboard extends Component {
                 td.textContent = total_md;
             } else if (j == days + 6) {
                 td.style = "text-align:center; background-color:#ff9800; font-weight:700; font-size:15px; border:1px solid white;";
-                td.textContent = total_gd;
+                td.textContent = total_ua;
             } else {
                 td.style = "text-align:center; border:1px solid white; background-color: white;";
                 td.textContent = "";

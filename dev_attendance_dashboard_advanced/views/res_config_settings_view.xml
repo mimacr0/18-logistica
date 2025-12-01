@@ -25,7 +25,7 @@
                             </div>
                             <div class="o_setting_right_pane">
                                 <label for="allowed_entry_time_float"/>
-                                <div class="text-muted">Allowed entry time (in hours, e.g. 9.5 = 9:30 AM)</div>
+                                <div class="text-muted">Allowed entry time (in hours, e.g. 8.5 = 8:30 AM)</div>
                                 <div>
                                     <field name="allowed_entry_time_float" widget="float_time_selection"/>
                                 </div>
@@ -36,17 +36,8 @@
                             </div>
                             <div class="o_setting_right_pane">
                                 <label for="minor_delay_limit_float"/>
-                                <div class="text-muted">Minor delay limit (e.g. 10.0 = 10:00 AM)</div>
+                                <div class="text-muted">Minor delay limit (e.g. 9.0 = 9:00 AM)</div>
                                 <field name="minor_delay_limit_float" widget="float_time_selection"/>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_left_pane">
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label for="major_delay_limit_float"/>
-                                <div class="text-muted">Major delay limit (e.g. 10.5 = 10:30 AM)</div>
-                                <field name="major_delay_limit_float" widget="float_time_selection"/>
                             </div>
                         </div>
                     </div>
