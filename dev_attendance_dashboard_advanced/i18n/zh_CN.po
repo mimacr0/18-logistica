@@ -559,7 +559,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js:0
 msgid "UA"
-msgstr "AI"
+msgstr "UA"
 
 #. module: dev_attendance_dashboard_advanced
 #. odoo-javascript
