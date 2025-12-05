@@ -44,7 +44,7 @@
             'base_module/static/src/frontend/scss/**.scss',
         ],
     },
-    'images': ['static/description/logo.png'],
+    'images': ['static/description/icon.png'],
     'installable': False, #Este campo se debe cambiar a True cuando se quiera que el modulo sea instalable
     'auto_install': False,
     'application': False,
