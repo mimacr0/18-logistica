@@ -15,6 +15,8 @@ Odoo Web Theme.
 
 This module modifies the web addon to provide custom design and responsiveness.
         """,
+
+    'author': 'DaFe Solutions',
     'depends': ['web', 'base_setup', 'portal'],
     'data': [
         'security/ir.model.access.csv',

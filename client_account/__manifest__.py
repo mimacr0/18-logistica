@@ -36,7 +36,7 @@
             'client_account/static/src/list/account_carrier_select_list_view.xml'
         ],
     },
-    'images': ['static/description/logo.png'],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'auto_install': False,
     'application': False,

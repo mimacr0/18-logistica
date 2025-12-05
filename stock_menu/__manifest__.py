@@ -23,7 +23,7 @@
         'web.assets_backend': [
         ]
     },
-    'images': ['static/description/logo.png'],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'auto_install': False,
     'application': False,

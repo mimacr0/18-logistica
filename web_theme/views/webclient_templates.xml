@@ -33,11 +33,12 @@
         <xpath expr="//t[@t-set='head_web']" position="replace">
             <t t-set="head_web">
                 <t t-set="company" t-value="request.env.company.sudo()"/>
+                <t t-set="pwa_app_name" t-value="'pwa_app_name' in company._fields and company.pwa_app_name or 'Odoo'"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
                 <meta name="theme-color" t-att-content="'#242733' if request.cookies.get('color_scheme') == 'dark' else '#714B67'"/>
                 <link rel="manifest" t-att-href="'/web_theme/%s/manifest' % (company.id) " crossorigin="use-credentials"/>
                 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-                <meta name="apple-mobile-web-app-title" t-att-content="company.pwa_app_name or 'Odoo'"/>
+                <meta name="apple-mobile-web-app-title" t-att-content="pwa_app_name"/>
 
                 <link rel="apple-touch-icon" t-att-href="'/web/image/res.company/%s/web_app_icon_512_pwa/152x152' % (company.id)"/>
                 <meta name="mobile-web-app-capable" content="yes"/>
@@ -73,9 +74,10 @@
     <template id="frontend_layout_pwa" inherit_id="web.frontend_layout">
         <xpath expr="//head" position="inside">
             <t t-set="company" t-value="request.env.company.sudo()"/>
+            <t t-set="pwa_app_name" t-value="'pwa_app_name' in company._fields and company.pwa_app_name or 'Odoo'"/>
             <link rel="manifest" t-att-href="'/web_theme/%s/manifest_frontend' % (company.id) " crossorigin="use-credentials"/>
             <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-            <meta name="apple-mobile-web-app-title" t-att-content="company.pwa_app_name or 'Odoo'"/>
+            <meta name="apple-mobile-web-app-title" t-att-content="pwa_app_name"/>
             <link rel="apple-touch-icon" t-att-href="'/web/image/res.company/%s/web_app_icon_512_pwa_frontend/152x152' % (company.id)"/>
             <meta name="mobile-web-app-capable" content="yes"/>
         </xpath>
