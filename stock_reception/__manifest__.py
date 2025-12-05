@@ -48,5 +48,5 @@
             'stock_reception/static/src/**/*.js',
         ]
     },
-    'images': ['static/description/icon.png']
+    'images': ['static/description/logo.png']
 }

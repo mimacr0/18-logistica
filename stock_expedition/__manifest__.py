@@ -37,5 +37,5 @@
     "demo": ['data/product_data_demo.xml'],
     'assets': {
     },
-    'images': ['static/description/icon.png']
+    'images': ['static/description/logo.png']
 }

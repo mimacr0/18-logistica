@@ -49,6 +49,6 @@ Quality Control
             'quality_control/static/tests/**/*',
         ],
     },
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/logo.png'],
 
 }
