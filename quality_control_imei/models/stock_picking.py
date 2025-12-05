@@ -30,7 +30,6 @@ class StockPicking(models.Model):
         """
         IrConfigParameter = self.env['ir.config_parameter'].sudo()
         category_ids_str = IrConfigParameter.get_param('quality_control_imei.category_ids', default='')
-        
         # If no categories configured, don't exclude from auto-generation
         if not category_ids_str:
             return False

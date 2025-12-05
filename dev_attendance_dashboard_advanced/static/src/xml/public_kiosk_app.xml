@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hr_attendance.public_kiosk_app" t-inherit="hr_attendance.public_kiosk_app" t-inherit-mode="extension" owl="1">
+        <!-- Ocultar el span con el logo dentro del t-if -->
+        <xpath expr="//span[contains(text(), 'Powered by')]" position="replace">
+            <!-- Logo oculto -->
+        </xpath>
+        <!-- Ocultar el div con el logo dentro del t-else -->
+        <xpath expr="//div[hasclass('o_hr_kiosk_mode_bottom') and hasclass('mx-auto') and contains(., 'Powered by')]" position="replace">
+            <!-- Logo oculto -->
+        </xpath>
+    </t>
+</templates>

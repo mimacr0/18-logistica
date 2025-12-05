@@ -45,7 +45,7 @@ class ThemePwaController(http.Controller):
     def manifest(self, company_id=None):
         company = request.env['res.company'].browse(company_id)
         manifest = {
-            'name': company.pwa_app_name if company and company.pwa_app_name else 'Odoo',
+            'name': getattr(company, 'pwa_app_name', None) or 'Odoo' if company else 'Odoo',
             'scope': '/',
             'start_url': '/odoo',
             'display': 'standalone',
@@ -71,7 +71,7 @@ class ThemePwaController(http.Controller):
     def manifest_frontend(self, company_id=None):
         company = request.env['res.company'].browse(company_id)
         manifest = {
-            'name': company.pwa_app_name if company and company.pwa_app_name else 'Odoo',
+            'name': getattr(company, 'pwa_app_name', None) or 'Odoo' if company else 'Odoo',
             'scope': '/',
             'start_url': '/',
             'display': 'standalone',

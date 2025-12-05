@@ -40,6 +40,9 @@
            'dev_attendance_dashboard_advanced/static/src/js/attendanceDashboard.js',
             'dev_attendance_dashboard_advanced/static/src/xml/attendance_dashboard.xml',
        ],
+       'hr_attendance.assets_public_attendance': [
+           'dev_attendance_dashboard_advanced/static/src/xml/public_kiosk_app.xml',
+       ],
     },
     'images': ['static/description/icon.png'],
     'installable': True,
