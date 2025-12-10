@@ -4,6 +4,6 @@
         size: cover;
         attachment: fixed;
         color: var(--homeMenu-bg-color, #71639E);
-        image: linear-gradient(to right bottom, rgba(113, 99, 158, 0.72) 0%, rgba(89, 78, 125, 0.41) 50%), url("/web_theme/static/img/background-light.svg"), url("/web_theme/static/img/home-menu-bg-overlay.svg");
+        image: linear-gradient(to right bottom, rgba(175, 155, 3, 0.72) 0%, rgba(175, 155, 3, 0.41) 100%), url("/web_theme/static/img/background-light.svg"), url("/web_theme/static/img/home-menu-bg-overlay.svg");
     }
 }
