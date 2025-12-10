@@ -7,7 +7,7 @@
     background: {
         size: cover;
         attachment: fixed;
-        color: #242733;
-        image: linear-gradient(to right bottom, rgba(73, 64, 103, 0.8) 0%, rgba(56, 49, 79, 0.6) 50%), url("/web_theme/static/img/background-dark.svg"), url("/web_theme/static/img/home-menu-bg-overlay.svg");
+        color: var(--homeMenu-bg-color, #71639E);
+        image: linear-gradient(to right bottom, rgba(51, 64, 161, 0.439) 0%, rgba(19, 43, 232, 0.398) 100%), url("/web_theme/static/img/background-dark.svg"), url("/web_theme/static/img/home-menu-bg-overlay.svg");
     }
 }
