@@ -25,11 +25,13 @@
     'website': "https://www.dafe.es",
     'data': [
         'data/repair_order_sequence.xml',
+        'data/stock_location_data.xml',
         'data/stock_picking_data.xml',
         'data/quality_alert_data.xml',
         'security/repair_module_groups.xml',
         'views/quality_alert_views.xml',
         'views/repair_order_views.xml',
+        'views/menu.xml',
         'views/stock_lot_views.xml',
         'views/stock_picking_views.xml',
         'wizard/repair_technician_change_wizard.xml',

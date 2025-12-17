@@ -86,9 +86,20 @@ class ReceivePackageWizard(models.TransientModel):
 
 
     def action_confirm(self):
-        move_line = self.env['stock.move.line'].search([('result_package_id', '=', self.package_id.id)], limit=1)
+        # 1. Busca la línea de movimiento del paquete escaneado
+        move_line = self.env['stock.move.line'].search([
+            ('result_package_id', '=', self.package_id.id)
+        ], limit=1)
+        
+        # 2. Obtiene el picking asociado
         picking = move_line.move_id.picking_id
+        
+        # 3. Valida el picking (confirma la recepción)
         picking.button_validate()
+        
+        # 4. Adjunta las imágenes capturadas
         self.attach_images()
+        
+        # 5. Vuelve a abrir el wizard para escanear otro paquete
         action = self.env.ref('stock_reception.action_receive_package_server').read()[0]
         return action

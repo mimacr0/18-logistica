@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_repair_result"
+              name="Resultados"
+              parent="repair.repair_menu_config"
+              action="action_repair_result"
+              sequence="100"/>
+
+    <menuitem id="menu_repair_diagnosis"
+              name="Diagnósticos"
+              parent="repair.repair_menu_config"
+              action="action_repair_diagnosis"
+              sequence="120"/>
+</odoo>

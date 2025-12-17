@@ -19,8 +19,8 @@
         'data/stock_package_sequence.xml',
         'views/stock_quant_package_views.xml',
         'views/menu.xml',
-
     ],
+    'post_init_hook': 'post_init_hook',
     'assets': {
         'web.assets_backend': [
  

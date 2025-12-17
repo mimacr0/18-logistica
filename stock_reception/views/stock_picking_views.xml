@@ -7,10 +7,10 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">is_reception</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="account_partner_id" nolabel="1" readonly="state in ['cancel', 'done']"/>
+                    <field name="account_partner_id" nolabel="1" readonly="state in ['cancel', 'done']" invisible="not is_reception"/>
                 </xpath>
                 <xpath expr="//field[@name='owner_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -25,7 +25,7 @@
             <field name="inherit_id" ref="stock.vpicktree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="attributes">
-                    <attribute name="column_invisible">1</attribute>
+                    <attribute name="column_invisible">0</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="account_partner_id" optional="show" readonly="state in ['cancel', 'done']"/>
