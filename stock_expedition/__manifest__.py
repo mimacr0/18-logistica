@@ -22,21 +22,21 @@
 {
     'name': 'Stock Expedition',
     'version': '18.0.1.0.0',
-    'author': 'Mimacro S.L',
+    'author': 'DaFe Solutions',
     'maintainer': 'Mimacro S.L',
-    'website': 'http://mimacro.com',
-    'license': 'AGPL-3',
-    'category': 'Extra Tools',
-    'summary': '',
+    'description': """Modulo para la gestión de expediciones""",
+    'summary': """Expediciones""",
     'depends': ['sale', 'product_sales_by_location'],
+    'license': 'LGPL-3',
+    'website': "https://www.dafe.es",
     'data': [
         'security/ir.model.access.csv',
         'views/sale_order_views.xml',
-
+        'views/menu.xml',
     ],
-    "demo": [],
-    'assets': {
-    },
-    'images': ['static/description/logo.png'],
+    'images': ['static/description/icon.png'],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
     'post_init_hook': 'post_init_hook',
 }

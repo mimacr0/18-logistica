@@ -22,12 +22,12 @@
 {
     'name': 'Stock Package Reception',
     'version': '18.0.1.0.0',
-    'author': 'Mimacro S.L',
+    'author': 'DaFe Solutions',
     'maintainer': 'Mimacro S.L',
-    'website': 'http://mimacro.com',
-    'license': 'AGPL-3',
-    'category': 'Extra Tools',
-    'summary': '',
+    'description': """Modulo para la gestión de recepción de paquetes""",
+    'license': 'LGPL-3',
+    'website': "https://www.dafe.es",
+    'summary': """Recepción de paquetes""",
     'depends': ['stock', 'delivery', 'hr', 'contacts_menu', 'product_menu', 'stock_menu', 'package_menu'],
     'data': [
         'security/package_reception_security.xml',
