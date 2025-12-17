@@ -34,8 +34,9 @@
         'views/sale_order_views.xml',
 
     ],
-    "demo": ['data/product_data_demo.xml'],
+    "demo": [],
     'assets': {
     },
-    'images': ['static/description/logo.png']
+    'images': ['static/description/logo.png'],
+    'post_init_hook': 'post_init_hook',
 }

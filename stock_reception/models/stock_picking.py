@@ -10,6 +10,14 @@ class StockPicking(models.Model):
 
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
 
+    is_reception = fields.Boolean(string='Is Reception', compute='_compute_is_reception', store=True)
+
+    @api.depends('picking_type_id')
+    def _compute_is_reception(self):
+        for picking in self:
+            picking.is_reception = picking.picking_type_id.code == 'incoming' 
+
+
     @api.depends('account_partner_id')
     def _set_partner_and_owner(self):
         """

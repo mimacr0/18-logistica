@@ -17,3 +17,6 @@ class SaleOrder(models.Model):
                 sale.partner_id = sale.account_partner_id.partner_id
             else:
                 sale.partner_id = False
+
+
+    
