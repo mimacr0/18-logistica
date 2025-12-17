@@ -11,4 +11,5 @@
 
     <menuitem id="menu_package_configuration" name="Configuration" parent="menu_root_reception" sequence="100"/>
     <menuitem id="menu_package_type" name="Package Types" parent="menu_package_configuration" action="stock.action_package_type_view" sequence="10"/>
+    
 </odoo>

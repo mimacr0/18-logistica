@@ -7,3 +7,7 @@
 
 from . import models
 # from . import wizard
+
+def post_init_hook(env):
+    from . import hooks
+    hooks.post_init_hook(env)
