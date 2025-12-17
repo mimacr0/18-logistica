@@ -120,18 +120,4 @@
             <p>Gestiona los posibles resultados de las reparaciones.</p>
         </field>
     </record>
-
-    <!-- <menuitem id="menu_repair_config" name="Configuración Reparaciones" parent="repair.repair_menu_config" sequence="100"/> -->
-
-    <menuitem id="menu_repair_result"
-              name="Resultados"
-              parent="repair.repair_menu_config"
-              action="action_repair_result"
-              sequence="100"/>
-
-    <menuitem id="menu_repair_diagnosis"
-              name="Diagnósticos"
-              parent="repair.repair_menu_config"
-              action="action_repair_diagnosis"
-              sequence="120"/>
 </odoo>
