@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit quality.point form view to add domain on user_id -->
+        <record id="quality_point_view_form_inherit_stock_reception" model="ir.ui.view">
+            <field name="name">quality.point.view.form.inherit.stock.reception</field>
+            <field name="model">quality.point</field>
+            <field name="inherit_id" ref="quality.quality_point_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="domain">[('groups_id', 'in', %(logistics_security.group_after_sales_department)d)]</attribute>
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
