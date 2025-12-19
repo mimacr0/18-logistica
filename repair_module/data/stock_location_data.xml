@@ -11,6 +11,15 @@
             <field name="barcode">WH-REPAIRS</field>
         </record>
 
+        <!-- Stock to Relocate Location: hijo de WH/Stock -->
+        <record id="stock_location_to_relocate" model="stock.location">
+            <field name="name">Stock a reubicar</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="barcode">WH-TO-RELOCATE</field>
+        </record>
+
         <!-- Scrap Location: hijo de WH/Stock -->
         <record id="stock_location_scrap" model="stock.location">
             <field name="name">Scrap</field>

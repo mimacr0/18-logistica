@@ -46,10 +46,7 @@
             <xpath expr="//field[@name='user_id']" position="attributes">
                 <attribute name="readonly">is_locked</attribute>
                 <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
-            </xpath>
-            <xpath expr="//field[@name='user_id']" position="attributes">
-                <attribute name="readonly">is_locked</attribute>
-                <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="domain">[('groups_id', 'in', %(repair_module.group_after_sales_department)d)]</attribute>
             </xpath>
             <xpath expr="//field[@name='picking_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -64,6 +61,27 @@
                     <group>
                         <field name="is_repair" widget="boolean_toggle" class="oe_inline" groups="repair_module.group_after_sales_department"/>
                     </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit quality.alert.team form to add member_ids field -->
+    <record id="repair_module_quality_alert_team_view_form" model="ir.ui.view">
+        <field name="name">repair.module.quality.alert.team.view.form</field>
+        <field name="model">quality.alert.team</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_alias']" position="before">
+                <group string="Team Configuration">
+                    <field name="leader_id" 
+                           domain="[('groups_id', 'in', %(repair_module.group_after_sales_department)d)]"
+                           options="{'no_create': True, 'no_create_edit': True}"
+                           placeholder="Select team leader..."/>
+                    <field name="member_ids" widget="many2many_tags" 
+                           domain="[('groups_id', 'in', %(repair_module.group_after_sales_department)d)]"
+                           options="{'no_create': True, 'no_create_edit': True}"
+                           placeholder="Add team members..."/>
                 </group>
             </xpath>
         </field>
