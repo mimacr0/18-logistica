@@ -6,11 +6,14 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="show_account_partner" invisible="1"/>
+                </xpath>
                 <xpath expr="//field[@name='partner_id']" position="attributes">
-                    <attribute name="invisible">is_reception</attribute>
+                    <attribute name="invisible">show_account_partner</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="account_partner_id" nolabel="1" readonly="state in ['cancel', 'done']" invisible="not is_reception"/>
+                    <field name="account_partner_id" nolabel="1" readonly="state in ['cancel', 'done']" invisible="not show_account_partner"/>
                 </xpath>
                 <xpath expr="//field[@name='owner_id']" position="attributes">
                     <attribute name="invisible">1</attribute>

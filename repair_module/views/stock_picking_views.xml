@@ -8,7 +8,7 @@
             <header position="inside">
                 <button name="action_create_repair_order"
                         type="object"
-                        string="Create Repair 1"
+                        string="Create Repair"
                         class="btn-primary"
                         invisible="state != 'done' or picking_type_barcode != 'move_repair' or repair_ids" />
             </header>

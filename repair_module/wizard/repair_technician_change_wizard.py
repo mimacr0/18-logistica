@@ -17,3 +17,9 @@ class RepairTechnicianChangeWizard(models.TransientModel):
         self.repair_id.technician_id = self.technician_id
         self.repair_id.assigned_user_id = self.technician_id
         self.repair_id.assigned_date = fields.Datetime.now()
+        
+        # Registrar en el chatter el cambio de técnico
+        self.repair_id.message_post(
+            body=_("Technician changed to: %s") % self.technician_id.name,
+            message_type='notification',
+        )

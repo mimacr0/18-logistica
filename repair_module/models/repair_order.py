@@ -70,9 +70,11 @@ class RepairOrder(models.Model):
             'assigned_user_id': self.env.user.id,
         })
 
-        # si además quieres seguir actualizando el alert relacionado
-        if self.repair_alert_id:
-            self.repair_alert_id.stage_id = self.env.ref('quality.quality_alert_stage_2')
+        # Registrar en el chatter a quién se asignó
+        self.message_post(
+            body=_("Repair assigned to technician: %s") % self.technician_id.name,
+            message_type='notification',
+        )
 
         return res
 
@@ -149,20 +151,21 @@ class RepairOrder(models.Model):
                     repair.product_id.display_name
                 ))
 
-        location_src = self.env['stock.location'].search([('barcode', '=', 'NV1P2S7')], limit=1)
-        location_dest = self.env['stock.location'].search([('barcode', '=', 'NV1P2S4R')], limit=1)
+        location_src = self.env.ref('repair_module.stock_location_repairs', raise_if_not_found=False)
+        location_dest = self.env.ref('repair_module.stock_location_to_relocate', raise_if_not_found=False)
 
         if not location_src or not location_dest:
-            raise ValidationError(_("No se encontraron las ubicaciones NV1P2S7 o NV1P2S4R, configúralas en Inventario."))
+            raise ValidationError(_("No se encontraron las ubicaciones 'Repairs' o 'Stock a reubicar'. Actualiza el módulo repair_module."))
 
         # --- Crear el Picking (transferencia interna) ---
         picking_type = self.env['stock.picking.type'].search([('barcode', '=', 'WHINT')], limit=1)
         picking_vals = {
             'account_partner_id': self.account_partner_id.id,
+            'partner_id': self[:1].partner_id.id if self[:1].partner_id else False,
             'origin': ', '.join(self.mapped('name')),
             'picking_type_id': picking_type.id,
-            'location_id': location_src.id,       # 🔹 Origen fijo
-            'location_dest_id': location_dest.id, # 🔹 Destino fijo
+            'location_id': location_src.id,
+            'location_dest_id': location_dest.id,
         }
         picking = self.env['stock.picking'].create(picking_vals)
 
@@ -186,7 +189,7 @@ class RepairOrder(models.Model):
                 'product_uom': repair.product_uom.id or repair.product_id.uom_id.id,
                 'location_id': location_src.id,
                 'location_dest_id': location_dest.id,
-                'picking_id': picking.id,  # Asociamos al picking
+                'picking_id': picking.id,
                 'repair_id': repair.id,
                 'move_line_ids': [(0, 0, {
                     'product_id': repair.product_id.id,

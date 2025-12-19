@@ -18,17 +18,37 @@ class QualityAlert(models.Model):
     quantity = fields.Integer(string='Quantity')
     stock_picking_count = fields.Integer(compute='_compute_stock_picking_count')
     check_ids = fields.Many2one('quality.check', string='Quality Checks')
-    picking_ids = fields.Many2many('stock.picking', 'quality_alert_picking_rel', string='Pickings', check_company=True)
+    picking_ids = fields.Many2many(
+        'stock.picking',
+        'quality_alert_picking_rel',
+        column1='quality_alert_id',
+        column2='stock_picking_id',
+        string='Pickings',
+        check_company=True
+    )
     schedule_date = fields.Date(string="Schedule Date")
     is_repair = fields.Boolean(string='Is Repair', default=False)
     is_locked = fields.Boolean(default=True)
     
+    # Override user_id to remove default (domain set in view to filter by After Sales group)
+    user_id = fields.Many2one(
+        'res.users',
+        string='Responsible',
+        tracking=True,
+        default=False,  # Remove default (base model sets self.env.user)
+        help='Responsible user. Only users from After Sales Department can be assigned. Defaults to team leader if not specified.'
+    )
+    
     @api.model_create_multi
-    def create(self, vals):
-        """Override para asignar stage al crear un nuevo alert"""
-        record = super().create(vals)
-        record._set_default_stage()
-        return record
+    def create(self, vals_list):
+        """Override para asignar stage y leader como responsable al crear un nuevo alert"""
+        records = super().create(vals_list)
+        for record in records:
+            record._set_default_stage()
+            # Asignar el leader del equipo como responsable si no se especificó user_id
+            if not record.user_id and record.team_id and record.team_id.leader_id:
+                record.user_id = record.team_id.leader_id
+        return records
 
     def write(self, vals):
         for alert in self:
@@ -101,9 +121,10 @@ class QualityAlert(models.Model):
         
         picking = self.env['stock.picking'].create({
             'account_partner_id': self.account_partner_id.id,
+            'partner_id': self.partner_id.id if self.partner_id else False,
             'origin': self.name,
             'picking_type_id': picking_type.id,
-            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'location_id': picking_type.default_location_src_id.id,  # From picking type configuration
             'location_dest_id': picking_type.default_location_dest_id.id,
             'quality_alert_ids': [(6, 0, [self.id])],
             'maintenance_type': self.maintenance_type,
@@ -128,10 +149,12 @@ class QualityAlert(models.Model):
             }
             move = self.env['stock.move'].create(move_vals)
 
+            # Reserve the lot without qty_done - operator will scan from PDA to confirm
             move_line_vals = {
                 'move_id': move.id,
+                'picking_id': picking.id,  # Explicit picking_id for stock_barcode module
                 'product_id': quant.product_id.id,
-                'qty_done': qty_to_move,
+                'quantity': qty_to_move,  # Reserved quantity
                 'location_id': quant.location_id.id,
                 'location_dest_id': picking_type.default_location_dest_id.id,
                 **({'lot_id': quant.lot_id.id} if quant.lot_id else {}),
@@ -144,6 +167,9 @@ class QualityAlert(models.Model):
 
         if total_qty_to_move > 0:
             raise ValidationError(_('Not enough quantity available. Remaining: %s') % total_qty_to_move)
+
+        # Confirm the picking to reserve the stock
+        picking.action_confirm()
 
         self.write({'picking_ids': [(4, picking.id)]})
 

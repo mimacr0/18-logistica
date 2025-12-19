@@ -7,6 +7,7 @@
 
 from . import choices
 from . import quality_alert
+from . import quality_alert_team
 from . import repair_order
 from . import stock_lot
 from . import stock_picking
