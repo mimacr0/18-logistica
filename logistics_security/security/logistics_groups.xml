@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Category for logistics security groups -->
+    <record model="ir.module.category" id="access_logistics_category">
+        <field name="name">Logistics</field>
+        <field name="description">Logistics access management</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- After Sales Department Group -->
+    <record id="group_after_sales_department" model="res.groups">
+        <field name="name">After Sales Department</field>
+        <field name="category_id" ref="access_logistics_category"/>
+        <field name="users" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Users with access to after sales operations</field>
+    </record>
+
+    <!-- Repair Department Group -->
+    <record id="group_repair_department" model="res.groups">
+        <field name="name">Repair Department</field>
+        <field name="category_id" ref="access_logistics_category"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Users with access to repair operations</field>
+    </record>
+</odoo>

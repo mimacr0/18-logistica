@@ -46,7 +46,7 @@
             <xpath expr="//field[@name='user_id']" position="attributes">
                 <attribute name="readonly">is_locked</attribute>
                 <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
-                <attribute name="domain">[('groups_id', 'in', %(repair_module.group_after_sales_department)d)]</attribute>
+                <attribute name="domain">[('groups_id', 'in', %(logistics_security.group_after_sales_department)d)]</attribute>
             </xpath>
             <xpath expr="//field[@name='picking_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -59,7 +59,7 @@
             <xpath expr="//page[@name='miscellaneous']/group" position="after">
                 <group>
                     <group>
-                        <field name="is_repair" widget="boolean_toggle" class="oe_inline" groups="repair_module.group_after_sales_department"/>
+                        <field name="is_repair" widget="boolean_toggle" class="oe_inline" groups="logistics_security.group_after_sales_department"/>
                     </group>
                 </group>
             </xpath>
@@ -75,11 +75,11 @@
             <xpath expr="//group[@name='group_alias']" position="before">
                 <group string="Team Configuration">
                     <field name="leader_id" 
-                           domain="[('groups_id', 'in', %(repair_module.group_after_sales_department)d)]"
+                           domain="[('groups_id', 'in', %(logistics_security.group_after_sales_department)d)]"
                            options="{'no_create': True, 'no_create_edit': True}"
                            placeholder="Select team leader..."/>
                     <field name="member_ids" widget="many2many_tags" 
-                           domain="[('groups_id', 'in', %(repair_module.group_after_sales_department)d)]"
+                           domain="[('groups_id', 'in', %(logistics_security.group_after_sales_department)d)]"
                            options="{'no_create': True, 'no_create_edit': True}"
                            placeholder="Add team members..."/>
                 </group>
