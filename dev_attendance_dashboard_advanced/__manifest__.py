@@ -25,6 +25,7 @@
     'license': 'AGPL-3',
     'website': 'https://www.dafe.es',
     'data': [
+        'security/ir.model.access.csv',
         'security/security.xml',
         'report/extrahour_menu.xml',
         'report/extrahour_pdf_template.xml',
@@ -33,6 +34,7 @@
         'views/hr_attendance.xml',
         'views/res_config_settings_view.xml',
         'views/hr_employee.xml',
+        'views/hr_holidays_menu.xml',
     ],
     'assets': {
        'web.assets_backend': [
