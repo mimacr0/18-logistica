@@ -15,7 +15,7 @@ class RepairOrder(models.Model):
     technician_id = fields.Many2one(
         comodel_name="res.users",
         string="Technician",
-        domain=lambda self: [('groups_id', 'in', [self.env.ref('repair_module.group_repair_department').id])]
+        domain=lambda self: [('groups_id', 'in', [self.env.ref('logistics_security.group_repair_department').id])]
     )    
     maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
     lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State')

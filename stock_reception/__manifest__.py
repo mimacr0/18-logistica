@@ -28,10 +28,11 @@
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'summary': """Recepción de paquetes""",
-    'depends': ['stock', 'delivery', 'hr', 'contacts_menu', 'product_menu', 'stock_menu', 'package_menu'],
+    'depends': ['stock', 'delivery', 'hr', 'contacts_menu', 'product_menu', 'stock_menu', 'package_menu', 'quality', 'quality_control', 'logistics_security'],
     'data': [
         'security/package_reception_security.xml',
         'security/ir.model.access.csv',
+        'data/quality_point_data.xml',
         # 'data/package_sequence_cron.xml',
         'wizard/create_stock_picking_wizard.xml',
         'wizard/receive_package_wizard.xml',
@@ -39,6 +40,7 @@
         'views/stock_barcode_views.xml',
         'views/stock_quant_views.xml',
         'views/stock_lot_views.xml',
+        'views/quality_point_views.xml',
 
     ],
     "demo": [],

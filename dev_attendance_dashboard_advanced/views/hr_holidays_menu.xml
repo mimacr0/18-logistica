@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Hide HR Holidays Dashboard menu for basic employees (only visible for HR Officers) -->
+    <record id="hr_holidays.menu_hr_holidays_dashboard" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('hr_holidays.group_hr_holidays_user')])]"/>
+    </record>
+</odoo>

@@ -20,7 +20,7 @@
           donde tendremos una carpeta para el JS 'static/src/js', otra para los QWeb 'static/src/xml'
           y otra para los estilos 'static/src/scss'.
     """,
-    'depends': ['base', 'client_account', 'quality', 'quality_control', 'repair', 'stock_expedition'],
+    'depends': ['base', 'client_account', 'quality', 'quality_control', 'repair', 'stock_expedition', 'logistics_security'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
@@ -28,7 +28,6 @@
         'data/stock_location_data.xml',
         'data/stock_picking_data.xml',
         'data/quality_alert_data.xml',
-        'security/repair_module_groups.xml',
         'views/quality_alert_views.xml',
         'views/repair_order_views.xml',
         'views/menu.xml',

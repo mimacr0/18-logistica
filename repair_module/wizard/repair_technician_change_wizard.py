@@ -7,7 +7,7 @@ class RepairTechnicianChangeWizard(models.TransientModel):
     technician_id = fields.Many2one(
         comodel_name='res.users',
         string='Technician',
-        domain=lambda self: [('groups_id', 'in', [self.env.ref('repair_module.group_repair_department').id])]
+        domain=lambda self: [('groups_id', 'in', [self.env.ref('logistics_security.group_repair_department').id])]
     )
     repair_id = fields.Many2one('repair.order', string='Repair Order')
 
