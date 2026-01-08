@@ -19,6 +19,7 @@
     'data': [
         'security/logistics_groups.xml',
     ],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'auto_install': False,
     'application': False,
