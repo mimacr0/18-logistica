@@ -5,13 +5,13 @@
         <div class="o_barcode_header">
             <div class="navbar navbar-expand navbar-dark">
                 <nav class="navbar-nav me-auto">
-                    <button t-on-click="(e) => this.exit(e)" class="o_exit btn nav-link me-4">
+                    <button t-on-click="(e) => this.exit(e)" class="o_exit btn btn-light border me-4">
                         <i class="oi oi-chevron-left"/>
                     </button>
                     <span class="o_title navbar-text" t-esc="env.model.name"/>
                 </nav>
                 <nav class="navbar-nav">
-                    <button t-on-click="(e) => this.exit(e)" class="o_close btn nav-link">
+                    <button t-on-click="(e) => this.exit(e)" class="o_close btn btn-light border">
                         <i class="fa fa-times"/>
                     </button>
                 </nav>
