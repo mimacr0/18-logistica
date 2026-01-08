@@ -9,7 +9,7 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
-    
+
     # Campo genérico que otros módulos pueden extender
     show_account_partner = fields.Boolean(
         string='Show Account Partner',
@@ -17,7 +17,7 @@ class StockPicking(models.Model):
         store=True,
         help='Determines if account_partner_id should be shown instead of partner_id'
     )
-    
+
     @api.depends('picking_type_id')
     def _compute_show_account_partner(self):
         """

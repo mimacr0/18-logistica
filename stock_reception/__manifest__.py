@@ -33,7 +33,6 @@
         'security/package_reception_security.xml',
         'security/ir.model.access.csv',
         'data/quality_point_data.xml',
-        # 'data/package_sequence_cron.xml',
         'wizard/create_stock_picking_wizard.xml',
         'wizard/receive_package_wizard.xml',
         'views/stock_picking_views.xml',
