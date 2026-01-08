@@ -17,6 +17,7 @@
     'website': "https://www.dafe.es",
     'data': [
         'data/stock_package_sequence.xml',
+        'data/stock_package_type_data.xml',
         'views/stock_quant_package_views.xml',
         'views/menu.xml',
     ],
