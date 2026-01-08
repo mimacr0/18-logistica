@@ -33,8 +33,8 @@
                 </div>
                 <div class="row mt-4 mb-4" invisible="not carrier_tracking_ref and not global_tracking_ref and not package_name">
                     <div class="col-12 d-flex align-items-baseline">
-                        <i class="fa fa-fw fa-lg fa-archive me-3" title="Package Type"/>
-                        <field name="package_type_id" nolabel="1" widget="selection_badge"/>
+                        <i class="fa fa-fw fa-lg fa-archive me-3" title="Package Type"/>                        
+                        <field name="package_type_id" nolabel="1" widget="selection_badge" readonly="package_type_id"/>
                     </div>
                 </div>
                 <div class="row mt-4 mb-4" invisible="not carrier_tracking_ref and not global_tracking_ref and not package_name">
