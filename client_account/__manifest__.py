@@ -16,6 +16,7 @@
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'data/mail_templates.xml',

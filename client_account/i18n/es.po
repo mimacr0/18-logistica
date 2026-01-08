@@ -144,7 +144,7 @@ msgstr "Saldo de cuenta"
 
 #. module: client_account
 #: model:ir.ui.menu,name:client_account.contacts_account
-#: model:ir.ui.menu,name:client_account.menu_root
+#: model:ir.ui.menu,name:client_account.credit_account_menu_root
 msgid "Accounts"
 msgstr "Cuentas"
 
