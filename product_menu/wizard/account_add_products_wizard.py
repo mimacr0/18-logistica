@@ -10,10 +10,10 @@ class AddProductsWizard(models.TransientModel):
     product_template_id = fields.Many2one(comodel_name='product.template', string='Product Template')
     name = fields.Char(string='Product',  copy=False, translate=True)
     image_1920 = fields.Binary(string='Image')
-    storage_type = fields.Selection(selection=[
-        ('storage_logistic', 'Serial Number'),
-        ('storage_none', 'None')
-    ], string='Storage Type')
+    tracking = fields.Selection(selection=[
+        ('serial', 'By Unique Serial Number'),
+        ('none', 'No Tracking')
+    ], string='Tracking', default='none')
     weight = fields.Float(string='Weight', digits='Stock Weight')
     volume = fields.Float(string='Volume', digits='Stock Volume')
     product_tag_ids = fields.Many2many(comodel_name='product.tag', string='Tags')
@@ -71,7 +71,7 @@ class AddProductsWizard(models.TransientModel):
             'volume': self.volume,
             'product_tag_ids': self.product_tag_ids,
             'categ_id': self.categ_id.id,
-            'storage_type': self.storage_type,
+            'tracking': self.tracking,
             'repair_price': self.repair_price,
             'warranty_price': self.warranty_price,
             'review_price': self.review_price,
@@ -118,36 +118,15 @@ class AddProductsWizard(models.TransientModel):
             'renew_price': self.renew_price,
             'is_storable': True,
         })
-        if self.storage_type == 'storage_logistic':
-            template.write({
-                'sale_ok': False,
-                'purchase_ok': False,
-                'type': 'consu',
-                'list_price': 0,
-                'taxes_id': False,
-                'standard_price': 0,
-                'tracking': 'serial',
-            })
-        elif self.storage_type == 'storage_lot':
-            template.write({
-                'sale_ok': False,
-                'purchase_ok': False,
-                'type': 'consu',
-                'list_price': 0,
-                'taxes_id': False,
-                'standard_price': 0,
-                'tracking': 'lot',
-            })
-        else:
-            template.write({
-                'sale_ok': False,
-                'purchase_ok': False,
-                'type': 'consu',
-                'list_price': 0,
-                'taxes_id': False,
-                'standard_price': 0,
-                'tracking': 'none'
-            })
+        template.write({
+            'sale_ok': False,
+            'purchase_ok': False,
+            'type': 'consu',
+            'list_price': 0,
+            'taxes_id': False,
+            'standard_price': 0,
+            'tracking': self.tracking or 'none',
+        })
         self.product_template_id = template.id
 
         return {

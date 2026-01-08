@@ -20,7 +20,7 @@
                         </h1>
                     </div>
                     <div name="category" invisible="not account_partner_id">
-                        <field name="storage_type"  widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                        <field name="tracking" widget="radio" options="{'horizontal': true}" nolabel="1"/>
                     </div>
                     <group invisible="not account_partner_id">
                         <group name="group_logistics" string="Logistics">

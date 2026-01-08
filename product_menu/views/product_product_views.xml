@@ -41,10 +41,12 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
         <field name="arch" type="xml">
-
-            <xpath expr="//button[@name='action_open_label_layout']" position="after">
-                <button name="open_add_product_wizard" type="object" class="btn btn-primary" string="Add Product"/>
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">0</attribute>
             </xpath>
+            <!-- <xpath expr="//button[@name='action_open_label_layout']" position="after">
+                <button name="open_add_product_wizard" type="object" class="btn btn-primary" string="Add Product"/>
+            </xpath> -->
 
             <xpath expr="//field[@name='default_code']" position="after">
                 <field name="account_partner_id" options="{'no_open': True}"/>
