@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default IMEI API Configuration -->
+        <record id="config_param_imei_api_url" model="ir.config_parameter">
+            <field name="key">quality_control_imei.api_url</field>
+            <field name="value">https://dash.imei.info/api/check/0</field>
+        </record>
+        
+        <record id="config_param_imei_api_key" model="ir.config_parameter">
+            <field name="key">quality_control_imei.api_key</field>
+            <field name="value">54885464-633a-4fca-a724-8521fab9a5d7</field>
+        </record>
+    </data>
+</odoo>
