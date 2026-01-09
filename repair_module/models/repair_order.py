@@ -15,7 +15,7 @@ class RepairOrder(models.Model):
     technician_id = fields.Many2one(
         comodel_name="res.users",
         string="Technician",
-        domain=lambda self: [('groups_id', 'in', [self.env.ref('logistics_security.group_repair_department').id])]
+        domain=lambda self: [('groups_id', 'in', [self.env.ref('logistics_security.group_repair_user').id])]
     )    
     maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
     lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State')
@@ -45,11 +45,11 @@ class RepairOrder(models.Model):
                 repair.sale_order_id.account_partner_id = repair.account_partner_id
         return res
 
-    def button_change_technician(self):
+    def button_set_technician(self):
         return {
-            'name': _('Change Technician'),
+            'name': _('Set Technician'),
             'type': 'ir.actions.act_window',
-            'res_model': 'repair.technician.change',
+            'res_model': 'repair.technician.set',
             'view_mode': 'form',
             'target': 'new',
             'context': {

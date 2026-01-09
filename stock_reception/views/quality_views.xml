@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="quality.quality_point_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='user_id']" position="attributes">
-                    <attribute name="domain">[('groups_id', 'in', %(logistics_security.group_after_sales_department)d)]</attribute>
+                    <attribute name="domain">[('groups_id', 'in', %(logistics_security.group_after_sales_user)d)]</attribute>
                     <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
                 </xpath>
             </field>

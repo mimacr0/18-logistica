@@ -49,3 +49,12 @@ class StockPicking(models.Model):
                 picking.partner_id = False
                 picking.owner_id = False
 
+    def button_validate(self):
+        """
+        Override to assign current user as responsible when validating incoming pickings.
+        """
+        for picking in self:
+            if not picking.user_id:
+                picking.user_id = self.env.user
+        return super().button_validate()
+

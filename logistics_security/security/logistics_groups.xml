@@ -7,19 +7,87 @@
         <field name="sequence">10</field>
     </record>
 
-    <!-- After Sales Department Group -->
-    <record id="group_after_sales_department" model="res.groups">
-        <field name="name">After Sales Department</field>
-        <field name="category_id" ref="access_logistics_category"/>
-        <field name="users" eval="[(4, ref('base.group_user'))]"/>
-        <field name="comment">Users with access to after sales operations</field>
+    <record model="ir.module.category" id="after_sales_category">
+        <field name="name">After Sales</field>
+        <field name="description">After Sales access management</field>
+        <field name="sequence">10</field>
+        <field name="parent_id" ref="access_logistics_category"/>
     </record>
 
-    <!-- Repair Department Group -->
-    <record id="group_repair_department" model="res.groups">
-        <field name="name">Repair Department</field>
-        <field name="category_id" ref="access_logistics_category"/>
-        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
-        <field name="comment">Users with access to repair operations</field>
+    <!-- After Sales Department Groups -->
+    <record id="group_after_sales_viewer" model="res.groups">
+        <field name="name">After Sales Viewer</field>
+        <field name="category_id" ref="after_sales_category"/>
+        <field name="comment">Read-only access to after sales operations.</field>
+    </record>
+
+    <record id="group_after_sales_user" model="res.groups">
+        <field name="name">After Sales User</field>
+        <field name="category_id" ref="after_sales_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_after_sales_viewer')), (4, ref('quality.group_quality_user'))]"/>
+        <field name="comment">Basic access to after sales operations. Includes Quality User access.</field>
+    </record>
+
+    <record id="group_after_sales_manager" model="res.groups">
+        <field name="name">After Sales Manager</field>
+        <field name="category_id" ref="after_sales_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_after_sales_user')), (4, ref('quality.group_quality_manager'))]"/>
+        <field name="comment">Full access to after sales operations. Includes Quality Manager access.</field>
+    </record>
+
+    <record model="ir.module.category" id="repair_category">
+        <field name="name">Repair</field>
+        <field name="description">Repair access management</field>
+        <field name="sequence">10</field>
+        <field name="parent_id" ref="access_logistics_category"/>
+    </record>
+
+    <!-- Repair Department Groups -->
+    <record id="group_repair_viewer" model="res.groups">
+        <field name="name">Repair Viewer</field>
+        <field name="category_id" ref="repair_category"/>
+        <field name="comment">Read-only access to repair operations.</field>
+    </record>
+
+    <record id="group_repair_user" model="res.groups">
+        <field name="name">Repair User</field>
+        <field name="category_id" ref="repair_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_repair_viewer'))]"/>
+        <field name="comment">Basic access to repair operations.</field>
+    </record>
+
+    <record id="group_repair_manager" model="res.groups">
+        <field name="name">Repair Manager</field>
+        <field name="category_id" ref="repair_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_repair_user'))]"/>
+        <field name="comment">Full access to repair operations.</field>
+    </record>
+
+    <record model="ir.module.category" id="warehouse_category">
+        <field name="name">Warehouse</field>
+        <field name="description">Warehouse access management</field>
+        <field name="sequence">10</field>
+        <field name="parent_id" ref="access_logistics_category"/>
+    </record>
+
+    <!-- Warehouse Department Groups -->
+    <record id="group_warehouse_viewer" model="res.groups">
+        <field name="name">Warehouse Viewer</field>
+        <field name="category_id" ref="warehouse_category"/>
+        <field name="comment">Read-only access to warehouse operations.</field>
+    </record>
+
+    <record id="group_warehouse_user" model="res.groups">
+        <field name="name">Warehouse User</field>
+        <field name="category_id" ref="warehouse_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_warehouse_viewer'))]"/>
+        <field name="comment">Basic access to warehouse operations.</field>
+    </record>
+
+    <record id="group_warehouse_manager" model="res.groups">
+        <field name="name">Warehouse Manager</field>
+        <field name="category_id" ref="warehouse_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_warehouse_user'))]"/>
+        <field name="comment">Full access to warehouse operations.</field>
     </record>
 </odoo>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_repair_technician_change_form" model="ir.ui.view">
-        <field name="name">repair.technician.change.form</field>
-        <field name="model">repair.technician.change</field>
+    <record id="view_repair_technician_set_form" model="ir.ui.view">
+        <field name="name">repair.technician.set.form</field>
+        <field name="model">repair.technician.set</field>
         <field name="arch" type="xml">
-            <form string="Change Technician">
+            <form string="Set Technician">
                 <group>
-                    <field name="technician_id"/>
+                    <field name="technician_id" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
                 </group>
                 <footer>
-                    <button string="Change" type="object" name="action_change_technician" class="btn-primary"/>
+                    <button string="Set" type="object" name="action_set_technician" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
