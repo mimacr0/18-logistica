@@ -11,43 +11,107 @@ patch(NavBar.prototype, {
         this.rpc = rpc;
         this.action = useService("action");
         this.ui = useService("ui");
-        
+
         // Cache para saber si es sesión SSO (evita llamadas repetidas)
         this._isSsoSession = null;
-        this._setupHomeMenuInterceptor();
+        this._ssoAction = null;  // Cache de la acción SSO
+
+        // Pre-cargar info SSO al inicio
+        this._preloadSsoInfo();
     },
 
     /**
-     * Configura interceptor para el botón de home menu
+     * Pre-carga la info SSO y configura los interceptores cuando esté lista
      */
-    _setupHomeMenuInterceptor() {
-        // Usar setTimeout para asegurar que el DOM está listo
-        setTimeout(() => {
-            const menuToggle = document.querySelector('.o_menu_toggle');
-            if (menuToggle) {
-                menuToggle.addEventListener('click', async (ev) => {
-                    console.log(menuToggle)
-                    const isMobile = this.ui.isSmall;
-                    if (!isMobile){
-                        const handled = await this._handleSsoRedirect();
-                        if (handled) {
-                            ev.preventDefault();
-                            ev.stopPropagation();
-                        }
-                    }
-                }, true); // Capture phase para interceptar primero
+    async _preloadSsoInfo() {
+        try {
+            await this._checkIsSsoSession();
+            if (this._isSsoSession?.is_sso) {
+                this._ssoAction = await this._getSsoAction();
+                console.log("SSO preloaded:", this._ssoAction);
+
+                if (this.ui.isSmall) {
+                    // MÓVIL: interceptar solo el botón "All Apps" dentro del sidebar
+                    this._setupAllAppsButtonInterceptor();
+                } else {
+                    // DESKTOP: interceptar el botón de apps del navbar
+                    this._setupDesktopAppsMenuInterceptor();
+                }
             }
-        }, 500);
+        } catch (error) {
+            console.error("Error preloading SSO:", error);
+        }
+    },
+
+    /**
+     * MÓVIL: Configura interceptor para el botón "All Apps" dentro del sidebar
+     * Usa event delegation para capturar clicks en elementos dinámicos
+     */
+    _setupAllAppsButtonInterceptor() {
+        // Event listener delegado en el body (capture phase)
+        document.body.addEventListener('click', (ev) => {
+            // Verificar si el click fue en el botón "All Apps" dentro del sidebar
+            const allAppsBtn = ev.target.closest('.o_sidebar_topbar a.btn-primary, .o_sidebar_topbar .btn-primary');
+
+            if (allAppsBtn && this._isSsoSession?.is_sso && this._ssoAction?.url) {
+                console.log("SSO Móvil: Click en 'All Apps' interceptado, redirigiendo...");
+                ev.preventDefault();
+                ev.stopPropagation();
+                ev.stopImmediatePropagation();
+
+                // Cerrar el sidebar antes de redirigir
+                this._closeAppMenuSidebar();
+
+                // Redirigir
+                window.location.href = this._ssoAction.url;
+                return false;
+            }
+        }, true); // Capture phase
+
+        console.log("Móvil: All Apps button interceptor configured");
+    },
+
+    /**
+     * DESKTOP: Configura interceptor para el botón de apps en el navbar
+     */
+    _setupDesktopAppsMenuInterceptor() {
+        setTimeout(() => {
+            // El botón de apps en desktop tiene el icono oi-apps y está en o_navbar_apps_menu
+            // const appsMenuBtn = document.querySelector('.o_navbar_apps_menu button, .o_navbar_apps_menu .dropdown-toggle');
+            const appsMenuBtn = document.querySelector('.o_menu_toggle');
+
+            if (appsMenuBtn && !appsMenuBtn.dataset.ssoIntercepted) {
+                appsMenuBtn.dataset.ssoIntercepted = 'true';
+
+                appsMenuBtn.addEventListener('click', (ev) => {
+                    if (this._isSsoSession?.is_sso && this._ssoAction?.url) {
+                        console.log("SSO Desktop: Click en menú de apps interceptado, redirigiendo...");
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        ev.stopImmediatePropagation();
+                        window.location.href = this._ssoAction.url;
+                        return false;
+                    }
+                }, true); // Capture phase
+
+                console.log("Desktop: Apps menu interceptor configured");
+            }
+        }, 200);
     },
 
     onAllAppsBtnClick() {
-        console.log("onAllAppsBtnClick")
-        super.onAllAppsBtnClick();
-        const isMobile = this.ui.isSmall;
-        if (isMobile){
-            this._handleSsoRedirect();
+        console.log("onAllAppsBtnClick");
+
+        // Verificación SÍNCRONA - si es SSO, redirigir sin abrir menú
+        if (this._isSsoSession?.is_sso && this._ssoAction?.url) {
+            console.log("SSO: Redirigiendo desde onAllAppsBtnClick...");
+            this._closeAppMenuSidebar();
+            window.location.href = this._ssoAction.url;
+            return;  // NO llamar a super
         }
-        this._closeAppMenuSidebar();
+
+        // Si no es SSO, comportamiento normal
+        super.onAllAppsBtnClick();
     },
 
      /**
@@ -99,7 +163,7 @@ patch(NavBar.prototype, {
 
     /**
      * Verifica si la sesión actual fue iniciada por SSO
-     * 
+     *
      * @returns {Object} {is_sso: bool, employee_id: int or null}
      */
     async _checkIsSsoSession() {
@@ -107,7 +171,7 @@ patch(NavBar.prototype, {
         if (this._isSsoSession !== null) {
             return this._isSsoSession;
         }
-        
+
         try {
             const result = await this.rpc("/sso/is_sso_session", {});
             this._isSsoSession = result || { is_sso: false, employee_id: null };
@@ -120,7 +184,7 @@ patch(NavBar.prototype, {
 
     /**
      * Obtiene la acción a ejecutar para usuarios SSO
-     * 
+     *
      * @returns {Object} {is_sso: bool, action: Object or null}
      */
     async _getSsoAction() {
