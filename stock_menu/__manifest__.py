@@ -12,7 +12,7 @@
     'author': 'DaFe Solutions',
     'description': """Modulo para la gestion de stock""",
     'summary': """Menu Stock""",
-    'depends': ['stock', 'client_account'],
+    'depends': ['stock', 'client_account', 'logistics_security'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [

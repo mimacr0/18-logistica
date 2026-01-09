@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- 
+        Menu Security Overrides
+        - Quality menu: Only accessible to After Sales Department
+        - Repair menu: Only accessible to Repair Department
+    -->
+
+    <!-- Quality Menu - Restrict to After Sales Department -->
+    <record id="quality_control.menu_quality_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('logistics_security.group_after_sales_user')])]"/>
+    </record>
+
+    <!-- Repair Menu - Restrict to Repair Department -->
+    <record id="repair.menu_repair_order" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('logistics_security.group_repair_user')])]"/>
+    </record>
+
+    <!-- Custom menu items -->
     <menuitem id="menu_repair_result"
               name="Resultados"
               parent="repair.repair_menu_config"

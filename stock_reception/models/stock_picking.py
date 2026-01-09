@@ -9,7 +9,7 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
-    
+
     # Campo genérico que otros módulos pueden extender
     show_account_partner = fields.Boolean(
         string='Show Account Partner',
@@ -17,7 +17,7 @@ class StockPicking(models.Model):
         store=True,
         help='Determines if account_partner_id should be shown instead of partner_id'
     )
-    
+
     @api.depends('picking_type_id')
     def _compute_show_account_partner(self):
         """
@@ -48,4 +48,13 @@ class StockPicking(models.Model):
             else:
                 picking.partner_id = False
                 picking.owner_id = False
+
+    def button_validate(self):
+        """
+        Override to assign current user as responsible when validating incoming pickings.
+        """
+        for picking in self:
+            if not picking.user_id:
+                picking.user_id = self.env.user
+        return super().button_validate()
 

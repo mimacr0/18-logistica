@@ -12,11 +12,12 @@
     'author': 'DaFe Solutions',
     'description': """Modulo para la gestión de clientes y cuentas en el portal""",
     'summary': """Menu paquetes""",
-    'depends': ['stock', 'client_account', 'stock_delivery'],
+    'depends': ['stock', 'client_account', 'stock_delivery', 'logistics_security'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
         'data/stock_package_sequence.xml',
+        'data/stock_package_type_data.xml',
         'views/stock_quant_package_views.xml',
         'views/menu.xml',
     ],

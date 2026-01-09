@@ -6,6 +6,7 @@
         name="Stock" 
         sequence="5"
         web_icon="stock_menu,static/description/stock_menu.png"
+        groups="logistics_security.group_after_sales_viewer,logistics_security.group_warehouse_viewer"
     />
     <menuitem 
         id="menu_products_stock_menu"
@@ -13,6 +14,7 @@
         sequence="10"
         parent="menu_root_stock_menu"
         action="stock.action_product_stock_view"
+        groups="logistics_security.group_after_sales_viewer,logistics_security.group_warehouse_viewer"
     />
 
 

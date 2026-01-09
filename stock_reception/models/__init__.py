@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import account_partner
 from . import stock_quant
 # from . import stock_quant_package
 from . import stock_picking

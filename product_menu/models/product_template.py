@@ -5,11 +5,6 @@ from odoo import fields, models, api
 class ProductTemplateInherit(models.Model):
     _inherit = 'product.template'
 
-    storage_type = fields.Selection(selection=[
-        ('storage_logistic', 'Storage Logistic'),
-        ('storage_lot', 'Storage Lot'),
-        ('storage_service', 'Storage Service')
-    ], string='Storage Type')
     repair_price = fields.Monetary(string='Repair Price')
     warranty_price = fields.Monetary(string='Warranty Price')
     review_price = fields.Monetary(string='Review Price')

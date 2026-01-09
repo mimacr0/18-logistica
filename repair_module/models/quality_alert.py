@@ -45,7 +45,7 @@ class QualityAlert(models.Model):
         records = super().create(vals_list)
         for record in records:
             record._set_default_stage()
-            # Asignar el leader del equipo como responsable si no se especificó user_id
+                # Asignar el leader del equipo como responsable si no se especificó user_id
             if not record.user_id and record.team_id and record.team_id.leader_id:
                 record.user_id = record.team_id.leader_id
         return records

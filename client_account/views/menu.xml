@@ -15,26 +15,27 @@
         <field name="act_window_id" ref="action_credit_account"/>
     </record>
 
-    <menuitem id="menu_root"
+    <menuitem id="credit_account_menu_root"
               name="Accounts"
               web_icon="client_account,static/description/client_account.png"
+              groups="client_account.group_client_account_user"
               sequence="25"/>
 
     <menuitem id="contacts_account"
               name="Accounts"
-              parent="menu_root"
+              parent="credit_account_menu_root"
               action="action_partner_account"
               sequence="1"/>
 
     <menuitem id="credits_account"
               name="Credits"
-              parent="menu_root"
+              parent="credit_account_menu_root"
               action="action_credit_account"
               sequence="2"/>
 
     <menuitem id="account_partner"
               name="Accounts Partners"
-              parent="menu_root"
+              parent="credit_account_menu_root"
               groups="base.group_no_one"
               action="action_account_partner"
               sequence="3"/>

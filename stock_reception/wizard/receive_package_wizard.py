@@ -42,7 +42,8 @@ class ReceivePackageWizard(models.TransientModel):
                 '|', '|', 
                 ('carrier_tracking_ref', '=', self.search_tracking_ref), 
                 ('global_tracking_ref', '=', self.search_tracking_ref),
-                ('name', '=', self.search_tracking_ref)
+                ('name', '=', self.search_tracking_ref),
+                ('state', 'in', ['on_hold', 'planned', 'in_progress'])  # Solo pendientes
                 ], limit=1)
         
             self.package_id = package_id.id
@@ -94,12 +95,19 @@ class ReceivePackageWizard(models.TransientModel):
         # 2. Obtiene el picking asociado
         picking = move_line.move_id.picking_id
         
-        # 3. Valida el picking (confirma la recepción)
+        # 3. Asigna el receptor como responsable del picking
+        if self.receiver_id and self.receiver_id.user_id:
+            picking.user_id = self.receiver_id.user_id
+        
+        # 4. Valida el picking (confirma la recepción)
         picking.button_validate()
         
-        # 4. Adjunta las imágenes capturadas
+        # 5. Cambia el estado del paquete a "done"
+        self.package_id.state = 'done'
+        
+        # 6. Adjunta las imágenes capturadas
         self.attach_images()
         
-        # 5. Vuelve a abrir el wizard para escanear otro paquete
+        # 7. Vuelve a abrir el wizard para escanear otro paquete
         action = self.env.ref('stock_reception.action_receive_package_server').read()[0]
         return action

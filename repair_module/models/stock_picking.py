@@ -137,19 +137,21 @@ class StockPicking(models.Model):
                         if not move_line.lot_id:
                             raise ValidationError(_("There are no selected lots"))
                         # Si tracking es 'serial', solo puede haber un lote por línea
+                        # Usar location_dest_id porque el producto ya fue movido ahí
                         RepairOrder.create({
                             **common_vals,
                             'product_qty': 1.0,
                             'lot_id': move_line.lot_id.id,
                             'lifecycle_state': move_line.lot_id.lifecycle_state,
-                            'product_location_src_id': move_line.location_id.id or picking.location_id.id,
+                            'product_location_src_id': move_line.location_dest_id.id or picking.location_dest_id.id,
                         })
                     elif tracking == 'none':
                         # Para productos sin serial, usar directamente line.quantity
+                        # Usar location_dest_id porque el producto ya fue movido ahí
                         RepairOrder.create({
                             **common_vals,
                             'product_qty': line.quantity,
-                            'product_location_src_id': line.location_id.id or picking.location_id.id,
+                            'product_location_src_id': line.location_dest_id.id or picking.location_dest_id.id,
                         })
 
                 except Exception as e:
