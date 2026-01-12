@@ -22,3 +22,12 @@ def _stock_expedition_initial_data(env):
         warehouses.write({
             'delivery_steps': 'pick_pack_ship',
         })
+
+    # 3. Activar filtro de direcciones de envío en tipos Pick, Pack, Out
+    expedition_types = env['stock.picking.type'].search([
+        ('barcode', 'in', ['NV1PICK', 'NV1PACK', 'NV1OUT'])
+    ])
+    if expedition_types:
+        expedition_types.write({
+            'use_delivery_address_domain': True,
+        })

@@ -10,6 +10,7 @@
     'category': 'Settings',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
+    'maintainer': 'DaFe Solutions',
     'description': """Modulo para la gestion de stock""",
     'summary': """Menu Stock""",
     'depends': ['stock', 'client_account', 'logistics_security'],
