@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Aplicar dominios de ubicaciones permitidas en stock.picking -->
+    <record id="view_picking_form_allowed_locations" model="ir.ui.view">
+        <field name="name">stock.picking.form.allowed.locations</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="allowed_location_ids" invisible="1"/>
+                <field name="allowed_location_dest_ids" invisible="1"/>
+            </xpath>
+            <!-- Aplicar dominio a location_id visible (el que tiene options) -->
+            <xpath expr="//field[@name='location_id'][@options]" position="attributes">
+                <attribute name="domain">[('id', 'in', allowed_location_ids)] if allowed_location_ids else []</attribute>
+            </xpath>
+            <!-- Aplicar dominio a location_dest_id visible (el que tiene options) -->
+            <xpath expr="//field[@name='location_dest_id'][@options]" position="attributes">
+                <attribute name="domain">[('id', 'in', allowed_location_dest_ids)] if allowed_location_dest_ids else []</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
