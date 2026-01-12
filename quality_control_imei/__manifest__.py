@@ -10,6 +10,7 @@
     'category': 'Inventory',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
+    'maintainer': 'DaFe Solutions',
     'description': """Modulo para el control de calidad de IMEI con validacion via API""",
     'summary': """Quality Control IMEI with API Validation""",
     'depends': ['stock', 'quality_control'],

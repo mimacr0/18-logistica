@@ -10,6 +10,7 @@
     'category': 'Settings',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
+    'maintainer': 'DaFe Solutions',
     'description': """Modulo para la gestión de clientes y cuentas en el portal""",
     'summary': """Menu paquetes""",
     'depends': ['stock', 'client_account', 'stock_delivery', 'logistics_security'],
