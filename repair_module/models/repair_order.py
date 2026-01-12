@@ -158,7 +158,10 @@ class RepairOrder(models.Model):
             raise ValidationError(_("No se encontraron las ubicaciones 'Repairs' o 'Stock a reubicar'. Actualiza el módulo repair_module."))
 
         # --- Crear el Picking (transferencia interna) ---
-        picking_type = self.env['stock.picking.type'].search([('barcode', '=', 'WHINT')], limit=1)
+        picking_type = self.env.ref('repair_module.stock_picking_type_return_from_repair', raise_if_not_found=False)
+        if not picking_type:
+            raise ValidationError(_("No se encontró el tipo de operación 'Return from Repair'. Actualiza el módulo repair_module."))
+        
         picking_vals = {
             'account_partner_id': self.account_partner_id.id,
             'partner_id': self[:1].partner_id.id if self[:1].partner_id else False,

@@ -10,7 +10,7 @@
     'category': 'All',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
-    'maintainer': 'Angel Zhou Hu',
+    'maintainer': 'Angel Zhou Hu, DaFe Solutions',
     'description': """Module to admin repairs""",
     'summary': """
         Este es un ejemplo de como debería ser una descripción de un módulo
@@ -20,7 +20,7 @@
           donde tendremos una carpeta para el JS 'static/src/js', otra para los QWeb 'static/src/xml'
           y otra para los estilos 'static/src/scss'.
     """,
-    'depends': ['base', 'client_account', 'repair', 'stock_expedition', 'logistics_security'],
+    'depends': ['base', 'client_account', 'repair', 'stock_expedition', 'logistics_security', 'stock_internal'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
@@ -34,6 +34,7 @@
         'views/stock_lot_views.xml',
         'views/stock_picking_views.xml',
         'wizard/repair_technician_change_wizard.xml',
+        'wizard/quality_alert_cancel_wizard.xml',
         'security/ir.model.access.csv',
         'security/repair_access_override.xml',
         'security/repair_rules.xml',
@@ -42,4 +43,5 @@
     'installable': True, #Este campo se debe cambiar a True cuando se quiera que el modulo sea instalable
     'auto_install': False,
     'application': False,
+    'post_init_hook': 'post_init_hook',
 }

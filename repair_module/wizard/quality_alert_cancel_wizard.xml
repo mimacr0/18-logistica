@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="quality_alert_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">quality.alert.cancel.wizard.form</field>
+        <field name="model">quality.alert.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancelar Alerta de Calidad">
+                <group>
+                    <field name="alert_id" invisible="1"/>
+                    <field name="has_done_pickings" invisible="1"/>
+                    <field name="has_repairs" invisible="1"/>
+                    <div class="alert alert-warning" role="alert" invisible="not has_done_pickings">
+                        <strong>Atención:</strong> Esta alerta tiene movimientos de stock ya completados.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not has_repairs">
+                        <strong>Atención:</strong> Esta alerta tiene órdenes de reparación/revisión asociadas que también serán canceladas.
+                    </div>
+                    <field name="reason" placeholder="Ingrese el motivo de la cancelación..."/>
+                </group>
+                <footer>
+                    <button name="action_confirm_cancel" string="Confirmar Cancelación" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_quality_alert_cancel_wizard" model="ir.actions.act_window">
+        <field name="name">Cancelar Alerta</field>
+        <field name="res_model">quality.alert.cancel.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
