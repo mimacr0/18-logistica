@@ -9,7 +9,7 @@
                 <button name="action_create_move_to_repair" type="object" string="Move To Repair" invisible="not is_repair or picking_ids or stage_id != %(repair_module.quality_alert_stage_received)d"/>
                 <button name="toggle_lock" type="object" string="Lock" class="oe_highlight" invisible="is_locked or not is_repair"/>
                 <button name="toggle_lock" type="object" string="Unlock" class="oe_highlight" invisible="not is_locked or not is_repair"/>
-                <button name="action_cancel" type="object" string="Cancelar" class="btn-secondary" invisible="not is_repair or stage_id == %(repair_module.quality_alert_stage_repair_cancelled)d"/>
+                <button name="action_cancel" type="object" string="Cancel" class="btn-secondary" invisible="not is_repair or stage_id == %(repair_module.quality_alert_stage_repair_cancelled)d"/>
             </header>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="open_stock_picking" type="object" class="oe_stat_button" icon="fa-bell" invisible="stock_picking_count == 0 or not is_repair">

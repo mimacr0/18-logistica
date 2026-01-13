@@ -14,7 +14,7 @@ class RepairDiagnosis(models.Model):
     
     lot_ids = fields.Many2many(
         comodel_name='stock.lot',
-        string='Lotes relacionados',
+        string='Related Lots',
         relation='stock_lot_repair_diagnosis_rel',
         column1='diagnosis_id',
         column2='lot_id'

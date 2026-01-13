@@ -15,7 +15,7 @@ class QualityAlert(models.Model):
 
     allowed_lot_ids = fields.Many2many('stock.lot', string='Lotes permitidos', compute='_compute_allowed_lot_ids')
     lot_id = fields.Many2one('stock.lot', 'Lot', check_company=True, domain="[('id', 'in', allowed_lot_ids)]")
-    repair_order_ids = fields.One2many(comodel_name='repair.order', inverse_name='repair_alert_id', string='Órdenes de reparación vinculadas')
+    repair_order_ids = fields.One2many(comodel_name='repair.order', inverse_name='repair_alert_id', string='Linked Repair Orders')
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
     maintenance_type = fields.Selection(MAINTENANCE_TYPE, string='Maintenance Type')
     quantity = fields.Integer(string='Quantity')
@@ -171,8 +171,10 @@ class QualityAlert(models.Model):
         if pickings_to_cancel:
             pickings_to_cancel.action_cancel()
         
-        # Crear movimiento de retorno si el producto está en una ubicación diferente a Stock
-        self._create_return_from_repair_picking()
+        # Crear movimiento de retorno SOLO si hay pickings completados (producto ya movido a Repairs)
+        done_pickings = self.picking_ids.filtered(lambda p: p.state == 'done')
+        if done_pickings:
+            self._create_return_from_repair_picking()
         
         # Cancelar reparaciones asociadas
         if self.repair_order_ids:
@@ -204,7 +206,7 @@ class QualityAlert(models.Model):
             )
 
     def _create_return_from_repair_picking(self):
-        """Crea un picking de retorno para devolver productos desde su ubicación actual a Stock."""
+        """Crea un picking de retorno para devolver productos desde ubicaciones de reparación a Stock."""
         self.ensure_one()
         
         return_picking_type = self.env.ref('repair_module.stock_picking_type_return_from_repair', raise_if_not_found=False)
@@ -215,57 +217,64 @@ class QualityAlert(models.Model):
         if not stock_location:
             return False
         
-        # Buscar la ubicación ACTUAL del producto/lote usando quants
-        move_lines_data = []
+        # Ubicaciones relacionadas con reparaciones
+        repairs_location = self.env.ref('repair_module.stock_location_repairs', raise_if_not_found=False)
+        to_relocate_location = self.env.ref('repair_module.stock_location_to_relocate', raise_if_not_found=False)
         
-        if self.lot_id:
-            # Si hay lote, buscar quants del lote en ubicaciones internas
-            quants = self.env['stock.quant'].search([
-                ('lot_id', '=', self.lot_id.id),
-                ('location_id.usage', '=', 'internal'),
-                ('quantity', '>', 0),
-            ])
-            for quant in quants:
-                move_lines_data.append({
-                    'product_id': quant.product_id.id,
-                    'quantity': quant.quantity,
-                    'lot_id': quant.lot_id.id,
-                    'location_src_id': quant.location_id.id,
-                    'location_dest_id': stock_location.id,
-                })
-        elif self.product_id:
-            # Sin lote, buscar por producto
-            quants = self.env['stock.quant'].search([
-                ('product_id', '=', self.product_id.id),
-                ('location_id.usage', '=', 'internal'),
-                ('location_id', '!=', stock_location.id),
-                ('quantity', '>', 0),
-            ])
-            for quant in quants:
-                move_lines_data.append({
-                    'product_id': quant.product_id.id,
-                    'quantity': quant.quantity,
-                    'lot_id': quant.lot_id.id if quant.lot_id else False,
-                    'location_src_id': quant.location_id.id,
-                    'location_dest_id': stock_location.id,
-                })
+        repair_location_ids = []
+        if repairs_location:
+            repair_location_ids.append(repairs_location.id)
+        if to_relocate_location:
+            repair_location_ids.append(to_relocate_location.id)
         
-        if not move_lines_data:
+        if not repair_location_ids:
             return False
+        
+        # Buscar quants solo en ubicaciones de reparación
+        domain = [
+            ('product_id', '=', self.product_id.id),
+            ('location_id', 'in', repair_location_ids),
+            ('quantity', '>', 0),
+        ]
+        if self.lot_id:
+            domain.append(('lot_id', '=', self.lot_id.id))
+        
+        quants = self.env['stock.quant'].search(domain)
+        
+        if not quants:
+            return False
+        
+        # Usar la cantidad de la alerta, no toda la cantidad del quant
+        quantity_to_return = self.quantity or 1
+        
+        # Tomar el primer quant con stock (priorizar Repairs sobre Stock a reubicar)
+        quant = quants.filtered(lambda q: q.location_id == repairs_location)[:1] or quants[:1]
+        
+        move_lines_data = [{
+            'product_id': quant.product_id.id,
+            'quantity': min(quantity_to_return, quant.quantity),
+            'lot_id': quant.lot_id.id if quant.lot_id else False,
+            'location_src_id': quant.location_id.id,
+            'location_dest_id': stock_location.id,
+        }]
         
         # Usar las ubicaciones del primer movimiento para la cabecera del picking
         first_line = move_lines_data[0]
         
         # Crear el picking de retorno
-        return_picking = self.env['stock.picking'].create({
-            'account_partner_id': self.account_partner_id.id if self.account_partner_id else False,
+        picking_vals = {
             'partner_id': self.partner_id.id if self.partner_id else False,
-            'origin': _('Cancelación %s') % self.name,
+            'origin': _('Cancellation %s') % self.name,
             'picking_type_id': return_picking_type.id,
             'location_id': first_line['location_src_id'],
             'location_dest_id': first_line['location_dest_id'],
             'quality_alert_ids': [(4, self.id)],
-        })
+        }
+        # Añadir campo opcional si existe
+        if 'account_partner_id' in self.env['stock.picking']._fields:
+            picking_vals['account_partner_id'] = self.account_partner_id.id if self.account_partner_id else False
+        
+        return_picking = self.env['stock.picking'].create(picking_vals)
         
         # Crear los movimientos
         for line_data in move_lines_data:
@@ -356,7 +365,8 @@ class QualityAlert(models.Model):
         if not self.product_id:
             raise ValidationError(_('A product must be selected.'))
 
-        if not self.account_partner_id:
+        # Validar account_partner solo si el campo existe
+        if 'account_partner_id' in self._fields and not self.account_partner_id:
             raise ValidationError(_('An account partner must be selected.'))
 
         # Validación de lot solo si el producto es serial/lot
@@ -366,16 +376,21 @@ class QualityAlert(models.Model):
         picking_type = self.env.ref('repair_module.stock_picking_type_move_to_repair')
         total_qty_to_move = self.quantity
         
-        picking = self.env['stock.picking'].create({
-            'account_partner_id': self.account_partner_id.id,
+        picking_vals = {
             'partner_id': self.partner_id.id if self.partner_id else False,
             'origin': self.name,
             'picking_type_id': picking_type.id,
-            'location_id': picking_type.default_location_src_id.id,  # From picking type configuration
+            'location_id': picking_type.default_location_src_id.id,
             'location_dest_id': picking_type.default_location_dest_id.id,
             'quality_alert_ids': [(6, 0, [self.id])],
-            'maintenance_type': self.maintenance_type,
-        })
+        }
+        # Añadir campos opcionales si existen en el modelo
+        if 'account_partner_id' in self.env['stock.picking']._fields:
+            picking_vals['account_partner_id'] = self.account_partner_id.id if self.account_partner_id else False
+        if 'maintenance_type' in self.env['stock.picking']._fields:
+            picking_vals['maintenance_type'] = self.maintenance_type
+        
+        picking = self.env['stock.picking'].create(picking_vals)
     
         quants = self._get_quants_for_move(location_id=location_id)
         for quant in quants:
