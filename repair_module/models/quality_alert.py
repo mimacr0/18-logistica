@@ -4,13 +4,10 @@
 #
 ##############################################################################
 
-import logging
 from markupsafe import Markup
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from .choices import MAINTENANCE_TYPE, LIFECYCLE_STATE
-
-_logger = logging.getLogger(__name__)
 
 
 class QualityAlert(models.Model):
@@ -93,24 +90,14 @@ class QualityAlert(models.Model):
     def _update_picking_lines(self, old_product=None):
         """Actualiza el producto, lote y cantidad en los pickings relacionados si son editables."""
         self.ensure_one()
-        _logger.info('=== _update_picking_lines START ===')
-        _logger.info('Alert: %s, Product: %s, Lot: %s, Quantity: %s', 
-                     self.name, 
-                     self.product_id.name if self.product_id else None,
-                     self.lot_id.name if self.lot_id else None,
-                     self.quantity)
-        _logger.info('Producto anterior: %s', old_product.name if old_product else None)
 
         if not self.picking_ids:
-            _logger.info('Sin pickings relacionados, saliendo')
             return
 
         # Verificar si hay pickings no editables (done o cancelled)
         non_editable_pickings = self.picking_ids.filtered(lambda p: p.state in ('done', 'cancel'))
-        _logger.info('Pickings no editables: %s', non_editable_pickings.mapped('name') if non_editable_pickings else 'Ninguno')
         
         if non_editable_pickings:
-            _logger.warning('Hay pickings no editables, lanzando error')
             raise ValidationError(_(
                 'No se puede modificar porque hay pickings en estado finalizado o cancelado: %s'
             ) % ', '.join(non_editable_pickings.mapped('name')))
@@ -119,11 +106,8 @@ class QualityAlert(models.Model):
         search_product = old_product if old_product else self.product_id
 
         for picking in self.picking_ids:
-            _logger.info('Procesando picking: %s (state: %s)', picking.name, picking.state)
-            
             # Buscar moves del producto
             moves = picking.move_ids.filtered(lambda m: m.product_id == search_product)
-            _logger.info('Moves encontrados: %s', len(moves))
             
             if moves:
                 # Actualizar stock.move
@@ -132,13 +116,11 @@ class QualityAlert(models.Model):
                     'product_uom_qty': self.quantity or 1,
                     'name': self.product_id.display_name,
                 }
-                _logger.info('Actualizando moves con: %s', move_vals)
                 moves.write(move_vals)
                 
                 # Actualizar stock.move.line
                 for move in moves:
                     move_lines = move.move_line_ids
-                    _logger.info('Move lines en move %s: %s', move.id, len(move_lines))
                     if move_lines:
                         line_vals = {
                             'product_id': self.product_id.id,
@@ -146,10 +128,7 @@ class QualityAlert(models.Model):
                         }
                         if self.lot_id:
                             line_vals['lot_id'] = self.lot_id.id
-                        _logger.info('Actualizando move lines con: %s', line_vals)
                         move_lines.write(line_vals)
-        
-        _logger.info('=== _update_picking_lines END ===')
         
     def toggle_lock(self):
         """ Alterna el valor de is_locked """
@@ -184,29 +163,21 @@ class QualityAlert(models.Model):
     def _do_cancel(self, reason=None):
         """Ejecuta la cancelación de la alerta y sus elementos relacionados."""
         self.ensure_one()
-        _logger.info('=== _do_cancel START ===')
-        _logger.info('Alert: %s, Reason: %s', self.name, reason)
         
         cancelled_stage = self.env.ref('repair_module.quality_alert_stage_repair_cancelled', raise_if_not_found=False)
         
         # Cancelar pickings no completados
         pickings_to_cancel = self.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
         if pickings_to_cancel:
-            _logger.info('Cancelando pickings: %s', pickings_to_cancel.mapped('name'))
             pickings_to_cancel.action_cancel()
         
-        # Crear movimiento inverso para pickings ya completados (de Repairs a Stock)
-        done_pickings = self.picking_ids.filtered(lambda p: p.state == 'done')
-        if done_pickings:
-            return_picking = self._create_return_from_repair_picking(done_pickings)
-            if return_picking:
-                _logger.info('Creado picking de retorno: %s', return_picking.name)
+        # Crear movimiento de retorno si el producto está en una ubicación diferente a Stock
+        self._create_return_from_repair_picking()
         
         # Cancelar reparaciones asociadas
         if self.repair_order_ids:
             repairs_to_cancel = self.repair_order_ids.filtered(lambda r: r.state != 'cancel')
             if repairs_to_cancel:
-                _logger.info('Cancelando reparaciones: %s', repairs_to_cancel.mapped('name'))
                 repairs_to_cancel.action_repair_cancel()
         
         # Cambiar stage a cancelado
@@ -231,35 +202,59 @@ class QualityAlert(models.Model):
                 message_type='comment',
                 subtype_xmlid='mail.mt_note',
             )
-        
-        _logger.info('=== _do_cancel END ===')
 
-    def _create_return_from_repair_picking(self, done_pickings):
-        """Crea un picking de retorno para devolver productos de Reparaciones a Stock."""
+    def _create_return_from_repair_picking(self):
+        """Crea un picking de retorno para devolver productos desde su ubicación actual a Stock."""
         self.ensure_one()
-        _logger.info('=== _create_return_from_repair_picking START ===')
         
         return_picking_type = self.env.ref('repair_module.stock_picking_type_return_from_repair', raise_if_not_found=False)
         if not return_picking_type:
-            _logger.warning('No se encontró el tipo de operación Return from Repair')
             return False
         
-        # Recopilar todas las líneas de movimiento de los pickings completados
+        stock_location = self.env.ref('stock.stock_location_stock', raise_if_not_found=False)
+        if not stock_location:
+            return False
+        
+        # Buscar la ubicación ACTUAL del producto/lote usando quants
         move_lines_data = []
-        for picking in done_pickings:
-            for move in picking.move_ids.filtered(lambda m: m.state == 'done'):
-                for move_line in move.move_line_ids:
-                    move_lines_data.append({
-                        'product_id': move_line.product_id.id,
-                        'quantity': move_line.quantity,
-                        'lot_id': move_line.lot_id.id if move_line.lot_id else False,
-                        'location_src_id': move_line.location_dest_id.id,  # Invertido: destino original → origen
-                        'location_dest_id': move_line.location_id.id,  # Invertido: origen original → destino
-                    })
+        
+        if self.lot_id:
+            # Si hay lote, buscar quants del lote en ubicaciones internas
+            quants = self.env['stock.quant'].search([
+                ('lot_id', '=', self.lot_id.id),
+                ('location_id.usage', '=', 'internal'),
+                ('quantity', '>', 0),
+            ])
+            for quant in quants:
+                move_lines_data.append({
+                    'product_id': quant.product_id.id,
+                    'quantity': quant.quantity,
+                    'lot_id': quant.lot_id.id,
+                    'location_src_id': quant.location_id.id,
+                    'location_dest_id': stock_location.id,
+                })
+        elif self.product_id:
+            # Sin lote, buscar por producto
+            quants = self.env['stock.quant'].search([
+                ('product_id', '=', self.product_id.id),
+                ('location_id.usage', '=', 'internal'),
+                ('location_id', '!=', stock_location.id),
+                ('quantity', '>', 0),
+            ])
+            for quant in quants:
+                move_lines_data.append({
+                    'product_id': quant.product_id.id,
+                    'quantity': quant.quantity,
+                    'lot_id': quant.lot_id.id if quant.lot_id else False,
+                    'location_src_id': quant.location_id.id,
+                    'location_dest_id': stock_location.id,
+                })
         
         if not move_lines_data:
-            _logger.info('No hay líneas para crear el retorno')
             return False
+        
+        # Usar las ubicaciones del primer movimiento para la cabecera del picking
+        first_line = move_lines_data[0]
         
         # Crear el picking de retorno
         return_picking = self.env['stock.picking'].create({
@@ -267,8 +262,8 @@ class QualityAlert(models.Model):
             'partner_id': self.partner_id.id if self.partner_id else False,
             'origin': _('Cancelación %s') % self.name,
             'picking_type_id': return_picking_type.id,
-            'location_id': return_picking_type.default_location_src_id.id,
-            'location_dest_id': return_picking_type.default_location_dest_id.id,
+            'location_id': first_line['location_src_id'],
+            'location_dest_id': first_line['location_dest_id'],
             'quality_alert_ids': [(4, self.id)],
         })
         
@@ -303,7 +298,6 @@ class QualityAlert(models.Model):
         # Confirmar el picking para reservar
         return_picking.action_confirm()
         
-        _logger.info('=== _create_return_from_repair_picking END ===')
         return return_picking
 
     def _set_default_stage(self):
@@ -361,6 +355,9 @@ class QualityAlert(models.Model):
 
         if not self.product_id:
             raise ValidationError(_('A product must be selected.'))
+
+        if not self.account_partner_id:
+            raise ValidationError(_('An account partner must be selected.'))
 
         # Validación de lot solo si el producto es serial/lot
         if self.product_id.tracking in ['serial', 'lot'] and not self.lot_id:
