@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from datetime import time
 from pytz import timezone
 import pytz
@@ -15,104 +15,123 @@ class HrAttendance(models.Model):
             ('justified_abs', 'Justified Absence'),
         ], string='Delay Status', compute='_compute_delay_status_float', store=True)
 
+    def action_recalculate_delay_status(self):
+        """
+        Server action to recalculate delay_status for selected attendances.
+        Can be called from tree view action or form view button.
+        """
+        if self:
+            self._compute_delay_status_float()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Recalculation Complete'),
+                'message': _('%d attendance(s) recalculated.') % len(self),
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+
+    def action_recalculate_all_delay_status(self):
+        """
+        Server action to recalculate delay_status for ALL attendances.
+        """
+        all_attendances = self.search([])
+        if all_attendances:
+            all_attendances._compute_delay_status_float()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Recalculation Complete'),
+                'message': _('%d attendance(s) recalculated.') % len(all_attendances),
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+
+    def _float_to_time(self, hour_float):
+        """Convert float hour to time object (e.g., 9.5 = 9:30)"""
+        hour_int = int(hour_float)
+        minute_int = int((hour_float - hour_int) * 60)
+        return time(hour_int, minute_int)
+
+    def _get_employee_calendar(self, employee):
+        """Get the resource calendar for an employee (from contract or employee)"""
+        if not employee:
+            return None
+        return employee.contract_id.resource_calendar_id or employee.resource_calendar_id
+
+    def _get_delay_settings(self, employee):
+        """
+        Get delay settings from employee's resource calendar.
+        
+        Returns: (allowed_entry_float, minor_delay_float) or (None, None) if not configured
+        """
+        calendar = self._get_employee_calendar(employee)
+        if calendar and calendar.allowed_entry_time and calendar.minor_delay_limit:
+            return calendar.allowed_entry_time, calendar.minor_delay_limit
+        return None, None
+
+    def _get_leave_for_date(self, employee, check_in_date):
+        """Get approved leave for employee on a specific date"""
+        if not employee:
+            return None
+        return self.env['hr.leave'].sudo().search([
+            ('employee_id', '=', employee.id),
+            ('request_date_from', '<=', check_in_date),
+            ('request_date_to', '>=', check_in_date),
+            ('state', '=', 'validate'),
+        ], limit=1, order='id desc')
+
     @api.depends('check_in')
     def _compute_delay_status_float(self):
-        params = self.env['ir.config_parameter'].sudo()
-
-        # Leer los valores de configuración como float (ya calculados en settings)
-        allowed_entry_float_str = params.get_param('attendance.allowed_entry_time_float')
-        minor_delay_float_str = params.get_param('attendance.minor_delay_limit_float')
-
-        # Convertir strings a float
-        allowed_entry_float = float(allowed_entry_float_str) if allowed_entry_float_str else 8.5
-        minor_delay_float = float(minor_delay_float_str) if minor_delay_float_str else 9.0
-
-        # Convertir float a time (ej: 9.5 = 9:30)
-        def float_to_time(hour_float):
-            hour_int = int(hour_float)
-            minute_int = int((hour_float - hour_int) * 60)
-            return time(hour_int, minute_int)
-
-        allowed_time_default = float_to_time(allowed_entry_float)
-        minor_time_default = float_to_time(minor_delay_float)
-
         for record in self:
             if not record.check_in:
                 record.delay_status = False
                 continue
 
-            # Obtener la zona horaria del empleado o del calendario
-            if record.employee_id:
-                calendar = record.employee_id.resource_calendar_id or record.employee_id.company_id.resource_calendar_id
-                tz_name = calendar.tz if calendar and calendar.tz else (record.employee_id.tz or self.env.user.tz or 'UTC')
-            else:
-                tz_name = self.env.user.tz or 'UTC'
+            employee = record.employee_id
             
-            # Convertir check_in de UTC a la zona horaria del empleado
-            tz = timezone(tz_name) if tz_name else pytz.utc
-            # check_in está almacenado en UTC (naive datetime), convertirlo a timezone-aware y luego a la zona del empleado
-            if record.check_in.tzinfo is None:
-                # Si es naive, asumir que está en UTC
-                check_in_utc = pytz.utc.localize(record.check_in)
-            else:
-                check_in_utc = record.check_in.astimezone(pytz.utc)
+            # Get delay settings from resource calendar
+            allowed_entry_float, minor_delay_float = self._get_delay_settings(employee)
             
+            # If no settings configured, skip delay calculation
+            if not allowed_entry_float or not minor_delay_float:
+                record.delay_status = False
+                continue
+
+            # Get timezone from calendar
+            calendar = self._get_employee_calendar(employee)
+            tz_name = (calendar.tz if calendar else None) or (employee.tz if employee else None) or self.env.user.tz or 'UTC'
+            
+            # Convert check_in from UTC to employee's timezone
+            tz = timezone(tz_name)
+            check_in_utc = pytz.utc.localize(record.check_in) if record.check_in.tzinfo is None else record.check_in.astimezone(pytz.utc)
             check_in_local = check_in_utc.astimezone(tz)
-            check_in_time = check_in_local.time()  # Hora local del empleado
-            check_in_date = check_in_local.date()  # Fecha local de la asistencia
+            check_in_time = check_in_local.time()
+            check_in_date = check_in_local.date()
 
-            # Buscar si hay un permiso (hr.leave) para este empleado y fecha
-            allowed_time = None
-            if record.employee_id:
-                leave = self.env['hr.leave'].sudo().search([
-                    ('employee_id', '=', record.employee_id.id),
-                    ('request_date_from', '<=', check_in_date),
-                    ('request_date_to', '>=', check_in_date),
-                    ('state', '=', 'validate'),
-                ], limit=1, order='id desc')
-                
-                if leave:
-                    # Verificar si es permiso por horas o de medio día por la mañana
-                    if leave.request_unit_hours and leave.request_hour_to:
-                        # Convertir Float a time (ej: 10.5 = 10:30)
-                        hour_to_int = int(leave.request_hour_to)
-                        minute_to_int = int((leave.request_hour_to - hour_to_int) * 60)
-                        allowed_time = time(hour_to_int, minute_to_int)
-                    elif leave.request_unit_half and leave.request_date_from_period == 'am' and leave.request_hour_to:
-                        # Medio día por la mañana: usar request_hour_to
-                        hour_to_int = int(leave.request_hour_to)
-                        minute_to_int = int((leave.request_hour_to - hour_to_int) * 60)
-                        allowed_time = time(hour_to_int, minute_to_int)
+            # Default times from calendar
+            allowed_time = self._float_to_time(allowed_entry_float)
+            minor_time = self._float_to_time(minor_delay_float)
 
-            # Si no hay permiso o no aplica, usar la configuración por defecto
-            if allowed_time is None:
-                allowed_time = allowed_time_default
-                minor_time = minor_time_default
-            else:
-                # Si hay permiso que cambia la hora de entrada, recalcular los límites basándose en esa hora
-                # Leer el campo booleano para saber si debemos recalcular
-                delay_by_check_in_str = params.get_param('attendance.delay_by_check_in', 'True')
-                delay_by_check_in = delay_by_check_in_str.lower() == 'true' if delay_by_check_in_str else True
-                
-                if delay_by_check_in:
-                    # Convertir allowed_time a float para hacer los cálculos
-                    allowed_hour_float = allowed_time.hour + (allowed_time.minute / 60.0)
-                    # Minor delay = allowed_time + 0.5 horas
-                    minor_hour_float = allowed_hour_float + 0.5
-                    # Convertir de vuelta a time
-                    minor_time = float_to_time(minor_hour_float)
-                else:
-                    # Usar los valores configurados manualmente
-                    minor_time = minor_time_default
+            # Check for leave that modifies entry time
+            leave = self._get_leave_for_date(employee, check_in_date)
+            if leave:
+                # Check if it's hourly leave or morning half-day
+                if leave.request_unit_hours and leave.request_hour_to:
+                    allowed_time = self._float_to_time(leave.request_hour_to)
+                    minor_time = self._float_to_time(leave.request_hour_to + 0.5)
+                elif leave.request_unit_half and leave.request_date_from_period == 'am' and leave.request_hour_to:
+                    allowed_time = self._float_to_time(leave.request_hour_to)
+                    minor_time = self._float_to_time(leave.request_hour_to + 0.5)
 
-            # Comparar directamente horas y minutos
+            # Compare times and set status
             if check_in_time <= allowed_time:
                 record.delay_status = 'on_time'
-            # Si llega entre la hora de inicio y el límite de retraso menor: retraso leve
-            elif allowed_time <= check_in_time < minor_time:
+            elif check_in_time < minor_time:
                 record.delay_status = 'minor'
-            # Si llega después del límite menor: ausencia injustificada
             else:
                 record.delay_status = 'unjustified_abs'
-
-

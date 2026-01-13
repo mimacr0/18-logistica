@@ -32,8 +32,8 @@
         'views/dashboard.xml',
         'views/attendance_calendar_view.xml',
         'views/hr_attendance.xml',
-        'views/res_config_settings_view.xml',
         'views/hr_employee.xml',
+        'views/resource_calendar_view.xml',
         'views/hr_holidays_menu.xml',
     ],
     'assets': {
