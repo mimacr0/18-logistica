@@ -1,0 +1,117 @@
+# -*- coding: utf-8 -*-
+
+from odoo import models, _
+from odoo.tools.float_utils import float_compare
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    def _should_exclude_from_auto_serial(self, product):
+        """
+        Hook method to determine if a product should be excluded from auto-serial generation.
+        
+        By default returns False (no exclusions).
+        Other modules (like quality_control_imei) can override this to exclude
+        products that need manual serial entry (e.g., IMEI products).
+        
+        :param product: product.product record
+        :return: True if product should be excluded from auto-serial generation
+        """
+        return False
+
+    def _pre_action_done_hook(self):
+        """
+        Override _pre_action_done_hook to check for missing serial numbers
+        and show wizard for auto-generation before validation.
+        """
+        # Check for products without serials (show wizard)
+        pickings_without_lots = self._check_missing_lots()
+        
+        if pickings_without_lots:
+            # Open wizard to prompt user to generate automated serial numbers
+            wizard = self.env['generate.serial.wizard'].create({
+                'picking_id': pickings_without_lots[0].id,
+            })
+            return {
+                'name': _('Generate Serial Numbers'),
+                'type': 'ir.actions.act_window',
+                'res_model': 'generate.serial.wizard',
+                'view_mode': 'form',
+                'views': [(False, 'form')],
+                'res_id': wizard.id,
+                'target': 'new',
+            }
+
+        # Call parent method to handle other validations
+        return super(StockPicking, self)._pre_action_done_hook()
+
+    def _check_missing_lots(self):
+        """
+        Check for move lines with serial tracking that don't have serial numbers.
+        Only checks products with tracking='serial' (lot tracking is not used).
+        
+        Uses _should_exclude_from_auto_serial() hook to allow other modules
+        to exclude certain products (e.g., IMEI products).
+        
+        Also checks for lines with demand but no quantity done (not yet picked/scanned).
+        """
+        pickings_without_lots = self.browse()
+
+        for picking in self:
+            # Only check pickings that use create or existing lots
+            if not (picking.picking_type_id.use_create_lots or picking.picking_type_id.use_existing_lots):
+                continue
+
+            # Get move lines that need to be checked
+            move_lines = picking.move_line_ids.filtered(
+                lambda ml: ml.state not in ('done', 'cancel')
+            )
+
+            for ml in move_lines:
+                # Only check products with serial tracking
+                if ml.product_id.tracking != 'serial':
+                    continue
+
+                # Check if lot/serial is already provided
+                if ml.lot_id or ml.lot_name:
+                    continue
+
+                # Check hook for exclusions (e.g., IMEI products)
+                if self._should_exclude_from_auto_serial(ml.product_id):
+                    continue
+
+                # Check exclusions (same logic as _exclude_requiring_lot)
+                picking_type_id = ml.move_id.picking_type_id
+                if ml.is_inventory or ml.move_id.scrap_id:
+                    continue
+
+                # If both checkboxes are disabled, allow without lot
+                if picking_type_id and not picking_type_id.use_create_lots and not picking_type_id.use_existing_lots:
+                    continue
+
+                # Check if line has quantity done OR has demand (not yet picked)
+                qty_done = float_compare(ml.quantity, 0, precision_rounding=ml.product_uom_id.rounding) > 0
+                has_demand = ml.move_id and float_compare(ml.move_id.product_uom_qty, 0, precision_rounding=ml.product_uom_id.rounding) > 0
+                
+                if qty_done or has_demand:
+                    pickings_without_lots |= picking
+                    break  # No need to check other lines in this picking
+
+        return pickings_without_lots
+
+    def check_needs_auto_serial(self):
+        """
+        RPC method called from barcode JS to check if there are lines
+        that need automatic serial generation.
+        
+        This is called AFTER save() so scanned lot_names are already in the DB.
+        
+        Returns dict with:
+        - 'needs_wizard': True if wizard should be opened
+        """
+        self.ensure_one()
+        pickings_without_lots = self._check_missing_lots()
+        return {
+            'needs_wizard': bool(pickings_without_lots),
+        }
