@@ -15,10 +15,12 @@
     'website': "https://www.dafe.es",
     'data': [
         'security/ir.model.access.csv',
+        'views/stock_picking_type_views.xml',
         'wizards/generate_serial_wizard_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
+            'stock_barcode_auto_serial/static/src/models/barcode_model.js',
             'stock_barcode_auto_serial/static/src/models/barcode_picking_model.js',
         ]
     },

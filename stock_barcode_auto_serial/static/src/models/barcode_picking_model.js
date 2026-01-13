@@ -10,6 +10,21 @@ import { _t } from "@web/core/l10n/translation";
  */
 patch(BarcodePickingModel.prototype, {
     /**
+     * Check if there are lines that haven't been scanned/picked yet.
+     * Returns true if all lines are picked or if there are no lines.
+     */
+    _hasUnpickedLines() {
+        const lines = this.currentState.lines || [];
+        for (const line of lines) {
+            // Check if line has demand but is not picked
+            if (!line.picked && line.product_uom_qty > 0) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
      * Override validate to check for lines needing auto-serial.
      * If lines need serials, bypass the backorder dialog and let server show the wizard.
      */
@@ -35,6 +50,11 @@ patch(BarcodePickingModel.prototype, {
             // Skip backorder dialog - let server handle the serial wizard first
             console.log('[stock_barcode_auto_serial] Lines need auto-serial, skipping backorder dialog');
             return this._validateDirect();
+        }
+        
+        // Check if there are unpicked lines - if so, show backorder dialog (don't auto-validate)
+        if (this._hasUnpickedLines()) {
+            console.log('[stock_barcode_auto_serial] Has unpicked lines, using normal validation flow');
         }
         
         // No lines need auto-serial, use normal validation flow

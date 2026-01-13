@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, _
+from odoo import models, fields, _
 from odoo.tools.float_utils import float_compare
+from odoo.exceptions import UserError
+
+
+class StockPickingType(models.Model):
+    _inherit = 'stock.picking.type'
+
+    require_scan_confirmation = fields.Boolean(
+        string='Require Scan Confirmation',
+        default=False,
+        help='If enabled, all lines must be scanned/confirmed (picked=True) before validating in barcode.'
+    )
 
 
 class StockPicking(models.Model):
@@ -20,11 +31,55 @@ class StockPicking(models.Model):
         """
         return False
 
+    def _check_unpicked_lines(self):
+        """
+        Check if there are lines that haven't been scanned/picked.
+        Only checks if picking type has require_scan_confirmation enabled.
+        
+        Returns list of unpicked product names.
+        """
+        unpicked_products = []
+        
+        for picking in self:
+            # Only check if require_scan_confirmation is enabled
+            if not picking.picking_type_id.require_scan_confirmation:
+                continue
+            
+            for ml in picking.move_line_ids:
+                if ml.state in ('done', 'cancel'):
+                    continue
+                
+                # Check if line has demand but is not picked
+                has_demand = ml.move_id and float_compare(
+                    ml.move_id.product_uom_qty, 0, 
+                    precision_rounding=ml.product_uom_id.rounding
+                ) > 0
+                
+                if has_demand and not ml.picked:
+                    unpicked_products.append(ml.product_id.display_name)
+        
+        return unpicked_products
+
     def _pre_action_done_hook(self):
         """
         Override _pre_action_done_hook to check for missing serial numbers
         and show wizard for auto-generation before validation.
+        Also checks for unpicked lines if require_scan_confirmation is enabled.
         """
+        # First, check for unpicked lines if require_scan_confirmation is enabled
+        unpicked_products = self._check_unpicked_lines()
+        if unpicked_products:
+            # Limit to first 10 products to avoid huge error messages
+            products_list = unpicked_products[:10]
+            more_text = f"\n... and {len(unpicked_products) - 10} more" if len(unpicked_products) > 10 else ""
+            raise UserError(_(
+                "The following products have not been scanned/confirmed:\n\n"
+                "%(products)s%(more)s\n\n"
+                "Please scan or confirm all products before validating.",
+                products="\n".join(f"- {p}" for p in products_list),
+                more=more_text,
+            ))
+        
         # Check for products without serials (show wizard)
         pickings_without_lots = self._check_missing_lots()
         
