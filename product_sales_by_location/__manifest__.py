@@ -31,7 +31,7 @@
                    "in odoo18",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
+    'maintainer': 'Cybrosys Techno Solutions, DaFe Solutions',
     'website': 'https://www.cybrosys.com',
     'depends': ['sale_management', 'stock', 'portal'],
     'data':

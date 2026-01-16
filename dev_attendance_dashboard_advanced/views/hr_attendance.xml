@@ -24,4 +24,29 @@
             </xpath>
         </field>
     </record>
+
+    <!-- Server Action: Recalculate Delay Status (selected records) -->
+    <record id="action_recalculate_delay_status" model="ir.actions.server">
+        <field name="name">Recalculate Delay Status</field>
+        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="binding_model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    records.action_recalculate_delay_status()
+        </field>
+    </record>
+
+    <!-- Server Action: Recalculate ALL Delay Status -->
+    <record id="action_recalculate_all_delay_status" model="ir.actions.server">
+        <field name="name">Recalculate ALL Delay Status</field>
+        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="binding_model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+env['hr.attendance'].action_recalculate_all_delay_status()
+        </field>
+    </record>
 </odoo>

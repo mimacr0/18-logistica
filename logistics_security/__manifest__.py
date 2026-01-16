@@ -9,7 +9,7 @@
     'name': 'Logistics Security',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
-    'maintainer': 'Mimacro S.L',
+    'maintainer': 'DaFe Solutions',
     'description': """Security groups for logistics modules""",
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",

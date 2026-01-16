@@ -7,6 +7,7 @@
     'category': 'Inventory/Inventory',
     'summary': "Add the support of batch transfers into the barcode view",
     'depends': ['stock_barcode', 'stock_picking_batch'],
+    'maintainer': 'DaFe Solutions',
     'data': [
         'views/stock_barcode_picking.xml',
         'views/stock_barcode_picking_batch.xml',

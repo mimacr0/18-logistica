@@ -23,7 +23,7 @@
     'name': 'Stock Expedition',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
-    'maintainer': 'Mimacro S.L',
+    'maintainer': 'DaFe Solutions',
     'description': """Modulo para la gestión de expediciones""",
     'summary': """Expediciones""",
     'depends': ['sale', 'product_sales_by_location'],
@@ -31,6 +31,8 @@
     'website': "https://www.dafe.es",
     'data': [
         'security/ir.model.access.csv',
+        'views/stock_picking_type_views.xml',
+        'views/stock_picking_views.xml',
         'views/sale_order_views.xml',
         'views/menu.xml',
     ],

@@ -6,6 +6,7 @@
     'category': 'Hidden',
     'summary': 'Odoo Mobile Core module',
     'version': '1.0',
+    'maintainer': 'DaFe Solutions',
     'description': """
 This module provides the core of the Odoo Mobile App.
         """,

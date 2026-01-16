@@ -18,6 +18,7 @@ class StockPicking(models.Model):
         help='Determines if account_partner_id should be shown instead of partner_id'
     )
 
+
     @api.depends('picking_type_id')
     def _compute_show_account_partner(self):
         """
@@ -34,6 +35,11 @@ class StockPicking(models.Model):
         for picking in self:
             # Por defecto, mostrar en recepciones
             picking.show_account_partner = picking.picking_type_id.code == 'incoming' 
+            if picking.picking_type_id.barcode in ['NV1QC', 'NV1STOR']:
+                picking.show_account_partner = True
+            else:
+                picking.show_account_partner = False
+
 
 
     @api.depends('account_partner_id')

@@ -11,6 +11,7 @@
     'version': '18.0.1.0.0',
     'author': 'Dafe Solutions LLC',
     'maintainer': 'Programador 1, Programador 2',
+    'maintainer': 'DaFe Solutions',
     'description': """Base para crear nuevos módulos de Odoo""",
     'summary': """
         Este es un ejemplo de como debería ser una descripción de un módulo

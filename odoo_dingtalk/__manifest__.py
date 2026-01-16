@@ -4,6 +4,7 @@
     'summary': """本模块支持从钉钉中同步联系人数据""",
     'description': """ """,
     'author': "XueFeng.Su",
+    'maintainer': 'DaFe Solutions',
     'website': "https://github.com/cd-feng",
     'category': 'Dingtalk/HR',
     'version': '18.0.0.1',

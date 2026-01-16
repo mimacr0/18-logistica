@@ -6,9 +6,10 @@
         <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
         <field name="arch" type="xml">
             <header position="inside">
-                <button name="action_create_move_to_repair" type="object" string="Move To Repair" invisible="not is_repair or picking_ids"/>
+                <button name="action_create_move_to_repair" type="object" string="Move To Repair" invisible="not is_repair or picking_ids or stage_id != %(repair_module.quality_alert_stage_received)d"/>
                 <button name="toggle_lock" type="object" string="Lock" class="oe_highlight" invisible="is_locked or not is_repair"/>
                 <button name="toggle_lock" type="object" string="Unlock" class="oe_highlight" invisible="not is_locked or not is_repair"/>
+                <button name="action_cancel" type="object" string="Cancel" class="btn-secondary" invisible="not is_repair or stage_id == %(repair_module.quality_alert_stage_repair_cancelled)d"/>
             </header>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="open_stock_picking" type="object" class="oe_stat_button" icon="fa-bell" invisible="stock_picking_count == 0 or not is_repair">
@@ -22,19 +23,23 @@
                 <attribute name="readonly">is_locked</attribute>
             </xpath> 
             <xpath expr="//field[@name='title']" position="after">
-                <field name="account_partner_id" invisible="not is_repair" readonly="is_locked"/>
+                <field name="account_partner_id" invisible="not is_repair" readonly="is_locked or picking_ids"/>
             </xpath>
             <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
-                <attribute name="readonly">is_locked</attribute>
+                <attribute name="readonly">is_locked or picking_ids</attribute>
                 <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
             </xpath>
             <xpath expr="//sheet/group/group/field[@name='product_id']" position="attributes">
-                <attribute name="readonly">is_locked</attribute>
+                <attribute name="readonly">is_locked or picking_ids</attribute>
                 <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="before">
+                <field name="allowed_lot_ids" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='lot_id']" position="attributes">
                 <attribute name="readonly">is_locked</attribute>
                 <attribute name="options">{'no_open': True, 'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="domain">[('id', 'in', allowed_lot_ids)]</attribute>
             </xpath>
             <xpath expr="//field[@name='lot_id']" position="after">
                 <field name="quantity" invisible="not is_repair" readonly="is_locked"/>

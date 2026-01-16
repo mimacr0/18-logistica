@@ -13,7 +13,7 @@
 
         <!-- Stock to Relocate Location: hijo de WH/Stock -->
         <record id="stock_location_to_relocate" model="stock.location">
-            <field name="name">Stock a reubicar</field>
+            <field name="name">Stock to Relocate</field>
             <field name="usage">internal</field>
             <field name="location_id" ref="stock.stock_location_stock"/>
             <field name="company_id" ref="base.main_company"/>

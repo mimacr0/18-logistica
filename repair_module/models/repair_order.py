@@ -8,7 +8,7 @@ class RepairOrder(models.Model):
 
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
     origin = fields.Char(string='Origin')
-    repair_alert_id = fields.Many2one( comodel_name='quality.alert', string='Alerta de Calidad', help='Alerta de calidad que generó este movimiento.')
+    repair_alert_id = fields.Many2one( comodel_name='quality.alert', string='Quality Alert', help='Quality alert that generated this movement.')
     description = fields.Html(string="Problem Description")
     diagnosis_ids = fields.Many2many(comodel_name='repair.diagnosis', string='Diagnosis', relation='repair_order_repair_diagnosis_rel', column1='repair_id', column2='diagnosis_id')
     result_ids = fields.Many2many(comodel_name='repair.result', string='Results', relation='repair_order_repair_result_rel', column1='repair_id', column2='result_id')
@@ -155,10 +155,13 @@ class RepairOrder(models.Model):
         location_dest = self.env.ref('repair_module.stock_location_to_relocate', raise_if_not_found=False)
 
         if not location_src or not location_dest:
-            raise ValidationError(_("No se encontraron las ubicaciones 'Repairs' o 'Stock a reubicar'. Actualiza el módulo repair_module."))
+            raise ValidationError(_("Locations 'Repairs' or 'Stock to relocate' not found. Please update the repair_module."))
 
-        # --- Crear el Picking (transferencia interna) ---
-        picking_type = self.env['stock.picking.type'].search([('barcode', '=', 'WHINT')], limit=1)
+        # --- Create the Picking (internal transfer) ---
+        picking_type = self.env.ref('repair_module.stock_picking_type_return_from_repair', raise_if_not_found=False)
+        if not picking_type:
+            raise ValidationError(_("Operation type 'Return from Repair' not found. Please update the repair_module."))
+        
         picking_vals = {
             'account_partner_id': self.account_partner_id.id,
             'partner_id': self[:1].partner_id.id if self[:1].partner_id else False,

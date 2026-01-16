@@ -29,7 +29,7 @@
                    'passwords or other authentication.',
     'author': 'Cybrosys Techno Solution',
     'company': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solution',
+    'maintainer': 'Cybrosys Techno Solution, DaFe Solutions',
     'website': 'https://www.cybrosys.com',
     'depends': ['web'],
     'data': [

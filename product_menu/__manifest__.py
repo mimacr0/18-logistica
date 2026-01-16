@@ -10,6 +10,7 @@
     'category': 'Settings',
     'version': '18.0.1.0.0',
     'author': 'DaFe Solutions',
+    'maintainer': 'DaFe Solutions',
     'description': """Modulo para la gestión de clientes y cuentas en el portal""",
     'summary': """Menu productos""",
     'depends': ['stock', 'client_account'],
@@ -35,4 +36,5 @@
     'installable': True,
     'auto_install': False,
     'application': False,
+    'post_init_hook': 'post_init_hook',
 }

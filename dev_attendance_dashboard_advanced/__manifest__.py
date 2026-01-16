@@ -10,7 +10,7 @@
     'category': 'Generic Modules/Human Resources',
     'version': '18.0.1.4',
     'author': 'DaFe Solutions',
-    'maintainer': 'Programador 1, Programador 2',
+    'maintainer': 'DaFe Solutions',
     'description': """
         Employee Attendance Monthly Dashboard Odoo App, designed to revolutionize your attendance management. This intuitive app provides a comprehensive attendance dashboard where you can see employees with their job designations and day-wise attendance on one screen. The app displays check-in and check-out times along with the total hours worked each day. If an employee is on leave, it is clearly shown. For weekends, the app manages days off based on the employee's work schedule, and global holidays are also accounted for. If an employee does not have leave, weekend, attendance, or a holiday marked, they are displayed as absent for that day.
 
@@ -32,8 +32,8 @@
         'views/dashboard.xml',
         'views/attendance_calendar_view.xml',
         'views/hr_attendance.xml',
-        'views/res_config_settings_view.xml',
         'views/hr_employee.xml',
+        'views/resource_calendar_view.xml',
         'views/hr_holidays_menu.xml',
     ],
     'assets': {

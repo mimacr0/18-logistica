@@ -12,6 +12,21 @@
             <field name="default_location_src_id" ref="stock.stock_location_stock"/>
             <field name="default_location_dest_id" ref="repair_module.stock_location_repairs"/>
             <field name="use_create_lots">False</field>
+            <field name="allowed_location_dest_ids" eval="[(6, 0, [ref('repair_module.stock_location_repairs')])]"/>
+        </record>
+
+        <!-- Tipo de operación para devolver productos de Reparaciones a Stock (reparación completada o cancelación) -->
+        <record id="stock_picking_type_return_from_repair" model="stock.picking.type">
+            <field name="name">Return from Repair</field>
+            <field name="code">internal</field>
+            <field name="sequence_code">RETREP</field>
+            <field name="reservation_method">at_confirm</field>
+            <field name="barcode">return_repair</field>
+            <field name="create_backorder">never</field>
+            <field name="default_location_src_id" ref="repair_module.stock_location_repairs"/>
+            <field name="default_location_dest_id" ref="repair_module.stock_location_to_relocate"/>
+            <field name="use_create_lots">False</field>
+            <field name="allowed_location_ids" eval="[(6, 0, [ref('repair_module.stock_location_repairs')])]"/>
         </record>
 
         <record id="picking_type_warehouse0_review" model="stock.picking.type">
