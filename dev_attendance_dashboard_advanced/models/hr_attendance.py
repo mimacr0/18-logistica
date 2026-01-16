@@ -57,8 +57,13 @@ class HrAttendance(models.Model):
         minute_int = int((hour_float - hour_int) * 60)
         return time(hour_int, minute_int)
 
-    def _get_employee_calendar(self, employee):
-        """Get the resource calendar for an employee (from contract or employee)"""
+    def _get_employee_calendar(self, employee=None):
+        """Get the resource calendar for an employee (from contract or employee).
+        
+        If employee is not provided, uses self.employee_id (for compatibility with base hr_attendance).
+        """
+        if employee is None:
+            employee = self.employee_id
         if not employee:
             return None
         return employee.contract_id.resource_calendar_id or employee.resource_calendar_id
@@ -95,7 +100,7 @@ class HrAttendance(models.Model):
             employee = record.employee_id
             
             # Get delay settings from resource calendar
-            allowed_entry_float, minor_delay_float = self._get_delay_settings(employee)
+            allowed_entry_float, minor_delay_float = record._get_delay_settings(employee)
             
             # If no settings configured, skip delay calculation
             if not allowed_entry_float or not minor_delay_float:
@@ -103,7 +108,7 @@ class HrAttendance(models.Model):
                 continue
 
             # Get timezone from calendar
-            calendar = self._get_employee_calendar(employee)
+            calendar = record._get_employee_calendar(employee)
             tz_name = (calendar.tz if calendar else None) or (employee.tz if employee else None) or self.env.user.tz or 'UTC'
             
             # Convert check_in from UTC to employee's timezone
@@ -114,19 +119,19 @@ class HrAttendance(models.Model):
             check_in_date = check_in_local.date()
 
             # Default times from calendar
-            allowed_time = self._float_to_time(allowed_entry_float)
-            minor_time = self._float_to_time(minor_delay_float)
+            allowed_time = record._float_to_time(allowed_entry_float)
+            minor_time = record._float_to_time(minor_delay_float)
 
             # Check for leave that modifies entry time
-            leave = self._get_leave_for_date(employee, check_in_date)
+            leave = record._get_leave_for_date(employee, check_in_date)
             if leave:
                 # Check if it's hourly leave or morning half-day
                 if leave.request_unit_hours and leave.request_hour_to:
-                    allowed_time = self._float_to_time(leave.request_hour_to)
-                    minor_time = self._float_to_time(leave.request_hour_to + 0.5)
+                    allowed_time = record._float_to_time(leave.request_hour_to)
+                    minor_time = record._float_to_time(leave.request_hour_to + 0.5)
                 elif leave.request_unit_half and leave.request_date_from_period == 'am' and leave.request_hour_to:
-                    allowed_time = self._float_to_time(leave.request_hour_to)
-                    minor_time = self._float_to_time(leave.request_hour_to + 0.5)
+                    allowed_time = record._float_to_time(leave.request_hour_to)
+                    minor_time = record._float_to_time(leave.request_hour_to + 0.5)
 
             # Compare times and set status
             if check_in_time <= allowed_time:
