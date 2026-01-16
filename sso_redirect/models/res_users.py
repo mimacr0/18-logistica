@@ -10,3 +10,6 @@ SSO_BASE_URL_PARAM = 'sso_redirect.base_url'
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
+    token = fields.Char("Token", readonly=True, copy=False)
+
+

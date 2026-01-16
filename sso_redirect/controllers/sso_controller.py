@@ -4,7 +4,7 @@ import json
 from odoo import http
 from odoo.http import request
 from werkzeug.utils import redirect
-
+import secrets
 
 class SsoController(http.Controller):
 
@@ -22,20 +22,29 @@ class SsoController(http.Controller):
         elif not employee.user_id:
             res = False
             msg = 'Usuario no configurado'
+        else:
+            new_token = secrets.token_hex(32)
+            employee.user_id.token  = new_token
 
-        return json.dumps({'success': res, 'error': msg})
+        return json.dumps({'success': res, 'error': msg, 'token':new_token})
 
     @http.route('/sso/login', type='http', auth='public', csrf=False)
-    def sso_login(self, token=None, domain=None):
-        if not token:
-            return "Token requerido"
+    def sso_login(self, ref=None, domain=None, token=None):
+        if not ref:
+            return "Referencia requerido"
 
         # Buscar empleado por barcode/token
         employee = request.env['hr.employee'].sudo().search([
-            ('barcode', '=', token)
+            ('barcode', '=', ref)
         ], limit=1)
         if not employee or not employee.user_id:
             return "Usuario no existe en este Odoo"
+
+        if not token:
+            return "Token invalido"
+
+        if employee.user_id.token != token:
+            return "Token invalido"
 
         user = employee.user_id
 
