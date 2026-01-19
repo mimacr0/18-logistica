@@ -22,6 +22,8 @@
         'web.assets_backend': [
             'stock_barcode_auto_serial/static/src/models/barcode_model.js',
             'stock_barcode_auto_serial/static/src/models/barcode_picking_model.js',
+            'stock_barcode_auto_serial/static/src/components/main.js',
+            'stock_barcode_auto_serial/static/src/components/main.xml',
         ]
     },
     'images': ['static/description/icon.png'],

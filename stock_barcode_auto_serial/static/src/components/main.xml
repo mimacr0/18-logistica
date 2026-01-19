@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Extend Main template to add Print Barcodes footer -->
+    <t t-inherit="stock_barcode.MainComponent" t-inherit-mode="extension">
+        <!-- Add Print Barcodes footer after the last o_action_buttons footer -->
+        <xpath expr="//footer[hasclass('o_action_buttons')][last()]" position="before">
+            <footer t-if="env.model.displayPrintLotLabelsButton and state.view === 'barcodeLines'"
+                class="o_barcode_control o_print_footer d-flex mt-auto gap-2 p-2">
+                <button t-on-click="printLotBarcodes" class="o_print_lot_barcodes btn btn-secondary w-100 fs-4 py-2">
+                    <i class="fa fa-barcode me-2"/>Print Barcodes
+                </button>
+            </footer>
+        </xpath>
+    </t>
+</templates>

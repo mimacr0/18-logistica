@@ -7,7 +7,7 @@
             <field name="name">Quality Control - Reception Inspection</field>
             <field name="title">Product Quality Inspection</field>
             <field name="picking_type_ids" search="[('name', '=', 'Control de calidad')]"/>
-            <field name="measure_on">product</field>
+            <field name="measure_on">move_line</field>
             <field name="measure_frequency_type">all</field>
             <field name="test_type_id" ref="quality_control.test_type_passfail"/>
             <field name="team_id" ref="quality.quality_alert_team0"/>
