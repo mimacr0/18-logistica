@@ -27,21 +27,20 @@ class QuantPackage(models.Model):
     optional_tracking_ref = fields.Char(string='Optional Tracking Reference')
     
     @api.model
-    def set_name_based_on_account(self, account):
+    def set_name_based_on_account(self, account=None):
         """
         Genera y devuelve un nombre único para el paquete usando la secuencia definida.
         La secuencia incluye automáticamente la fecha (YYMMDD) y un número secuencial.
+        El parámetro account es opcional y se mantiene por compatibilidad.
         """
-        if not account:
-            return ''
         # Usar la secuencia definida en stock_package_sequence.xml
         # El prefijo %(y)s%(month)s%(day)s genera automáticamente YYMMDD
-        # El padding de 3 genera números como 001, 002, etc.
+        # El padding de 5 genera números como 00001, 00002, etc.
         name = self.env['ir.sequence'].next_by_code('stock.quant.package.custom')
         if not name:
             # Fallback si la secuencia no existe
             date_str = datetime.now().strftime('%y%m%d')
-            name = f"{date_str}001"
+            name = f"{date_str}00001"
         return name
 
 

@@ -43,7 +43,9 @@ class QualityCheckSpreadsheet(models.Model):
 
     @api.autovacuum
     def _gc_spreadsheet_history(self):
-        self.env['spreadsheet.revision']._gc_revisions(
-            [('res_model', '=', self._name)],
-            inactivity_days=1,
-        )
+        # Only run if spreadsheet.revision model exists (requires spreadsheet module)
+        if 'spreadsheet.revision' in self.env:
+            self.env['spreadsheet.revision']._gc_revisions(
+                [('res_model', '=', self._name)],
+                inactivity_days=1,
+            )
