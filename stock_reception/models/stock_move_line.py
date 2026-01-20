@@ -13,5 +13,5 @@ class StockMoveLine(models.Model):
         help='Historical reference to the original package before unpacking. '
              'This field preserves the package association for traceability '
              'even after products have been unpacked.',
-        copy=False,
+        copy=True,  # Propagate to derived move lines
     )

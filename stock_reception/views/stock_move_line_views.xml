@@ -6,7 +6,7 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.view_move_line_tree"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='location_dest_id']" position="after">
+            <xpath expr="//field[@name='result_package_id']" position="after">
                 <field name="origin_package_id" string="Origin Package" optional="hide"/>
             </xpath>
         </field>

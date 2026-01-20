@@ -38,8 +38,13 @@ def _stock_reception_initial_data(env):
                 wh.qc_type_id.write({
                     'use_create_lots': True,
                     'use_existing_lots': False,
+                    'require_scan_confirmation': True,
                     # Solo permitir destino QC
                     'allowed_location_dest_ids': [(6, 0, [wh.wh_qc_stock_loc_id.id])] if wh.wh_qc_stock_loc_id else False,
+                })
+            if wh.store_type_id:
+                wh.store_type_id.write({
+                    'require_scan_confirmation': True,
                 })
 
     # 4. Add the reception admin group to the admin user
