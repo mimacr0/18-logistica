@@ -86,13 +86,15 @@ class GenerateSerialWizard(models.TransientModel):
         if not move_lines:
             return {'type': 'ir.actions.act_window_close'}
 
-        # Group lines by package (result_package_id or package_id)
+        # Group lines by package (result_package_id, package_id, or origin_package_id)
         lines_by_package = defaultdict(list)
         for line in move_lines:
             if line.result_package_id:
                 package_key = ('result', line.result_package_id.id)
             elif line.package_id:
                 package_key = ('source', line.package_id.id)
+            elif line.origin_package_id:
+                package_key = ('origin', line.origin_package_id.id)
             else:
                 package_key = ('no_package', line.picking_id.id if line.picking_id else None)
             lines_by_package[package_key].append(line)
@@ -102,11 +104,13 @@ class GenerateSerialWizard(models.TransientModel):
         for package_key, package_lines in lines_by_package.items():
             sequence = 1
             for line in package_lines:
-                # Get package name
+                # Get package name (priority: result_package_id > package_id > origin_package_id)
                 if line.result_package_id and line.result_package_id.name:
                     package_name = line.result_package_id.name
                 elif line.package_id and line.package_id.name:
                     package_name = line.package_id.name
+                elif line.origin_package_id and line.origin_package_id.name:
+                    package_name = line.origin_package_id.name
                 else:
                     package_name = line.product_id.default_code or line.product_id.name[:10]
                 

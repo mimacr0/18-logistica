@@ -193,7 +193,6 @@ class StockPicking(models.Model):
         lots = self.move_line_ids.filtered(lambda ml: ml.lot_id).mapped('lot_id')
         if not lots:
             raise UserError(_('No lots/serial numbers found to print labels.'))
-        print(lots)
         account_name = self.account_partner_id.name if self.account_partner_id else ''
         # In case we want to print the barcode labels
         # report = self.env.ref('stock_barcode_auto_serial.action_report_lot_label_barcode')
