@@ -15,6 +15,7 @@
     'website': "https://www.dafe.es",
     'data': [
         'security/ir.model.access.csv',
+        'report/lot_label_report.xml',
         'views/stock_picking_type_views.xml',
         'wizards/generate_serial_wizard_views.xml',
     ],

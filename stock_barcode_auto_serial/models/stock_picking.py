@@ -188,22 +188,15 @@ class StockPicking(models.Model):
         }
 
     def action_print_lot_labels(self):
-        """Open lot label layout wizard directly to print lot/serial labels."""
+        """Print serial number labels directly (one per serial)."""
         self.ensure_one()
-        move_lines = self.move_line_ids.filtered(lambda ml: ml.lot_id)
-        if not move_lines:
+        lots = self.move_line_ids.filtered(lambda ml: ml.lot_id).mapped('lot_id')
+        if not lots:
             raise UserError(_('No lots/serial numbers found to print labels.'))
-        
-        wizard = self.env['lot.label.layout'].create({
-            'move_line_ids': [(6, 0, move_lines.ids)],
-        })
-        view_id = self.env.ref('stock.lot_label_layout_form_picking').id
-        return {
-            'name': _('Print Lot Labels'),
-            'type': 'ir.actions.act_window',
-            'res_model': 'lot.label.layout',
-            'res_id': wizard.id,
-            'view_mode': 'form',
-            'views': [(view_id, 'form')],
-            'target': 'new',
-        }
+        print(lots)
+        account_name = self.account_partner_id.name if self.account_partner_id else ''
+        # In case we want to print the barcode labels
+        # report = self.env.ref('stock_barcode_auto_serial.action_report_lot_label_barcode')
+        # In case we want to print the QR labels
+        report = self.env.ref('stock_barcode_auto_serial.action_report_lot_label_qr')
+        return report.report_action(lots.ids, data={'account_name': account_name})
