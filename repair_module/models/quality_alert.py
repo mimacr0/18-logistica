@@ -311,6 +311,8 @@ class QualityAlert(models.Model):
 
     def _set_default_stage(self):
         self.ensure_one()
+        if self.stage_id:
+            return
         default_stage = self.env.ref('repair_module.quality_alert_stage_received', raise_if_not_found=False)
         if default_stage:
             self.write({
