@@ -32,6 +32,7 @@
     'data': [
         'security/package_reception_security.xml',
         'security/ir.model.access.csv',
+        'data/quality_alert_stage_data.xml',
         'data/quality_point_data.xml',
         'wizard/create_stock_picking_wizard.xml',
         'wizard/receive_package_wizard.xml',

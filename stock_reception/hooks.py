@@ -35,13 +35,29 @@ def _stock_reception_initial_data(env):
 
             # Quality Control (qc_type_id): Crear lotes, no usar existentes
             if wh.qc_type_id:
-                wh.qc_type_id.write({
+                qc_vals = {
                     'use_create_lots': True,
                     'use_existing_lots': False,
                     'require_scan_confirmation': True,
+                    'show_print_lot_labels': True,
+                    'barcode_allow_extra_product': True,
+                    'barcode_validation_after_dest_location': False,
+                    'barcode_validation_all_product_packed': False,
+                    'barcode_validation_full': True,
+                    'restrict_put_in_pack': 'optional',
+                    'restrict_scan_dest_location': 'optional',
+                    'restrict_scan_product': False,
+                    'restrict_scan_source_location': 'no',
+                    'restrict_scan_tracking_number': 'optional',
+                    'show_reserved_sns': False,
+                    'use_custom_partner_domain': False,
+                    'use_delivery_address_domain': False,
+                    'allowed_location_ids': [(6, 0, [])],
                     # Solo permitir destino QC
                     'allowed_location_dest_ids': [(6, 0, [wh.wh_qc_stock_loc_id.id])] if wh.wh_qc_stock_loc_id else False,
-                })
+                }
+                qc_vals = {key: val for key, val in qc_vals.items() if key in wh.qc_type_id._fields}
+                wh.qc_type_id.write(qc_vals)
             if wh.store_type_id:
                 wh.store_type_id.write({
                     'require_scan_confirmation': True,
