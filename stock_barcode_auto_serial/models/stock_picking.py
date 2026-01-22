@@ -13,6 +13,17 @@ class StockPickingType(models.Model):
         default=False,
         help='If enabled, all lines must be scanned/confirmed (picked=True) before validating in barcode.'
     )
+    show_print_lot_labels = fields.Boolean(
+        string='Show Print Lot Labels Button',
+        default=False,
+        help='If enabled, the "Print Barcodes" button will be visible in the barcode app.'
+    )
+
+    def _get_barcode_config(self):
+        """Extend barcode config with print lot labels visibility."""
+        config = super()._get_barcode_config()
+        config['show_print_lot_labels'] = self.show_print_lot_labels
+        return config
 
 
 class StockPicking(models.Model):
@@ -65,22 +76,13 @@ class StockPicking(models.Model):
         Override _pre_action_done_hook to check for missing serial numbers
         and show wizard for auto-generation before validation.
         Also checks for unpicked lines if require_scan_confirmation is enabled.
-        """
-        # First, check for unpicked lines if require_scan_confirmation is enabled
-        unpicked_products = self._check_unpicked_lines()
-        if unpicked_products:
-            # Limit to first 10 products to avoid huge error messages
-            products_list = unpicked_products[:10]
-            more_text = f"\n... and {len(unpicked_products) - 10} more" if len(unpicked_products) > 10 else ""
-            raise UserError(_(
-                "The following products have not been scanned/confirmed:\n\n"
-                "%(products)s%(more)s\n\n"
-                "Please scan or confirm all products before validating.",
-                products="\n".join(f"- {p}" for p in products_list),
-                more=more_text,
-            ))
         
-        # Check for products without serials (show wizard)
+        Order of checks:
+        1. Missing serials first (wizard generates serials AND marks picked=True)
+        2. Unpicked lines after (in case there are still unpicked lines)
+        """
+        # First, check for products without serials (show wizard)
+        # The wizard also marks lines as picked=True when generating serials
         pickings_without_lots = self._check_missing_lots()
         
         if pickings_without_lots:
@@ -97,6 +99,20 @@ class StockPicking(models.Model):
                 'res_id': wizard.id,
                 'target': 'new',
             }
+        
+        # After serials are generated, check for unpicked lines
+        unpicked_products = self._check_unpicked_lines()
+        if unpicked_products:
+            # Limit to first 10 products to avoid huge error messages
+            products_list = unpicked_products[:10]
+            more_text = f"\n... and {len(unpicked_products) - 10} more" if len(unpicked_products) > 10 else ""
+            raise UserError(_(
+                "The following products have not been scanned/confirmed:\n\n"
+                "%(products)s%(more)s\n\n"
+                "Please scan or confirm all products before validating.",
+                products="\n".join(f"- {p}" for p in products_list),
+                more=more_text,
+            ))
 
         # Call parent method to handle other validations
         return super(StockPicking, self)._pre_action_done_hook()
@@ -170,3 +186,16 @@ class StockPicking(models.Model):
         return {
             'needs_wizard': bool(pickings_without_lots),
         }
+
+    def action_print_lot_labels(self):
+        """Print serial number labels directly (one per serial)."""
+        self.ensure_one()
+        lots = self.move_line_ids.filtered(lambda ml: ml.lot_id).mapped('lot_id')
+        if not lots:
+            raise UserError(_('No lots/serial numbers found to print labels.'))
+        account_name = self.account_partner_id.name if self.account_partner_id else ''
+        # In case we want to print the barcode labels
+        # report = self.env.ref('stock_barcode_auto_serial.action_report_lot_label_barcode')
+        # In case we want to print the QR labels
+        report = self.env.ref('stock_barcode_auto_serial.action_report_lot_label_qr')
+        return report.report_action(lots.ids, data={'account_name': account_name})

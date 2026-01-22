@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit stock.move.line tree view to add origin_package_id -->
+    <record id="view_move_line_tree_inherit_stock_reception" model="ir.ui.view">
+        <field name="name">stock.move.line.tree.inherit.stock.reception</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='result_package_id']" position="after">
+                <field name="origin_package_id" string="Origin Package" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

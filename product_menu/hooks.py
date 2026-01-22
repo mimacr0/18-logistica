@@ -7,7 +7,5 @@
 
 
 def post_init_hook(env):
-    """Activa la opción de fechas de caducidad en productos."""
-    env['res.config.settings'].create({
-        'group_product_expiry': True,
-    }).execute()
+    """Hook de post-instalación (vacío - product_expiry no requerido)."""
+    pass

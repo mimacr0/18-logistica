@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     account_partner_id = fields.Many2one(string='Owner Account', comodel_name='account.partner')
+    transport_insurance = fields.Boolean(string='Transport Insurance', default=False, help='If checked, transport insurance will be applied to this order shipments.')
 
     @api.onchange('account_partner_id')
     def _set_partner_and_owner(self):

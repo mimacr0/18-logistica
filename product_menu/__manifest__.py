@@ -18,6 +18,7 @@
     'website': "https://www.dafe.es",
     'data': [
         'security/ir.model.access.csv',
+        'data/product_attribute_data.xml',
         'wizard/account_add_products_wizard.xml',
         'wizard/product_images_import_wizard.xml',
         'views/product_template_views.xml',

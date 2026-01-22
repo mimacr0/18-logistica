@@ -11,11 +11,8 @@ from odoo import models, fields, api
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    allowed_partner_ids = fields.Many2many(
-        comodel_name='res.partner',
-        string='Direcciones de envío permitidas',
-        compute='_compute_allowed_partner_ids',
-    )
+    transport_insurance = fields.Boolean(string='Transport Insurance', related='sale_id.transport_insurance', store=True,  readonly=True,  help='If checked, transport insurance will be applied to this shipment.')
+    allowed_partner_ids = fields.Many2many(comodel_name='res.partner', string='Direcciones de envío permitidas', compute='_compute_allowed_partner_ids',)
 
     @api.depends('picking_type_id')
     def _compute_allowed_partner_ids(self):

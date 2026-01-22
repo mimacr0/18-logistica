@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Paperformat 3x2 cm (30mm x 20mm) -->
+        <record id="paperformat_label_3x2" model="report.paperformat">
+            <field name="name">Label 3x2 cm</field>
+            <field name="default" eval="False"/>
+            <field name="format">custom</field>
+            <field name="page_width">30</field>
+            <field name="page_height">20</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <record id="paperformat_label_2x3" model="report.paperformat">
+            <field name="name">Label 2x3 cm</field>
+            <field name="default" eval="False"/>
+            <field name="format">custom</field>
+            <field name="page_width">20</field>
+            <field name="page_height">30</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="dpi">96</field>
+        </record>   
+
+        <!-- Report action for serial number labels -->
+        <record id="action_report_lot_label_barcode" model="ir.actions.report">
+            <field name="name">Serial Number Labels</field>
+            <field name="model">stock.lot</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">stock_barcode_auto_serial.report_lot_label_barcode</field>
+            <field name="report_file">stock_barcode_auto_serial.report_lot_label_barcode</field>
+            <field name="print_report_name">'Serial_Labels_%s' % object.name</field>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_label_3x2"/>
+        </record>
+        
+        <record id="action_report_lot_label_qr" model="ir.actions.report">
+            <field name="name">Serial Number Labels QR</field>
+            <field name="model">stock.lot</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">stock_barcode_auto_serial.report_lot_label_qr</field>
+            <field name="report_file">stock_barcode_auto_serial.report_lot_label_qr</field>
+            <field name="print_report_name">'Serial_Labels_QR_%s' % object.name</field>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_label_3x2"/>
+        </record>
+
+        <!-- Template for serial number labels (one per serial) -->
+        <template id="report_lot_label_barcode">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="lot">
+                    <div class="page" style=" text-align: center; padding: 5px 0 2px 0;  width: 100%; height: 100%;">
+                        <!-- Serial number barcode -->
+                        <div t-out="lot.name" t-options="{'widget': 'barcode', 'symbology': 'EAN13', 'img_style': 'width:100%; height:19mm;', 'quiet': '0', 'humanreadable': '1'}"/>
+                        <!-- Serial number text -->
+                        <!-- <div style="font-size: 6pt; font-weight: bold; text-align: center;" t-field="lot.name"/> -->
+                        <!-- Account name from context -->
+                        <div style="font-size: 5pt; text-align: center;" t-out="account_name"/>
+                    </div>
+                    <p style="page-break-before:always;"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_lot_label_qr">
+            <t t-call="web.basic_layout">
+                <style>
+                    .container, .article { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+                    .page, .page *, table, tr, td { border: none !important; }
+                </style>
+                <t t-foreach="docs" t-as="lot">
+                    <div class="page" style="padding: 1.5mm 1mm 1mm 1mm;">
+                        <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+                            <tr>
+                                <!-- QR -->
+                                <td style="vertical-align: middle; text-align: center; width: 70%; transform: rotate(270deg); -webkit-transform: rotate(270deg); white-space: nowrap;">
+                                    <div t-out="lot.name" t-options="{'widget': 'barcode', 'symbology': 'QR', 'img_style': 'width:22mm; height:22mm;', 'quiet': '0'}" style="'border: 1px solid blue;'"/>
+                                </td>
+                                <!-- Textos girados con position absolute -->
+                                <td style="position: relative; width: 15%; height: 22mm;">
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); -webkit-transform: translate(-50%, -50%) rotate(-90deg); transform-origin: center center; white-space: nowrap; font-size: 7pt; font-weight: bold;" t-field="lot.name"/>
+                                </td>
+                                <td style="position: relative; width: 15%; height: 22mm;">
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); -webkit-transform: translate(-50%, -50%) rotate(-90deg); transform-origin: center center; white-space: nowrap; font-size: 6pt; font-weight: bold;" t-out="account_name"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p style="page-break-before:always;"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

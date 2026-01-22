@@ -99,15 +99,12 @@ class ReceivePackageWizard(models.TransientModel):
         if self.receiver_id and self.receiver_id.user_id:
             picking.user_id = self.receiver_id.user_id
         
-        # 4. Valida el picking (confirma la recepción)
+        # 4. Valida el picking (confirma la recepción y actualiza estado del paquete)
         picking.button_validate()
         
-        # 5. Cambia el estado del paquete a "done"
-        self.package_id.state = 'done'
-        
-        # 6. Adjunta las imágenes capturadas
+        # 5. Adjunta las imágenes capturadas
         self.attach_images()
         
-        # 7. Vuelve a abrir el wizard para escanear otro paquete
+        # 6. Vuelve a abrir el wizard para escanear otro paquete
         action = self.env.ref('stock_reception.action_receive_package_server').read()[0]
         return action

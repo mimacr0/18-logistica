@@ -10,6 +10,21 @@ import { _t } from "@web/core/l10n/translation";
  */
 patch(BarcodePickingModel.prototype, {
     /**
+     * Hide the return button for all picking types.
+     */
+    get displayReturnButton() {
+        return false;
+    },
+
+    /**
+     * Show/hide the print lot labels button based on picking type configuration.
+     */
+    get displayPrintLotLabelsButton() {
+        return this.config.show_print_lot_labels !== false;
+    },
+
+    /**
+     * 
      * Check if there are lines that haven't been scanned/picked yet.
      * Returns true if all lines are picked or if there are no lines.
      */
