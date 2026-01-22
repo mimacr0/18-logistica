@@ -175,10 +175,21 @@ class QualityCheckWizard(models.TransientModel):
             product_name = wizard.product_id.display_name if wizard.product_id else _('Unknown product')
             lot_name = wizard.lot_name or _('No lot')
             note = wizard.additional_note or _('No note')
+            move_line = wizard.current_check_id.move_line_id if wizard.current_check_id else False
+            package = False
+            if move_line:
+                package = move_line.result_package_id or move_line.package_id or move_line.origin_package_id
+            if not package and picking:
+                package = (
+                    picking.move_line_ids.mapped('result_package_id')
+                    or picking.move_line_ids.mapped('package_id')
+                    or picking.move_line_ids.mapped('origin_package_id')
+                )[:1]
+            package_name = package.name if package else _('No package')
             message = _(
-                "QC failed on %(picking)s | %(product)s | Lot: %(lot)s | Qty: %(qty)s | Note: %(note)s"
+                "QC failed on %(package)s | %(product)s | Lot: %(lot)s | Qty: %(qty)s | Note: %(note)s"
             ) % {
-                'picking': picking.name or '',
+                'package': package_name,
                 'product': product_name,
                 'lot': lot_name,
                 'qty': wizard.qty_failed or wizard.qty_line or 0,
