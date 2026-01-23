@@ -1,0 +1,620 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_menu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+t\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-23 15:10+0000\n"
+"PO-Revision-Date: 2026-01-23 15:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__variant_count
+msgid "# Variants"
+msgstr "变体数量"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_images_import_wizard_form_view
+msgid "&amp;nbsp;"
+msgstr "&amp;nbsp;"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_128gb
+msgid "128GB"
+msgstr "128GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_12gb
+msgid "12GB"
+msgstr "12GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_16gb
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_16gb
+msgid "16GB"
+msgstr "16GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_1tb
+msgid "1TB"
+msgstr "1TB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_24gb
+msgid "24GB"
+msgstr "24GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_256gb
+msgid "256GB"
+msgstr "256GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_2gb
+msgid "2GB"
+msgstr "2GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_2tb
+msgid "2TB"
+msgstr "2TB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_32gb
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_32gb
+msgid "32GB"
+msgstr "32GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_3gb
+msgid "3GB"
+msgstr "3GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_4gb
+msgid "4GB"
+msgstr "4GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_512gb
+msgid "512GB"
+msgstr "512GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_rom_64gb
+msgid "64GB"
+msgstr "64GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_6gb
+msgid "6GB"
+msgstr "6GB"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_ram_8gb
+msgid "8GB"
+msgstr "8GB"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "<span>cm</span>"
+msgstr "<span>cm</span>"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "<span>cm³</span>"
+msgstr "<span>cm³</span>"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "<span>kg</span>"
+msgstr "<span>kg</span>"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "<span>×</span>"
+msgstr "<span>×</span>"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__account_partner_id
+msgid "Account"
+msgstr "账户"
+
+#. module: product_menu
+#: model:ir.actions.act_window,name:product_menu.action_add_products_wizard
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Account Add Products"
+msgstr "账户添加产品"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_product_product__account_partner_id
+#: model:ir.model.fields,field_description:product_menu.field_product_template__account_partner_id
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
+msgid "Account Partner"
+msgstr "账户伙伴"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
+msgid "Add"
+msgstr "添加"
+
+#. module: product_menu
+#. odoo-javascript
+#: code:addons/product_menu/static/src/kanban/stock_package_reception_list_view.xml:0
+msgid "Add Product"
+msgstr "添加产品"
+
+#. module: product_menu
+#: model:ir.model,name:product_menu.model_add_products_line_wizard
+msgid "Add Products Line Wizard"
+msgstr "添加产品行向导"
+
+#. module: product_menu
+#: model:ir.model,name:product_menu.model_add_products_wizard
+msgid "Add Products Wizard"
+msgstr "添加产品向导"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__attribute_id
+msgid "Attribute"
+msgstr "属性"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_attribute_value_list
+msgid "Attribute Values"
+msgstr "属性值"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__attr_line_ids
+#: model:ir.ui.menu,name:product_menu.menu_products_attributes_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Attributes"
+msgstr "属性"
+
+#. module: product_menu
+#: model:ir.actions.act_window,name:product_menu.product_menu_attributes_values_action
+msgid "Attributres Values"
+msgstr "属性值"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_black
+msgid "Black"
+msgstr "黑色"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_blue
+msgid "Blue"
+msgstr "蓝色"
+
+#. module: product_menu
+#: model:ir.model.fields.selection,name:product_menu.selection__add_products_wizard__tracking__serial
+msgid "By Unique Serial Number"
+msgstr "按唯一序列号"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+#: model_terms:ir.ui.view,arch_db:product_menu.product_images_import_wizard_form_view
+msgid "Cancel"
+msgstr "取消"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Categories"
+msgstr "类别"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__categ_id
+msgid "Category"
+msgstr "类别"
+
+#. module: product_menu
+#: model:product.attribute,name:product_menu.product_attribute_color
+msgid "Color"
+msgstr "颜色"
+
+#. module: product_menu
+#: model:ir.ui.menu,name:product_menu.menu_products_configuration_menu
+msgid "Configuration"
+msgstr "配置"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__create_uid
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__create_uid
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__create_uid
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__create_date
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__create_date
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__create_date
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__create_date
+msgid "Created on"
+msgstr "创建于"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__currency_id
+msgid "Currency"
+msgstr "币种"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
+msgid "Debug"
+msgstr "调试"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
+msgid "Delete"
+msgstr "删除"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__name
+msgid "Description"
+msgstr "描述"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__display_name
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__display_name
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__display_name
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
+msgid "E-Commerce"
+msgstr "电子商务"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_gold
+msgid "Gold"
+msgstr "金色"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_gray
+msgid "Gray"
+msgstr "灰色"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_green
+msgid "Green"
+msgstr "绿色"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__height
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Height"
+msgstr "高度"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__id
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__id
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__id
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
+msgid "IMG"
+msgstr "IMG"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__image_1920
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__image
+msgid "Image"
+msgstr "图片"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__image_ids
+#: model:ir.model.fields,field_description:product_menu.field_product_product__image_ids
+msgid "Images"
+msgstr "图片"
+
+#. module: product_menu
+#: model:ir.actions.act_window,name:product_menu.product_images_import_wizard_action
+msgid "Images Import"
+msgstr "图片导入"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__write_uid
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__write_uid
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__write_uid
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__write_date
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__write_date
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__write_date
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__length
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Length"
+msgstr "长度"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Logistics"
+msgstr "物流"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Measures (cm)"
+msgstr "尺寸（cm）"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_midnight
+msgid "Midnight"
+msgstr "午夜色"
+
+#. module: product_menu
+#: model:ir.model.fields.selection,name:product_menu.selection__add_products_wizard__tracking__none
+msgid "No Tracking"
+msgstr "无追踪"
+
+#. module: product_menu
+#: model:ir.model,name:product_menu.model_product_images_import_wizard
+msgid "PRODUCT IMAGES IMPORT WIZARD"
+msgstr "产品图片导入向导"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
+msgid "Pictures"
+msgstr "图片"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_pink
+msgid "Pink"
+msgstr "粉色"
+
+#. module: product_menu
+#. odoo-python
+#: code:addons/product_menu/wizard/account_add_products_wizard.py:0
+msgid "Please add attributes\n"
+msgstr "请添加属性\n"
+
+#. module: product_menu
+#. odoo-python
+#: code:addons/product_menu/wizard/account_add_products_wizard.py:0
+msgid "Please enter the name for the product\n"
+msgstr "请输入产品名称\n"
+
+#. module: product_menu
+#. odoo-python
+#: code:addons/product_menu/wizard/account_add_products_wizard.py:0
+msgid "Please enter the volume for the product\n"
+msgstr "请输入产品体积\n"
+
+#. module: product_menu
+#. odoo-python
+#: code:addons/product_menu/wizard/account_add_products_wizard.py:0
+msgid "Please enter the weight for the product\n"
+msgstr "请输入产品重量\n"
+
+#. module: product_menu
+#. odoo-python
+#: code:addons/product_menu/wizard/account_add_products_wizard.py:0
+msgid "Please select the related account for the product\n"
+msgstr "请选择产品关联的账户\n"
+
+#. module: product_menu
+#: model:ir.model,name:product_menu.model_product_template
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__name
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__product_id
+#: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__product_id
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
+msgid "Product"
+msgstr "产品"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Product Category"
+msgstr "产品类别"
+
+#. module: product_menu
+#: model:ir.model,name:product_menu.model_odoo_product_image
+msgid "Product Image"
+msgstr "产品图片"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Product Name"
+msgstr "产品名称"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__product_template_id
+msgid "Product Template"
+msgstr "产品模板"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__product_tmpl_id
+msgid "Product Tmpl"
+msgstr "产品模板"
+
+#. module: product_menu
+#: model:ir.model,name:product_menu.model_product_product
+msgid "Product Variant"
+msgstr "产品变体"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__product_variant_name
+msgid "Product Variant Name"
+msgstr "产品变体名称"
+
+#. module: product_menu
+#. odoo-python
+#: code:addons/product_menu/wizard/account_add_products_wizard.py:0
+#: model:ir.actions.act_window,name:product_menu.product_menu_product_product_action
+#: model:ir.ui.menu,name:product_menu.menu_products_product_menu
+#: model:ir.ui.menu,name:product_menu.menu_root_product_menu
+msgid "Products"
+msgstr "产品"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_purple
+msgid "Purple"
+msgstr "紫色"
+
+#. module: product_menu
+#: model:product.attribute,name:product_menu.product_attribute_ram
+msgid "RAM"
+msgstr "内存"
+
+#. module: product_menu
+#: model:product.attribute,name:product_menu.product_attribute_rom
+msgid "ROM"
+msgstr "存储"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_red
+msgid "Red"
+msgstr "红色"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__renew_price
+#: model:ir.model.fields,field_description:product_menu.field_product_product__renew_price
+#: model:ir.model.fields,field_description:product_menu.field_product_template__renew_price
+msgid "Renew Price"
+msgstr "翻新价格"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__repair_price
+#: model:ir.model.fields,field_description:product_menu.field_product_product__repair_price
+#: model:ir.model.fields,field_description:product_menu.field_product_template__repair_price
+msgid "Repair Price"
+msgstr "维修价格"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__review_price
+#: model:ir.model.fields,field_description:product_menu.field_product_product__review_price
+#: model:ir.model.fields,field_description:product_menu.field_product_template__review_price
+msgid "Review Price"
+msgstr "检测价格"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Robot vacuum cleaner ..."
+msgstr "扫地机器人..."
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_rose_gold
+msgid "Rose Gold"
+msgstr "玫瑰金"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__list_price
+msgid "Sale Price"
+msgstr "销售价格"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+#: model_terms:ir.ui.view,arch_db:product_menu.product_images_import_wizard_form_view
+msgid "Save"
+msgstr "保存"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__send_buyes
+msgid "Send Buyes"
+msgstr "发送买家"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Service repair"
+msgstr "维修服务"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Service review"
+msgstr "检测服务"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_silver
+msgid "Silver"
+msgstr "银色"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Size: Length × Width × Height"
+msgstr "尺寸：长 × 宽 × 高"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_space_gray
+msgid "Space Gray"
+msgstr "深空灰"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_starlight
+msgid "Starlight"
+msgstr "星光色"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__product_tag_ids
+msgid "Tags"
+msgstr "标签"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__tracking
+msgid "Tracking"
+msgstr "追踪"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__value_ids
+msgid "Values"
+msgstr "值"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__variant_ids
+msgid "Variants"
+msgstr "变体"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__volume
+msgid "Volume"
+msgstr "体积"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__warranty_price
+#: model:ir.model.fields,field_description:product_menu.field_product_product__warranty_price
+#: model:ir.model.fields,field_description:product_menu.field_product_template__warranty_price
+msgid "Warranty Price"
+msgstr "保修价格"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__weight
+msgid "Weight"
+msgstr "重量"
+
+#. module: product_menu
+#: model:product.attribute.value,name:product_menu.product_attribute_value_color_white
+msgid "White"
+msgstr "白色"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__width
+#: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+msgid "Width"
+msgstr "宽度"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__wizard_id
+msgid "Wizard"
+msgstr "向导"

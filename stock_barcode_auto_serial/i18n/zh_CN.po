@@ -1,0 +1,203 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_barcode_auto_serial
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+t\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-23 15:21+0000\n"
+"PO-Revision-Date: 2026-01-23 15:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.actions.report,print_report_name:stock_barcode_auto_serial.action_report_lot_label_barcode
+msgid "'Serial_Labels_%s' % object.name"
+msgstr "'序列号标签_%s' % object.name"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.actions.report,print_report_name:stock_barcode_auto_serial.action_report_lot_label_qr
+msgid "'Serial_Labels_QR_%s' % object.name"
+msgstr "'序列号二维码标签_%s' % object.name"
+
+#. module: stock_barcode_auto_serial
+#. odoo-python
+#: code:addons/stock_barcode_auto_serial/wizards/generate_serial_wizard.py:0
+msgid ""
+"<p><strong>%s product line(s)</strong> require Serial numbers but none have "
+"been provided.</p><p>Do you want to generate automated serial numbers for "
+"these products?</p>"
+msgstr ""
+"<p><strong>%s 条产品行</strong>需要序列号，但未提供。</p><p>是否要为这些产品"
+"生成自动序列号？</p>"
+
+#. module: stock_barcode_auto_serial
+#. odoo-python
+#: code:addons/stock_barcode_auto_serial/wizards/generate_serial_wizard.py:0
+msgid ""
+"<p>Some products require Serial numbers but none have been "
+"provided.</p><p>Do you want to generate automated serial numbers for these "
+"products?</p>"
+msgstr ""
+"<p>部分产品需要序列号，但未提供。</p><p>是否要为这些产品生成自动序列号？</p>"
+
+#. module: stock_barcode_auto_serial
+#. odoo-javascript
+#: code:addons/stock_barcode_auto_serial/static/src/models/barcode_picking_model.js:0
+msgid "All products need to be packed"
+msgstr "所有产品都需要打包"
+
+#. module: stock_barcode_auto_serial
+#: model_terms:ir.ui.view,arch_db:stock_barcode_auto_serial.view_generate_serial_wizard_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__create_date
+msgid "Created on"
+msgstr "创建于"
+
+#. module: stock_barcode_auto_serial
+#. odoo-javascript
+#: code:addons/stock_barcode_auto_serial/static/src/models/barcode_picking_model.js:0
+msgid "Destination location must be scanned"
+msgstr "目的位置必须扫描"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: stock_barcode_auto_serial
+#: model_terms:ir.ui.view,arch_db:stock_barcode_auto_serial.view_generate_serial_wizard_form
+msgid "Generate"
+msgstr "生成"
+
+#. module: stock_barcode_auto_serial
+#. odoo-python
+#: code:addons/stock_barcode_auto_serial/models/stock_picking.py:0
+#: model_terms:ir.ui.view,arch_db:stock_barcode_auto_serial.view_generate_serial_wizard_form
+msgid "Generate Serial Numbers"
+msgstr "生成序列号"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model,name:stock_barcode_auto_serial.model_generate_serial_wizard
+msgid "Generate Serial Numbers Wizard"
+msgstr "生成序列号向导"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,help:stock_barcode_auto_serial.field_stock_picking_type__require_scan_confirmation
+msgid ""
+"If enabled, all lines must be scanned/confirmed (picked=True) before "
+"validating in barcode."
+msgstr "启用后，所有行在条码验证前必须扫描/确认（picked=True）。"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,help:stock_barcode_auto_serial.field_stock_picking_type__show_print_lot_labels
+msgid ""
+"If enabled, the \"Print Barcodes\" button will be visible in the barcode "
+"app."
+msgstr "启用后，“打印条码”按钮将在条码应用中显示。"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__move_line_count
+msgid "Lines Requiring Serial Numbers"
+msgstr "需要序列号的行"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model,name:stock_barcode_auto_serial.model_report_stock_barcode_auto_serial_report_lot_label
+msgid "Lot Label Report"
+msgstr "批次标签报告"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__message
+msgid "Message"
+msgstr "消息"
+
+#. module: stock_barcode_auto_serial
+#. odoo-python
+#: code:addons/stock_barcode_auto_serial/models/stock_picking.py:0
+msgid "No lots/serial numbers found to print labels."
+msgstr "未找到可打印标签的批次/序列号。"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_generate_serial_wizard__picking_id
+msgid "Picking"
+msgstr "调拨"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model,name:stock_barcode_auto_serial.model_stock_picking_type
+msgid "Picking Type"
+msgstr "拣货类型"
+
+#. module: stock_barcode_auto_serial
+#. odoo-javascript
+#: code:addons/stock_barcode_auto_serial/static/src/components/main.xml:0
+msgid "Print Barcodes"
+msgstr "打印条码"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_stock_picking_type__require_scan_confirmation
+msgid "Require Scan Confirmation"
+msgstr "要求扫描确认"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.actions.report,name:stock_barcode_auto_serial.action_report_lot_label_barcode
+msgid "Serial Number Labels"
+msgstr "序列号标签"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.actions.report,name:stock_barcode_auto_serial.action_report_lot_label_qr
+msgid "Serial Number Labels QR"
+msgstr "序列号二维码标签"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model.fields,field_description:stock_barcode_auto_serial.field_stock_picking_type__show_print_lot_labels
+msgid "Show Print Lot Labels Button"
+msgstr "显示打印批次标签按钮"
+
+#. module: stock_barcode_auto_serial
+#. odoo-python
+#: code:addons/stock_barcode_auto_serial/models/stock_picking.py:0
+msgid ""
+"The following products have not been scanned/confirmed:\n"
+"\n"
+"%(products)s%(more)s\n"
+"\n"
+"Please scan or confirm all products before validating."
+msgstr ""
+"以下产品尚未扫描/确认：\n"
+"\n"
+"%(products)s%(more)s\n"
+"\n"
+"请在验证前扫描或确认所有产品。"
+
+#. module: stock_barcode_auto_serial
+#: model:ir.model,name:stock_barcode_auto_serial.model_stock_picking
+msgid "Transfer"
+msgstr "调拨"
