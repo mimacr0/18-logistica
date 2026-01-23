@@ -4,21 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+t\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 15:44+0000\n"
-"PO-Revision-Date: 2025-03-08 15:44+0000\n"
+"POT-Creation-Date: 2026-01-23 14:58+0000\n"
+"PO-Revision-Date: 2026-01-23 14:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: client_account
-#: model_terms:ir.ui.view,arch_db:client_account.view_choose_delivery_carrier_form_inherit
-msgid ", the carrier must give you a rate for the shipment."
-msgstr ", el transportista debe darte una tarifa para el envío."
 
 #. module: client_account
 #: model:mail.template,body_html:client_account.email_template_delivery_carrier_confirmation
@@ -29,11 +24,7 @@ msgid ""
 "        <br/><br/>\n"
 "        Your order with number <strong t-out=\"object.name or ''\"/> has been confirmed. Please check your customer portal to continue with the process.\n"
 "        <br/><br/>\n"
-"        <strong>Shipping Method:</strong> <t t-out=\"object.carrier_id.name or ''\"/><br/>\n"
-"        <t t-if=\"object.carrier_id.shipping_package\">\n"
-"            <strong>Package Type:</strong> <span t-field=\"object.carrier_id.shipping_package\"/><br/>\n"
-"        </t>\n"
-"        <br/>\n"
+"\n"
 "        You can track your order status and delivery details in your customer portal.\n"
 "        <br/><br/>\n"
 "        Regards,<br/>\n"
@@ -83,27 +74,36 @@ msgid "<i class=\"fa fa-money me-2\" title=\"Amount\"/>"
 msgstr "<i class=\"fa fa-money me-2\" title=\"Cantidad\"/>"
 
 #. module: client_account
-#: model_terms:ir.ui.view,arch_db:client_account.view_choose_delivery_carrier_form_inherit
-msgid "<i class=\"oi oi-arrow-right me-1\"/>Get rate"
-msgstr "<i class=\"oi oi-arrow-right me-1\"/>Obtener tarifa"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "<span>Other address for the company (e.g. subsidiary, ...)</span>"
+msgstr "<span>Otra dirección para la empresa (p. ej. filial, ...)</span>"
 
 #. module: client_account
-#: model_terms:ir.ui.view,arch_db:client_account.view_choose_delivery_carrier_form_inherit
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
 msgid ""
-"<span invisible=\"delivery_type not in ['fixed', 'base_on_rule']\" "
-"class=\"ms-bold\">or</span>"
+"<span>Preferred address for all deliveries. Selected by default when you "
+"deliver an order that belongs to this company.</span>"
 msgstr ""
-"<span invisible=\"delivery_type not in ['fixed', 'base_on_rule']\" "
-"class=\"ms-bold\">o</span>"
+"<span>Dirección preferida para todas las entregas. Se selecciona por defecto "
+"cuando entrega un pedido que pertenece a esta empresa.</span>"
 
 #. module: client_account
-#: model_terms:ir.ui.view,arch_db:client_account.view_choose_delivery_carrier_form_inherit
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
 msgid ""
-"<strong>¡Atención!:</strong>\n"
-"                    You should first contact"
+"<span>Preferred address for all invoices. Selected by default when you "
+"invoice an order that belongs to this company.</span>"
 msgstr ""
-"<strong>¡Atención!:</strong>\n"
-"                    Primero debes contactar"
+"<span>Dirección preferida para todas las facturas. Se selecciona por defecto "
+"cuando factura un pedido que pertenece a esta empresa.</span>"
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid ""
+"<span>Use this to organize the contact details of employees of a given "
+"company (e.g. CEO, CFO, ...).</span>"
+msgstr ""
+"<span>Use esto para organizar los datos de contacto de empleados de una "
+"empresa (p. ej. CEO, CFO, ...).</span>"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_add_account_partner__account
@@ -127,6 +127,11 @@ msgid "Account ID"
 msgstr "ID de cuenta"
 
 #. module: client_account
+#: model:res.groups,name:client_account.group_client_account_manager
+msgid "Account Manager"
+msgstr "Gestor de cuentas"
+
+#. module: client_account
 #: model:ir.actions.act_window,name:client_account.action_account_partner
 #: model:ir.model,name:client_account.model_account_partner
 msgid "Account Partner"
@@ -136,6 +141,11 @@ msgstr "Contacto de cuenta"
 #: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
 msgid "Account Partners"
 msgstr "Socios de cuenta"
+
+#. module: client_account
+#: model:res.groups,name:client_account.group_client_account_user
+msgid "Account User"
+msgstr "Usuario de cuenta"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
@@ -155,7 +165,6 @@ msgstr "Contactos de cuentas"
 
 #. module: client_account
 #. odoo-javascript
-#: code:addons/addons_shipment/client_account/static/src/js/add_account_partner_list.xml:0
 #: code:addons/client_account/static/src/js/add_account_partner_list.xml:0
 msgid "Add Account"
 msgstr "Agregar Cuenta"
@@ -166,11 +175,9 @@ msgid "Add Account Partner"
 msgstr "Agregar Socio de Cuenta"
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/models/account_carrier_line.py:0
-#: code:addons/client_account/models/account_carrier_line.py:0
-msgid "Add Carrier"
-msgstr "Agregar transportista"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Address"
+msgstr "Dirección"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_res_partner__type
@@ -213,11 +220,6 @@ msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
 
 #. module: client_account
-#: model:ir.model.fields.selection,name:client_account.selection__delivery_carrier__shipping_package__box
-msgid "Box"
-msgstr "Caja"
-
-#. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.credit_account_view_search
 msgid "Buscar Cuenta de Crédito"
 msgstr "Buscar Cuenta de Crédito"
@@ -229,33 +231,25 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_account_carrier_line__carrier_id
-#: model:ir.model.fields,field_description:client_account.field_choose_delivery_carrier__carrier_partner
-msgid "Carrier"
-msgstr "Transportista"
-
-#. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_res_partner__carrier_line_ids
 #: model:ir.model.fields,field_description:client_account.field_res_users__carrier_line_ids
 msgid "Carrier Lines"
 msgstr "Líneas de transportista"
 
 #. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_choose_delivery_carrier__carrier_name
-#: model:ir.model.fields,field_description:client_account.field_delivery_carrier__carrier_partner
-msgid "Carrier Partner"
-msgstr "Socio de transportista"
-
-#. module: client_account
-#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
-#: model_terms:ir.ui.view,arch_db:client_account.selection_delivery_carrier_update_view
-msgid "Carriers"
-msgstr "Transportistas"
-
-#. module: client_account
 #: model:ir.model.fields.selection,name:client_account.selection__credit_account__concept__cash
 msgid "Cash Payment"
 msgstr "Pago en efectivo"
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "City"
+msgstr "Ciudad"
+
+#. module: client_account
+#: model:ir.module.category,name:client_account.module_category_client_account
+msgid "Client Account"
+msgstr "Cuenta de cliente"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_add_account_partner__commercial
@@ -286,21 +280,32 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Contact / Address"
+msgstr "Contacto / Dirección"
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Contact Name"
+msgstr "Nombre de contacto"
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Contact image"
+msgstr "Imagen de contacto"
+
+#. module: client_account
 #: model:ir.actions.act_window,name:client_account.action_partner_account
+#: model:ir.model.fields,field_description:client_account.field_res_partner__contact_ids
+#: model:ir.model.fields,field_description:client_account.field_res_users__contact_ids
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
 msgid "Contacts"
 msgstr "Contactos"
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Could not send email: %s"
-msgstr "No se pudo enviar el correo electrónico: %s"
-
-#. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_account_carrier_line__country_ids
-msgid "Countries"
-msgstr "Países"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Country"
+msgstr "País"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_account_carrier_line__create_uid
@@ -343,7 +348,6 @@ msgstr "Número de Crédito"
 
 #. module: client_account
 #. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/reject_reason_credit.py:0
 #: code:addons/client_account/wizard/reject_reason_credit.py:0
 msgid "Credit account not found."
 msgstr "No se encontró la cuenta de crédito."
@@ -360,24 +364,9 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
 #: model:ir.model.fields,field_description:client_account.field_credit_account__date
 msgid "Date"
 msgstr "Fecha"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Dear"
-msgstr "Estimado/a"
-
-#. module: client_account
-#: model:ir.model,name:client_account.model_choose_delivery_carrier
-msgid "Delivery Carrier Selection Wizard"
-msgstr "Asistente de selección de transportista"
 
 #. module: client_account
 #: model:mail.template,name:client_account.email_template_delivery_carrier_confirmation
@@ -405,29 +394,9 @@ msgstr "Borrador"
 
 #. module: client_account
 #. odoo-python
-#: code:addons/addons_shipment/client_account/models/credit_account.py:0
 #: code:addons/client_account/models/credit_account.py:0
 msgid "Entering an amount is required."
 msgstr "Se requiere ingresar una cantidad."
-
-#. module: client_account
-#: model:ir.model.fields.selection,name:client_account.selection__delivery_carrier__shipping_package__envelope
-msgid "Envelope"
-msgstr "Sobre"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/models/account_carrier_line.py:0
-#: code:addons/client_account/models/account_carrier_line.py:0
-msgid "Error"
-msgstr "Error"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Error sending confirmation email"
-msgstr "Error al enviar el correo de confirmación"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_account_carrier_line__is_favorite
@@ -435,8 +404,17 @@ msgid "Favorite"
 msgstr "Favorito"
 
 #. module: client_account
+#: model:ir.model,name:client_account.model_portal_wizard
+msgid "Grant Portal Access"
+msgstr "Otorgar acceso al portal "
+
+#. module: client_account
+#: model:ir.module.category,description:client_account.module_category_client_account
+msgid "Grupos para gestión de cuentas de clientes"
+msgstr "Grupos para gestión de cuentas de clientes"
+
+#. module: client_account
 #. odoo-javascript
-#: code:addons/addons_shipment/client_account/static/src/list/account_carrier_select_list_view.js:0
 #: code:addons/client_account/static/src/list/account_carrier_select_list_view.js:0
 msgid "Guardando selección..."
 msgstr "Guardando selección..."
@@ -457,6 +435,11 @@ msgstr "Información"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Internal notes..."
+msgstr "Notas internas..."
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
 msgid "Invite"
 msgstr "Invitar"
 
@@ -465,13 +448,6 @@ msgstr "Invitar"
 #: model:ir.model.fields,field_description:client_account.field_res_users__is_carrier
 msgid "Is Carrier"
 msgstr "Es transportista"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Kg"
-msgstr "Kg"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_add_account_partner__lang
@@ -502,6 +478,16 @@ msgid "Manage Account"
 msgstr "Gestionar cuenta"
 
 #. module: client_account
+#: model:res.groups,comment:client_account.group_client_account_manager
+msgid "Manager can configure and administer client accounts"
+msgstr "El gerente puede configurar y administrar cuentas de clientes"
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Mobile:"
+msgstr "Móvil:"
+
+#. module: client_account
 #: model:ir.model.fields.selection,name:client_account.selection__credit_account__concept__credit
 msgid "Monthly Credit"
 msgstr "Crédito mensual"
@@ -519,7 +505,6 @@ msgstr "Nunca Conectado"
 
 #. module: client_account
 #. odoo-python
-#: code:addons/addons_shipment/client_account/models/credit_account.py:0
 #: code:addons/client_account/models/credit_account.py:0
 msgid "New"
 msgstr "Nuevo"
@@ -536,48 +521,15 @@ msgstr "Sin cuenta"
 
 #. module: client_account
 #. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/reject_reason_credit.py:0
 #: code:addons/client_account/wizard/reject_reason_credit.py:0
 msgid "No active ID found in context."
 msgstr "No se encontró ID activa en el contexto."
 
 #. module: client_account
 #. odoo-javascript
-#: code:addons/addons_shipment/client_account/static/src/list/account_carrier_select_list_view.js:0
 #: code:addons/client_account/static/src/list/account_carrier_select_list_view.js:0
 msgid "No hay transportistas seleccionados"
 msgstr "No hay transportistas seleccionados"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/models/account_carrier_line.py:0
-#: code:addons/client_account/models/account_carrier_line.py:0
-msgid "No partner found"
-msgstr "No se encontró cliente"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Order Confirmation"
-msgstr "Confirmación de pedido"
-
-#. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_account_carrier_line__shipping_package
-msgid "Package"
-msgstr "Paquete"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Package Type"
-msgstr "Tipo de paquete"
-
-#. module: client_account
-#: model:ir.model.fields.selection,name:client_account.selection__delivery_carrier__shipping_package__pallet
-msgid "Palet"
-msgstr "Palet"
 
 #. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_account_carrier_line__partner_id
@@ -591,27 +543,26 @@ msgid "Partner Account"
 msgstr "Cuenta del socio"
 
 #. module: client_account
+#: model:ir.model.fields,field_description:client_account.field_portal_wizard__partner_ids
 #: model_terms:ir.ui.view,arch_db:client_account.account_partner_view_list
 #: model_terms:ir.ui.view,arch_db:client_account.client_account_view_list
 msgid "Partners"
-msgstr "Socios"
+msgstr "Contactos"
 
 #. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_choose_delivery_carrier__quoted_price
-msgid "Quoted Price"
-msgstr "Precio cotizado"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Phone:"
+msgstr "Teléfono:"
+
+#. module: client_account
+#: model:ir.model,name:client_account.model_portal_wizard_user
+msgid "Portal User Config"
+msgstr "Configuración del usuario del portal"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.reject_reason_credit_wizard
 msgid "Reason"
 msgstr "Razón"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Regards,"
-msgstr "Saludos,"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.credit_account_view_form
@@ -681,20 +632,9 @@ msgstr "Ventas"
 
 #. module: client_account
 #. odoo-javascript
-#: code:addons/addons_shipment/client_account/static/src/list/account_carrier_select_list_view.xml:0
 #: code:addons/client_account/static/src/list/account_carrier_select_list_view.xml:0
 msgid "Select"
 msgstr "Seleccionar"
-
-#. module: client_account
-#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
-msgid "Select Carrier"
-msgstr "Seleccionar transportista"
-
-#. module: client_account
-#: model:ir.actions.server,name:client_account.server_action_account_carrier_select
-msgid "Select Carriers"
-msgstr "Seleccionar transportistas"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.add_account_partner_view
@@ -722,31 +662,8 @@ msgid "Sequence"
 msgstr "Secuencia"
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Shipping Address"
-msgstr "Dirección de envío"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Shipping Method"
-msgstr "Método de envío"
-
-#. module: client_account
-#: model:ir.model,name:client_account.model_delivery_carrier
-msgid "Shipping Methods"
-msgstr "Métodos de envío"
-
-#. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_delivery_carrier__shipping_package
-msgid "Shipping Package"
-msgstr "Paquete de envío"
-
-#. module: client_account
 #: model:ir.model.fields,field_description:client_account.field_credit_account__state
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
 msgid "State"
 msgstr "Estado"
 
@@ -757,27 +674,23 @@ msgid "State Account"
 msgstr "Estado de la cuenta"
 
 #. module: client_account
-#: model:ir.model.fields,field_description:client_account.field_account_carrier_line__state_ids
-msgid "States"
-msgstr "Estados"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Street..."
+msgstr "Calle..."
 
 #. module: client_account
 #. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "The Sales Team"
-msgstr "El equipo de ventas"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/models/credit_account.py:0
 #: code:addons/client_account/models/credit_account.py:0
 msgid "This record is already confirmed."
 msgstr "Este registro ya está confirmado."
 
 #. module: client_account
 #. odoo-python
-#: code:addons/addons_shipment/client_account/models/credit_account.py:0
 #: code:addons/client_account/models/credit_account.py:0
 msgid "This record is already in draft state."
 msgstr "Este registro ya está en estado borrador."
@@ -794,29 +707,26 @@ msgid "Total Account"
 msgstr "Cuenta total"
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Total Amount"
-msgstr "Monto total"
-
-#. module: client_account
 #. odoo-javascript
-#: code:addons/addons_shipment/client_account/static/src/list/account_carrier_select_list_view.js:0
 #: code:addons/client_account/static/src/list/account_carrier_select_list_view.js:0
 msgid "Transportistas guardados correctamente"
 msgstr "Transportistas guardados correctamente"
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid ""
-"You can track the status of your order and delivery details in your customer"
-" portal."
-msgstr ""
-"Puedes rastrear el estado de tu pedido y los detalles de entrega en tu "
-"portal de cliente."
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "Update"
+msgstr "Actualizar"
+
+#. module: client_account
+#: model:res.groups,comment:client_account.group_client_account_user
+msgid "User can view and manage client accounts"
+msgstr "El usuario puede ver y gestionar cuentas de clientes"
+
+#. module: client_account
+#: model:ir.model.fields,field_description:client_account.field_res_partner__portal_user_ids
+#: model:ir.model.fields,field_description:client_account.field_res_users__portal_user_ids
+msgid "Users"
+msgstr "Usuarios"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
@@ -833,18 +743,9 @@ msgid "You must enter the reason you are declining credit."
 msgstr "Debe ingresar la razón por la que está rechazando el crédito."
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Your Company"
-msgstr "Tu empresa"
-
-#. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "Your order with number"
-msgstr "Su pedido con número"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "ZIP"
+msgstr "Código postal"
 
 #. module: client_account
 #: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
@@ -852,22 +753,19 @@ msgid "e.g. 'B2B', 'VIP', 'Consulting', ..."
 msgstr "por ejemplo. 'B2B', 'VIP', 'Consultoría', ..."
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid ""
-"has been confirmed. Please check your customer portal to continue with the "
-"process."
-msgstr ""
-"ha sido confirmado. Por favor, revise su portal de cliente para continuar "
-"con el proceso."
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "e.g. Mr."
+msgstr "p. ej. Sr."
 
 #. module: client_account
-#. odoo-python
-#: code:addons/addons_shipment/client_account/wizard/choose_delivery_carrier.py:0
-#: code:addons/client_account/wizard/choose_delivery_carrier.py:0
-msgid "with weight of"
-msgstr "con un peso de"
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "e.g. New Address"
+msgstr "p. ej. Nueva dirección"
+
+#. module: client_account
+#: model_terms:ir.ui.view,arch_db:client_account.client_account_view_form
+msgid "e.g. Sales Director"
+msgstr "p. ej. Director de ventas"
 
 #. module: client_account
 #: model:mail.template,subject:client_account.email_template_delivery_carrier_confirmation

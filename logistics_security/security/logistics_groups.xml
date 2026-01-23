@@ -32,6 +32,7 @@
         <field name="name">After Sales Manager</field>
         <field name="category_id" ref="after_sales_category"/>
         <field name="implied_ids" eval="[(4, ref('group_after_sales_user')), (4, ref('quality.group_quality_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         <field name="comment">Full access to after sales operations. Includes Quality Manager access.</field>
     </record>
 
@@ -60,6 +61,7 @@
         <field name="name">Repair Manager</field>
         <field name="category_id" ref="repair_category"/>
         <field name="implied_ids" eval="[(4, ref('group_repair_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         <field name="comment">Full access to repair operations.</field>
     </record>
 
@@ -88,6 +90,7 @@
         <field name="name">Warehouse Manager</field>
         <field name="category_id" ref="warehouse_category"/>
         <field name="implied_ids" eval="[(4, ref('group_warehouse_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         <field name="comment">Full access to warehouse operations.</field>
     </record>
 </odoo>

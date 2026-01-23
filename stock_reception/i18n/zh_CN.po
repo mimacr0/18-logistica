@@ -1,0 +1,679 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_reception
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+t\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-23 15:37+0000\n"
+"PO-Revision-Date: 2026-01-23 15:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "%(check)s failed - %(account)s"
+msgstr "%(check)s 失败 - %(account)s"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "(Optional Reference)"
+msgstr "（可选参考）"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "(Required Reference)"
+msgstr "（必填参考）"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid ""
+"<i class=\"fa fa-fw fa-lg  fa-map-marker me-3\" title=\"Destination Location"
+" \"/>"
+msgstr ""
+"<i class=\"fa fa-fw fa-lg  fa-map-marker me-3\" title=\"Destination Location"
+" \"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-archive me-3\" title=\"Package Type\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-archive me-3\" title=\"Package Type\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-balance-scale me-3\" title=\"Weight (kg)\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-balance-scale me-3\" title=\"Weight (kg)\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-barcode me-3\" title=\"Enter a package name\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-barcode me-3\" title=\"Enter a package name\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-book me-3\" title=\"Package\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-book me-3\" title=\"Package\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-cube me-3\" title=\"Measures (mm)\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-cube me-3\" title=\"Measures (mm)\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid ""
+"<i class=\"fa fa-fw fa-lg fa-search me-3\" title=\"Enter a tracking code "
+"(required)\"/>"
+msgstr ""
+"<i class=\"fa fa-fw fa-lg fa-search me-3\" title=\"Enter a tracking code "
+"(required)\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-upload me-3\" title=\"Images / videos\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-upload me-3\" title=\"Images / videos\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<i class=\"fa fa-fw fa-lg fa-user me-3\" title=\"Person receiving\"/>"
+msgstr "<i class=\"fa fa-fw fa-lg fa-user me-3\" title=\"Person receiving\"/>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<span class=\"p-2\">mm</span>"
+msgstr "<span class=\"p-2\">mm</span>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "<span class=\"p-2\">×</span>"
+msgstr "<span class=\"p-2\">×</span>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "<span>mm</span>"
+msgstr "<span>mm</span>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "<span>×</span>"
+msgstr "<span>×</span>"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Account"
+msgstr "账户"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.stock_production_lot_view_form
+msgid "Additional Info"
+msgstr "附加信息"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__box_number
+msgid "Box Number"
+msgstr "箱号"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__carrier_id
+msgid "Carrier"
+msgstr "承运商"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Carrier Information"
+msgstr "承运商信息"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__carrier_name
+msgid "Carrier Name"
+msgstr "承运商名称"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__carrier_tracking_ref
+msgid "Carrier Tracking Reference"
+msgstr "承运商跟踪参考"
+
+#. module: stock_reception
+#: model:res.groups,name:stock_reception.group_package_reception_client_api
+msgid "Client API"
+msgstr "客户端 API"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Confirm"
+msgstr "确认"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Create Package Reception"
+msgstr "创建包裹接收"
+
+#. module: stock_reception
+#: model:ir.actions.act_window,name:stock_reception.action_stock_reception_create_stock_picking
+#: model:ir.actions.act_window,name:stock_reception.action_stock_reception_create_stock_picking_form
+msgid "Create Picking"
+msgstr "创建调拨"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Create Reception"
+msgstr "创建接收"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_create_stock_picking_line_wizard
+msgid "Create Stock Picking Line Wizard"
+msgstr "创建库存调拨行向导"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_create_stock_picking_wizard
+msgid "Create Stock Picking Wizard"
+msgstr "创建库存调拨向导"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "Created Packages"
+msgstr "已创建包裹"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__create_date
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__create_date
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__create_date
+msgid "Created on"
+msgstr "创建于"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Date"
+msgstr "日期"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__location_dest_id
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__location_dest_id
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__location_dest_id
+msgid "Destination Location"
+msgstr "目的位置"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_stock_picking__show_account_partner
+msgid "Determines if account_partner_id should be shown instead of partner_id"
+msgstr "确定是否显示 account_partner_id 而不是 partner_id"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Discard"
+msgstr "丢弃"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__display_name
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__display_name
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__height
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__height
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Height"
+msgstr "高度"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_stock_move_line__origin_package_id
+msgid ""
+"Historical reference to the original package before unpacking. This field "
+"preserves the package association for traceability even after products have "
+"been unpacked."
+msgstr ""
+"拆包前的原始包裹历史参考。该字段在产品拆包后仍保留包裹关联以便追溯。"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__id
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__id
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_stock_lot__pakcage_id
+msgid "ID of the package where the lot is stored"
+msgstr "存放批次的包裹ID"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__media_ids
+msgid "Images / videos"
+msgstr "图片 / 视频"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__global_tracking_ref
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__global_tracking_ref
+msgid "International Tracking Reference"
+msgstr "国际跟踪参考"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__write_date
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__write_date
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__packaging_length
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__packaging_length
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Length"
+msgstr "长度"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__location_id
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__location_id
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Location"
+msgstr "位置"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_stock_lot
+msgid "Lot/Serial"
+msgstr "批次/序列号"
+
+#. module: stock_reception
+#: model:res.groups,name:stock_reception.group_package_reception_manager
+msgid "Manager"
+msgstr "经理"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Measures (mm)"
+msgstr "尺寸（mm）"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "Move"
+msgstr "移动"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "No account"
+msgstr "无账户"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "No location"
+msgstr "无位置"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "No lot"
+msgstr "无批次"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "No note"
+msgstr "无备注"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "No package"
+msgstr "无包裹"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "No partners found associated with the selected products."
+msgstr "未找到与所选产品关联的合作伙伴。"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__optional_tracking_ref
+msgid "Optional Tracking Reference"
+msgstr "可选跟踪参考"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_stock_move_line__origin_package_id
+#: model_terms:ir.ui.view,arch_db:stock_reception.view_move_line_tree_inherit_stock_reception
+msgid "Origin Package"
+msgstr "来源包裹"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__account_partner_id
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__account_partner_id
+#: model:ir.model.fields,field_description:stock_reception.field_stock_picking__account_partner_id
+#: model:ir.model.fields,field_description:stock_reception.field_stock_quant__account_partner_id
+msgid "Owner Account"
+msgstr "所有者账户"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__pack_date
+msgid "Pack Date"
+msgstr "包装日期"
+
+#. module: stock_reception
+#. odoo-javascript
+#: code:addons/stock_reception/static/src/models/package_model.js:0
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__package_id
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Package"
+msgstr "包裹"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_stock_lot__pakcage_id
+msgid "Package ID"
+msgstr "包裹ID"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Package Information"
+msgstr "包裹信息"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__reception_line_ids
+msgid "Package Lines"
+msgstr "包裹行"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__package_name
+msgid "Package Name"
+msgstr "包裹名称"
+
+#. module: stock_reception
+#. odoo-javascript
+#: code:addons/stock_reception/static/src/main_menu.xml:0
+#: model:ir.actions.server,name:stock_reception.action_receive_package_server
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__package_reception_id
+msgid "Package Reception"
+msgstr "包裹接收"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__package_type_id
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__package_type_id
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Package Type"
+msgstr "包裹类型"
+
+#. module: stock_reception
+#. odoo-javascript
+#: code:addons/stock_reception/static/src/components/receive_package.js:0
+msgid "Package reception"
+msgstr "包裹接收"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_stock_quant_package
+msgid "Packages"
+msgstr "包裹"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_create_stock_picking_wizard__height
+#: model:ir.model.fields,help:stock_reception.field_receive_package_wizard__height
+msgid "Packaging Height"
+msgstr "包装高度"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_create_stock_picking_wizard__packaging_length
+#: model:ir.model.fields,help:stock_reception.field_receive_package_wizard__packaging_length
+msgid "Packaging Length"
+msgstr "包装长度"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_create_stock_picking_wizard__packaging_weight
+msgid "Packaging Weight"
+msgstr "包装重量"
+
+#. module: stock_reception
+#: model:ir.model.fields,help:stock_reception.field_create_stock_picking_wizard__width
+#: model:ir.model.fields,help:stock_reception.field_receive_package_wizard__width
+msgid "Packaging Width"
+msgstr "包装宽度"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__picking_type_id
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__picking_type_id
+msgid "Picking Type"
+msgstr "调拨类型"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "Please add at least one reception line."
+msgstr "请至少添加一条接收行。"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "Please enter a scheduled date."
+msgstr "请输入计划日期。"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "Please introduce a carrier_tracking_ref."
+msgstr "请输入承运商跟踪参考。"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid "Please select a package type."
+msgstr "请选择包裹类型。"
+
+#. module: stock_reception
+#: model:ir.module.category,name:stock_reception.module_category_print_report_delivery
+#: model:res.groups,name:stock_reception.group_print_report_delivery
+msgid "Print Report Delivery"
+msgstr "打印交付报告"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__product_id
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Product"
+msgstr "产品"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "产品移动(移库明细)"
+
+#. module: stock_reception
+#: model:quality.alert.stage,name:stock_reception.quality_alert_stage_qc_failed
+msgid "QC Failed"
+msgstr "质检失败"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid ""
+"QC failed on %(package)s | %(product)s | Lot: %(lot)s | Qty: %(qty)s | Note:"
+" %(note)s"
+msgstr ""
+"质检失败：%(package)s | %(product)s | 批次：%(lot)s | 数量：%(qty)s | 备注："
+"%(note)s"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "Quality Check"
+msgstr "质量检查"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "Quality check failed"
+msgstr "质量检查失败"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid ""
+"Quality check failed on picking %(picking)s.<br/>Product: "
+"%(product)s<br/>Lot/Serial: %(lot)s<br/>Failed qty: %(qty)s<br/>Failure "
+"location: %(location)s"
+msgstr ""
+"在调拨 %(picking)s 上质量检查失败。<br/>产品：%(product)s<br/>批次/序列号："
+"%(lot)s<br/>失败数量：%(qty)s<br/>失败位置：%(location)s"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_line_wizard__product_uom_qty
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Quantity"
+msgstr "数量"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_stock_quant
+msgid "Quants"
+msgstr "量化"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/receive_package_wizard.py:0
+#: model:ir.actions.act_window,name:stock_reception.action_receive_package_wizard
+#: model:ir.actions.client,name:stock_reception.action_receive_package_client
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Receive Package"
+msgstr "接收包裹"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_receive_package_wizard
+msgid "Receive Package Wizard"
+msgstr "接收包裹向导"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__receiver_id
+msgid "Receiver"
+msgstr "接收人"
+
+#. module: stock_reception
+#. odoo-javascript
+#: code:addons/stock_reception/static/src/components/receive_package.js:0
+msgid "Reception Confirmed"
+msgstr "接收已确认"
+
+#. module: stock_reception
+#: model:res.groups,name:stock_reception.group_package_reception_responsible
+msgid "Responsible"
+msgstr "负责人"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Scan or enter a tracking code (required)"
+msgstr "扫描或输入跟踪码（必填）"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__scheduled_date
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Scheduled Date"
+msgstr "计划日期"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__search_tracking_ref
+msgid "Search Tracking Reference"
+msgstr "搜索跟踪参考"
+
+#. module: stock_reception
+#. odoo-javascript
+#: code:addons/stock_reception/static/src/components/stock_location.xml:0
+msgid "Select location"
+msgstr "选择位置"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_stock_picking__show_account_partner
+msgid "Show Account Partner"
+msgstr "显示账户伙伴"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+msgid "Size: Length × Width × Height"
+msgstr "尺寸：长 × 宽 × 高"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__location_id
+msgid "Source Location"
+msgstr "来源位置"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_stock_move
+msgid "Stock Move"
+msgstr "库存移动"
+
+#. module: stock_reception
+#: model:ir.module.category,name:stock_reception.module_category_stock_reception
+msgid "Stock Reception"
+msgstr "库存接收"
+
+#. module: stock_reception
+#: model:ir.module.category,name:stock_reception.module_category_stock_reception_api
+msgid "Stock Reception API"
+msgstr "库存接收 API"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/create_stock_picking_wizard.py:0
+msgid ""
+"The selected products have different associated partners. They must be the "
+"same."
+msgstr "所选产品关联的合作伙伴不同，必须一致。"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_stock_picking
+msgid "Transfer"
+msgstr "调拨"
+
+#. module: stock_reception
+#. odoo-python
+#: code:addons/stock_reception/wizard/quality_check_wizard.py:0
+msgid "Unknown product"
+msgstr "未知产品"
+
+#. module: stock_reception
+#: model:res.groups,name:stock_reception.group_package_reception_user
+msgid "User"
+msgstr "用户"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__packaging_weight
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__weight
+#: model:ir.model.fields,help:stock_reception.field_receive_package_wizard__weight
+msgid "Weight"
+msgstr "重量"
+
+#. module: stock_reception
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Weight (kg)"
+msgstr "重量（kg）"
+
+#. module: stock_reception
+#: model:ir.model.fields,field_description:stock_reception.field_create_stock_picking_wizard__width
+#: model:ir.model.fields,field_description:stock_reception.field_receive_package_wizard__width
+#: model_terms:ir.ui.view,arch_db:stock_reception.create_stock_picking_wizard_view
+#: model_terms:ir.ui.view,arch_db:stock_reception.receive_package_wizard_form_view
+msgid "Width"
+msgstr "宽度"
+
+#. module: stock_reception
+#: model:ir.model,name:stock_reception.model_quality_check_wizard
+msgid "Wizard for Quality Check Pop Up"
+msgstr "弹出的质量检查向导"

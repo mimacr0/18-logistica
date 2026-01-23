@@ -15,9 +15,11 @@
     'website': "https://www.dafe.es",
     'summary': """Common security groups for logistics""",
     'category': 'Inventory/Inventory',
-    'depends': ['base', 'quality', 'quality_control'],
+    'depends': ['base', 'quality', 'quality_control', 'stock', 'hr', 'contacts'],
     'data': [
         'security/logistics_groups.xml',
+        'security/stock_picking_type_rules.xml',
+        'views/menu_visibility.xml',
     ],
     'images': ['static/description/icon.png'],
     'installable': True,
