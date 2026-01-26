@@ -4,7 +4,7 @@ from .choices import LIFECYCLE_STATE
 class StockLot(models.Model):
     _inherit = 'stock.lot'
 
-    lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State')
+    lifecycle_state = fields.Selection(LIFECYCLE_STATE, string='Lifecycle State', default='E')
     
     repair_history = fields.Html(string='Repair History')
     repair_order_id = fields.Many2one('repair.order', string='Repair Order')

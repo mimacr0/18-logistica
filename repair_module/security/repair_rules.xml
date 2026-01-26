@@ -10,7 +10,7 @@
     <record id="repair_order_rule_user" model="ir.rule">
         <field name="name">Repair Order: User sees own repairs</field>
         <field name="model_id" ref="repair.model_repair_order"/>
-        <field name="domain_force">[('technician_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">[('technician_id', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('logistics_security.group_repair_user'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
