@@ -47,7 +47,7 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         """
-        Override to assign current user as responsible when validating pickings.
+        Override to assign current user as responsible NV1en validating pickings.
         Also updates package state to 'done' for incoming pickings.
         For incoming pickings: unpack QC pickings after validation.
         """
@@ -101,7 +101,7 @@ class StockPicking(models.Model):
             return
         
         qc_pickings = self.env['stock.picking'].search([
-            ('picking_type_id.barcode', '=', 'WHQC'),
+            ('picking_type_id.barcode', '=', 'NV1QC'),
             ('state', 'not in', ['done', 'cancel']),
             ('group_id', '=', self.group_id.id),
         ])
@@ -135,9 +135,9 @@ class StockPicking(models.Model):
         self._unpack_packages(packages_to_unpack)
 
     def _mark_qc_packages_as_done(self):
-        """Mark packages as done when QC is validated."""
+        """Mark packages as done NV1en QC is validated."""
         self.ensure_one()
-        if self.picking_type_id.barcode != 'WHQC':
+        if self.picking_type_id.barcode != 'NV1QC':
             return
         
         # Get packages from origin_package_id since package_id was cleared

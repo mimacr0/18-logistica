@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="rule_picking_type_read_by_group" model="ir.rule">
-        <field name="name">Picking Types - Read by Group</field>
-        <field name="model_id" ref="stock.model_stock_picking_type"/>
-        <field name="perm_read" eval="1"/>
-        <field name="perm_write" eval="0"/>
-        <field name="perm_create" eval="0"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="domain_force">[
-            '|', '|',
-            ('barcode', 'in', ['WHQC', 'WHSTOR', 'WHINT', 'WHPICK', 'WHPACK', 'move_repair', 'return_repair', 'WHRO', 'review_operation']) if user.has_group('logistics_security.group_after_sales_viewer') else ('id', '=', -1),
-            ('barcode', 'in', ['WHIN', 'WHOUT', 'WHINT', 'WHPICK', 'WHPACK']) if user.has_group('logistics_security.group_warehouse_viewer') else ('id', '=', -1),
-            ('barcode', 'in', ['review_operation', 'WHRO', 'move_repair', 'return_repair']) if user.has_group('logistics_security.group_repair_viewer') else ('id', '=', -1)
-        ]</field>
-    </record>
-
-    <record id="rule_picking_type_write_by_group" model="ir.rule">
-        <field name="name">Picking Types - Write by Group</field>
-        <field name="model_id" ref="stock.model_stock_picking_type"/>
-        <field name="perm_read" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_unlink" eval="0"/>
-        <field name="domain_force">[
-            '|', '|',
-            ('barcode', 'in', ['WHQC', 'WHSTOR', 'WHINT', 'WHPICK', 'WHPACK', 'move_repair', 'return_repair', 'WHRO', 'review_operation']) if user.has_group('logistics_security.group_after_sales_user') else ('id', '=', -1),
-            ('barcode', 'in', ['WHIN', 'WHOUT', 'WHINT', 'WHPICK', 'WHPACK']) if user.has_group('logistics_security.group_warehouse_user') else ('id', '=', -1),
-            ('barcode', 'in', ['review_operation', 'WHRO', 'move_repair', 'return_repair']) if user.has_group('logistics_security.group_repair_user') else ('id', '=', -1)
-        ]</field>
-    </record>
+    <data noupdate="0">
+        <record id="rule_picking_type_read_by_group" model="ir.rule">
+            <field name="name">Picking Types - Read by Group</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">[
+                '|',
+                (1, '=', 1) if user.has_group('base.group_system') else ('id', '=', -1),
+                '|', '|',
+                ('barcode', 'in', ['NV1QC', 'NV1STOR', 'NV1INT', 'NV1PICK', 'NV1PACK', 'move_repair', 'return_repair', 'NV1RO', 'review_operation']) if user.has_group('logistics_security.group_after_sales_viewer') else ('id', '=', -1),
+                ('barcode', 'in', ['NV1IN', 'NV1OUT', 'NV1INT', 'NV1PICK', 'NV1PACK']) if user.has_group('logistics_security.group_warehouse_viewer') else ('id', '=', -1),
+                ('barcode', 'in', ['review_operation', 'NV1RO', 'move_repair', 'return_repair']) if user.has_group('logistics_security.group_repair_viewer') else ('id', '=', -1)
+            ]</field>
+        </record>
+    
+        <record id="rule_picking_type_write_by_group" model="ir.rule">
+            <field name="name">Picking Types - Write by Group</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">[
+                '|',
+                (1, '=', 1) if user.has_group('base.group_system') else ('id', '=', -1),
+                '|', '|',
+                ('barcode', 'in', ['NV1QC', 'NV1STOR', 'NV1INT', 'NV1PICK', 'NV1PACK', 'move_repair', 'return_repair', 'NV1RO', 'review_operation']) if user.has_group('logistics_security.group_after_sales_user') else ('id', '=', -1),
+                ('barcode', 'in', ['NV1IN', 'NV1OUT', 'NV1INT', 'NV1PICK', 'NV1PACK']) if user.has_group('logistics_security.group_warehouse_user') else ('id', '=', -1),
+                ('barcode', 'in', ['review_operation', 'NV1RO', 'move_repair', 'return_repair']) if user.has_group('logistics_security.group_repair_user') else ('id', '=', -1)
+            ]</field>
+        </record>
+    </data>
 </odoo>
