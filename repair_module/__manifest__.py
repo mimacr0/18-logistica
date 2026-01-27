@@ -24,7 +24,6 @@
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
-        'data/repair_order_sequence.xml',
         'data/stock_location_data.xml',
         'data/stock_picking_data.xml',
         'data/quality_alert_data.xml',

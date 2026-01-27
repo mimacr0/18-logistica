@@ -382,39 +382,39 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
             const lines = helper.getLines();
 
             // Products comming from Section 1.
-            helper.assertLineLocations(lines[0], 'WH/Stock/Section 1');
+            helper.assertLineLocations(lines[0], 'NV1/Stock/Section 1');
             helper.assertLineProduct(lines[0], 'product1');
 
-            helper.assertLineLocations(lines[1], 'WH/Stock/Section 1');
+            helper.assertLineLocations(lines[1], 'NV1/Stock/Section 1');
             helper.assertLineProduct(lines[1], 'product1');
 
-            helper.assertLineLocations(lines[2], 'WH/Stock/Section 1');
+            helper.assertLineLocations(lines[2], 'NV1/Stock/Section 1');
             helper.assertLineProduct(lines[2], 'product4');
 
-            helper.assertLineLocations(lines[3], 'WH/Stock/Section 1');
+            helper.assertLineLocations(lines[3], 'NV1/Stock/Section 1');
             helper.assertLineProduct(lines[3], 'productserial1');
             helper.assertLineTrackingNumber(lines[3], '');
 
             // Products coming from Section 2.
-            helper.assertLineLocations(lines[4], 'WH/Stock/Section 2');
+            helper.assertLineLocations(lines[4], 'NV1/Stock/Section 2');
             helper.assertLineProduct(lines[4], 'product2');
 
             // Products coming from Section 3.
-            helper.assertLineLocations(lines[5], 'WH/Stock/Section 3');
+            helper.assertLineLocations(lines[5], 'NV1/Stock/Section 3');
             helper.assertLineProduct(lines[5], 'product2');
 
-            helper.assertLineLocations(lines[6], 'WH/Stock/Section 3');
+            helper.assertLineLocations(lines[6], 'NV1/Stock/Section 3');
             helper.assertLineProduct(lines[6], 'product3');
 
             // Products coming from Section 4.
-            helper.assertLineLocations(lines[7], 'WH/Stock/Section 4');
+            helper.assertLineLocations(lines[7], 'NV1/Stock/Section 4');
             helper.assertLineProduct(lines[7], 'product4');
 
             // Products coming from Section 5.
-            helper.assertLineLocations(lines[8], 'WH/Stock/Section 5');
+            helper.assertLineLocations(lines[8], 'NV1/Stock/Section 5');
             helper.assertLineProduct(lines[8], 'product5');
 
-            helper.assertLineLocations(lines[9], 'WH/Stock/Section 5');
+            helper.assertLineLocations(lines[9], 'NV1/Stock/Section 5');
             helper.assertLineProduct(lines[9], 'product5');
 
             // Checks each line belong to the right picking.
@@ -427,7 +427,7 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
     // Scans the source (Section 1) then scans product1 x2, product4 x1
     { trigger: '.o_barcode_client_action', run: 'scan LOC-01-01-00' },
     {
-        trigger: '.o_barcode_location_line:contains("WH/Stock/Section 1").text-bg-800',
+        trigger: '.o_barcode_location_line:contains("NV1/Stock/Section 1").text-bg-800',
     },
     {
         trigger: '.o_scan_message.o_scan_product',
@@ -458,7 +458,7 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
     },
     // Scan product2 x2
     {
-        trigger: '.o_barcode_location_line:contains("WH/Stock/Section 2").text-bg-800',
+        trigger: '.o_barcode_location_line:contains("NV1/Stock/Section 2").text-bg-800',
         run: 'scan product2' // Must complete the line from Section 2.
     },
     {
@@ -466,8 +466,8 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
         run: function() {
             const lines = helper.getLines();
             helper.assertLinesBelongTo([lines[4], lines[5]], 'picking_delivery_1');
-            helper.assertLineLocations(lines[4], 'WH/Stock/Section 2');
-            helper.assertLineLocations(lines[5], 'WH/Stock/Section 3');
+            helper.assertLineLocations(lines[4], 'NV1/Stock/Section 2');
+            helper.assertLineLocations(lines[5], 'NV1/Stock/Section 3');
         }
     },
     // Scans again product2 but it's reserved in Section 3 and we're still in Section 2 and scaning
@@ -485,8 +485,8 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
             checkState(currentViewState);
             const lines = helper.getLines();
             helper.assertLinesBelongTo([lines[4], lines[5]], 'picking_delivery_1');
-            helper.assertLineLocations(lines[4], 'WH/Stock/Section 2');
-            helper.assertLineLocations(lines[5], 'WH/Stock/Section 2');
+            helper.assertLineLocations(lines[4], 'NV1/Stock/Section 2');
+            helper.assertLineLocations(lines[5], 'NV1/Stock/Section 2');
         },
     },
 
@@ -495,7 +495,7 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
 
     // Scan product3 x2
     {
-        trigger: '.o_barcode_location_line:contains("WH/Stock/Section 3").text-bg-800',
+        trigger: '.o_barcode_location_line:contains("NV1/Stock/Section 3").text-bg-800',
         run: 'scan product3'
     },
     { trigger: ".o_barcode_line[data-barcode='product3'].o_selected", run: 'scan product3' },
@@ -508,19 +508,19 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', { steps
 
     // Scan product4 x1
     {
-        trigger: '.o_barcode_location_line:contains("WH/Stock/Section 4").text-bg-800',
+        trigger: '.o_barcode_location_line:contains("NV1/Stock/Section 4").text-bg-800',
         run: 'scan product4'
     },
 
     // Change the location for shelf 5 (the last one).
     {
-        trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 4']+.o_barcode_line.o_selected.o_line_completed",
+        trigger: ".o_barcode_location_line[data-location='NV1/Stock/Section 4']+.o_barcode_line.o_selected.o_line_completed",
         run: 'scan shelf5'
     },
 
     // Scan p5pack01 which is attended.
     {
-        trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 5'].text-bg-800",
+        trigger: ".o_barcode_location_line[data-location='NV1/Stock/Section 5'].text-bg-800",
         run: 'scan p5pack01'
     },
     // Scan p5pack02 which isn't attended.
@@ -821,28 +821,28 @@ registry.category("web_tour.tours").add('test_batch_create', { steps: () => [
             const lines = helper.getLines();
 
             // Products comming from Section 1.
-            helper.assertLineLocations(lines[0], "WH/Stock/Section 1");
+            helper.assertLineLocations(lines[0], "NV1/Stock/Section 1");
             helper.assertLineProduct(lines[0], "product1");
 
-            helper.assertLineLocations(lines[1], "WH/Stock/Section 1");
+            helper.assertLineLocations(lines[1], "NV1/Stock/Section 1");
             helper.assertLineProduct(lines[1], "product1");
 
-            helper.assertLineLocations(lines[2], "WH/Stock/Section 1");
+            helper.assertLineLocations(lines[2], "NV1/Stock/Section 1");
             helper.assertLineProduct(lines[2], "product4");
 
             // Products coming from Section 2.
-            helper.assertLineLocations(lines[3], "WH/Stock/Section 2");
+            helper.assertLineLocations(lines[3], "NV1/Stock/Section 2");
             helper.assertLineProduct(lines[3], "product2");
 
             // Products coming from Section 3.
-            helper.assertLineLocations(lines[4], "WH/Stock/Section 3");
+            helper.assertLineLocations(lines[4], "NV1/Stock/Section 3");
             helper.assertLineProduct(lines[4], "product2");
 
-            helper.assertLineLocations(lines[5], "WH/Stock/Section 3");
+            helper.assertLineLocations(lines[5], "NV1/Stock/Section 3");
             helper.assertLineProduct(lines[5], "product3");
 
             // Products coming from Section 4.
-            helper.assertLineLocations(lines[6], "WH/Stock/Section 4");
+            helper.assertLineLocations(lines[6], "NV1/Stock/Section 4");
             helper.assertLineProduct(lines[6], "product4");
 
             // Checks each line belong to the right picking.
@@ -864,20 +864,20 @@ registry.category("web_tour.tours").add('test_put_in_pack_scan_suggested_package
             const lines = helper.getLines();
 
             // Products comming from Section 1.
-            helper.assertLineLocations(lines[0], "WH/Stock/Section 1");
+            helper.assertLineLocations(lines[0], "NV1/Stock/Section 1");
             helper.assertLineProduct(lines[0], "product1");
 
-            helper.assertLineLocations(lines[1], "WH/Stock/Section 1");
+            helper.assertLineLocations(lines[1], "NV1/Stock/Section 1");
             helper.assertLineProduct(lines[1], "product1");
 
-            helper.assertLineLocations(lines[2], "WH/Stock/Section 1");
+            helper.assertLineLocations(lines[2], "NV1/Stock/Section 1");
             helper.assertLineProduct(lines[2], "product3");
 
             // Products coming from Section 2.
-            helper.assertLineLocations(lines[3], "WH/Stock/Section 2");
+            helper.assertLineLocations(lines[3], "NV1/Stock/Section 2");
             helper.assertLineProduct(lines[3], "product2");
 
-            helper.assertLineLocations(lines[4], "WH/Stock/Section 2");
+            helper.assertLineLocations(lines[4], "NV1/Stock/Section 2");
             helper.assertLineProduct(lines[4], "product2");
 
             // Checks each line belong to the right picking.
@@ -953,7 +953,7 @@ registry.category("web_tour.tours").add('test_put_in_pack_scan_suggested_package
     },
     // Scans the delivery 1 line's product and put it in pack.
     {
-        trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-800',
+        trigger: '.o_barcode_location_line[data-location="NV1/Stock/Section 2"].text-bg-800',
         run: 'scan product2',
     },
     {

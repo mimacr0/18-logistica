@@ -9,7 +9,7 @@
 
     <record id="action_receive_package_server" model="ir.actions.server">
         <field name="name">Package Reception</field>
-        <field name="model_id" ref="stock_reception.action_receive_package_server"/>
+        <field name="model_id" ref="stock_reception.model_receive_package_wizard"/>
         <field name="state">code</field>
         <field name="code">
 action = env.ref('stock_reception.action_receive_package_client').sudo().read()[0]

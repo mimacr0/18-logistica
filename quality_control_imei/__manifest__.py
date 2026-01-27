@@ -20,7 +20,6 @@
         'python': ['requests'],
     },
     'data': [
-        'data/stock_sequence_data.xml',
         'data/imei_api_config_data.xml',
         'views/res_config_settings_views.xml',
         'views/quality_check_views.xml',
