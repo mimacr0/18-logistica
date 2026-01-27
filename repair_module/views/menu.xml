@@ -16,16 +16,22 @@
         <field name="groups_id" eval="[(6, 0, [ref('logistics_security.group_repair_user')])]"/>
     </record>
 
-    <!-- Custom menu items -->
-    <menuitem id="menu_repair_result"
-              name="Results"
-              parent="repair.repair_menu_config"
-              action="action_repair_result"
-              sequence="100"/>
 
+    <record id="repair.repair_menu_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('logistics_security.group_repair_manager'))]"/>
+    </record>
+    <!-- Custom menu items -->
     <menuitem id="menu_repair_diagnosis"
               name="Diagnostics"
               parent="repair.repair_menu_config"
               action="action_repair_diagnosis"
+              sequence="100"/>
+    
+    <menuitem id="menu_repair_result"
+              name="Results"
+              parent="repair.repair_menu_config"
+              action="action_repair_result"
               sequence="120"/>
+
+
 </odoo>

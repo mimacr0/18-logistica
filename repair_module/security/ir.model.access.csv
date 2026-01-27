@@ -1,9 +1,12 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 access_quality_alert_after_sales,access_quality_alert_after_sales,quality_control.model_quality_alert,logistics_security.group_after_sales_user,1,0,0,0
+access_repair_order_after_sales_user,repair.order.access_repair_order_after_sales_user,repair.model_repair_order,logistics_security.group_after_sales_user,1,1,1,0
 access_repair_order_user,repair.order.user,repair.model_repair_order,logistics_security.group_repair_user,1,1,0,0
 access_repair_order_manager,repair.order.manager,repair.model_repair_order,logistics_security.group_repair_manager,1,1,1,1
-access_repair_result_user,repair.result.user,model_repair_result,logistics_security.group_repair_user,1,1,1,1
-access_repair_diagnosis_user,repair.diagnosis.user,model_repair_diagnosis,logistics_security.group_repair_user,1,1,1,1
+access_repair_result_user,repair.result.user,model_repair_result,logistics_security.group_repair_user,1,1,0,0
+access_repair_diagnosis_user,repair.diagnosis.user,model_repair_diagnosis,logistics_security.group_repair_user,1,1,0,0
 access_quality_alert_repair,access_quality_alert_repair,quality_control.model_quality_alert,logistics_security.group_repair_user,1,0,0,0
 access_repair_technician_set,access_repair_technician_set,model_repair_technician_set,logistics_security.group_repair_manager,1,1,1,1
 access_quality_alert_cancel_wizard,quality.alert.cancel.wizard,model_quality_alert_cancel_wizard,logistics_security.group_after_sales_user,1,1,1,1
+access_repair_result_manager,repair.result.manager,model_repair_result,logistics_security.group_repair_manager,1,1,1,1
+access_repair_diagnosis_manager,repair.diagnosis.manager,model_repair_diagnosis,logistics_security.group_repair_manager,1,1,1,1

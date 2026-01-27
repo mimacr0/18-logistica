@@ -33,6 +33,8 @@
         'views/menu.xml',
         'views/stock_lot_views.xml',
         'views/stock_picking_views.xml',
+        'views/repair_result_views.xml',
+        'views/repair_diagnosis_views.xml',
         'wizard/repair_technician_change_wizard.xml',
         'wizard/quality_alert_cancel_wizard.xml',
         'security/ir.model.access.csv',

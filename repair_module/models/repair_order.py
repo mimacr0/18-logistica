@@ -2,6 +2,7 @@ from odoo import models, fields, api, _
 from .choices import MAINTENANCE_TYPE, LIFECYCLE_STATE
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_is_zero, clean_context
+from markupsafe import Markup
 
 class RepairOrder(models.Model):
     _inherit = 'repair.order'
@@ -45,7 +46,7 @@ class RepairOrder(models.Model):
                 repair.sale_order_id.account_partner_id = repair.account_partner_id
         return res
 
-    def button_set_technician(self):
+    def action_batch_set_technician(self):
         return {
             'name': _('Set Technician'),
             'type': 'ir.actions.act_window',
@@ -53,8 +54,9 @@ class RepairOrder(models.Model):
             'view_mode': 'form',
             'target': 'new',
             'context': {
-                'default_repair_id': self.id,
-                'default_technician_id': self.technician_id.id,
+                'default_repair_ids': self.ids,
+                'active_model': self._name,
+                'active_ids': self.ids,
             },
         }
 
@@ -98,9 +100,9 @@ class RepairOrder(models.Model):
 
     def action_repair_end(self):
         self.ensure_one()
-        if not self.lifecycle_state and self.product_id.tracking == 'serial':
+        if not self.lifecycle_state and self.product_id.tracking == 'serial' or self.lifecycle_state == 'E':
             raise ValidationError(_('Please assign a new lifecycle state'))
-
+            
         res = super().action_repair_end()
         if self.repair_alert_id:
             self.repair_alert_id.stage_id = self.env.ref('repair_module.quality_alert_stage_sent_to_postsale')
@@ -199,22 +201,28 @@ class RepairOrder(models.Model):
                     'lot_id': repair.lot_id.id,
                     'product_uom_id': repair.product_uom.id or repair.product_id.uom_id.id,
                     'quantity': repair.product_qty,
+                    'qty_done': repair.product_qty,
                     'owner_id': owner_id,
+                    'picking_id': picking.id,
                     'location_id': location_src.id,
                     'location_dest_id': location_dest.id,
                 })],
             })
 
         product_moves = self.env['stock.move'].create(product_move_vals)
+        picking.action_confirm()
 
         if self.repair_alert_id:
             self.repair_alert_id.write({'picking_ids': [(4, picking.id)]})
 
             # (Opcional) mensaje en el chatter del alert
             self.repair_alert_id.message_post(
-                body=_("Se ha creado una transferencia interna <a href=# data-oe-model='stock.picking' data-oe-id='%d'>%s</a> desde NV1P2S7 hacia NV1P2S4R.")
+                body=Markup(_("Se ha creado una transferencia interna <a href=# data-oe-model='stock.picking' data-oe-id='%d'>%s</a> desde NV1P2S7 hacia NV1P2S4R."))
                 % (picking.id, picking.name)
                 )
+            stage = self.env.ref('repair_module.quality_alert_stage_sent_to_postsale', raise_if_not_found=False)
+            if stage:
+                self.repair_alert_id.stage_id = stage.id
 
         # Asignar el move principal a la reparación
         repair_move = {m.repair_id.id: m for m in product_moves}

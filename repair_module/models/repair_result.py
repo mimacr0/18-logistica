@@ -19,3 +19,5 @@ class RepairResult(models.Model):
         column1='result_id',
         column2='lot_id'
     )
+
+    price = fields.Float(string='Price')

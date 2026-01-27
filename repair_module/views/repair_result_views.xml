@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="repair_module_view_repair_result_form" model="ir.ui.view">
+        <field name="name">repair.module.view.repair.result.form</field>
+        <field name="model">repair.result</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="price" widget="monetary"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="lot_ids" readonly="1" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="repair_module_view_repair_result_list" model="ir.ui.view">
+        <field name="name">repair.module.view.repair.result.list</field>
+        <field name="model">repair.result</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="price" widget="monetary"/>
+            </list>
+        </field>
+    </record>
+</odoo>
