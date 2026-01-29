@@ -18,6 +18,7 @@
     'depends': ['base', 'quality', 'quality_control', 'stock', 'hr', 'contacts'],
     'data': [
         'security/logistics_groups.xml',
+        'security/ir.model.access.csv',
         'security/stock_picking_type_rules.xml',
         'views/menu_visibility.xml',
     ],

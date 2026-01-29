@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='group_standard_price']" position="inside">
                 <field name="account_partner_id" class="oe_inline" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                <field name="internal_reference"/>
             </xpath>
         </field>
     </record>
