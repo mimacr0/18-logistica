@@ -43,7 +43,7 @@ class ProductProductInherit(models.Model):
         - ID del product.template
         - ID del product.product
         
-        Formato: {account_partner_id}-{template_id}-{product_id}
+        Formato: {account_partner_id.name}-{template_id}-{product_id}
         
         :param account_partner: account.partner record (opcional, si no se proporciona usa self.account_partner_id)
         :return: string con el SKU generado
@@ -54,7 +54,7 @@ class ProductProductInherit(models.Model):
         partner = account_partner or self.account_partner_id
         
         # Obtener IDs
-        partner_id = partner.id if partner else None
+        partner_id = partner.name if partner else None
         template_id = self.product_tmpl_id.id if self.product_tmpl_id else None
         product_id = self.id if self.id else None
         
@@ -72,6 +72,11 @@ class ProductProductInherit(models.Model):
             return "SKUTEMP"
         
         return '-'.join(sku_parts)
+
+    def action_manual_generate_code(self):
+        for product in self:
+            product.ensure_default_code(account_partner=product.account_partner_id)
+
 
     def ensure_default_code(self, account_partner=None):
         """
