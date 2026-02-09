@@ -5,7 +5,10 @@
 #
 ##############################################################################
 
-from . import product_template
-from . import product_product
-from . import product_image
-from . import product_category
+from odoo import fields, models
+
+
+class ProductCategoryInherit(models.Model):
+    _inherit = 'product.category'
+
+    name = fields.Char(string='Name', index='trigram', required=True, translate=True)

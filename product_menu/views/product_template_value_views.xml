@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
-
     <record id="product_menu_product_attribute_value_list" model="ir.ui.view">
         <field name="name">product.attribute.value.list</field>
         <field name="model">product.attribute.value</field>
