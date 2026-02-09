@@ -8,6 +8,15 @@
 
             <search string="Product">
                 <field name="name" string="Product" filter_domain="['|', '|', ('default_code', 'ilike', self), ('name', 'ilike', self), ('barcode', 'ilike', self)]"/>
+                <separator/>
+                <filter string="Products" name="products" domain="[('type', 'in', ['consu', 'product'])]"/>
+                <filter string="Spare Parts" name="spare_parts" domain="[('categ_id', 'child_of', 8)]"/>
+
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Product Type" name="type" context="{'group_by':'type'}"/>
+                    <filter string="Product Category" name="categ_id" context="{'group_by':'categ_id'}"/>
+                </group>
                 <!-- <field name="client_account_id" string="Client Account" filter_domain="[('client_account_id', 'ilike', self)]"/>
                 <separator/>
                 <filter string="Services" name="services" domain="[('type','=','service')]"/>
@@ -32,6 +41,7 @@
                 </group> -->
                 <searchpanel>
                     <field name="account_partner_id" string="Account Partner" icon="fa-users" enable_counters="1"/>
+                    <field name="categ_id" string="Product Category" icon="fa-th-list" enable_counters="1"/>
                 </searchpanel>
             </search>
         </field>

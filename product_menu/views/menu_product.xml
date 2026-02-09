@@ -22,12 +22,19 @@
         parent="menu_root_product_menu"
     />
 
-        <menuitem 
+    <menuitem 
         id="menu_products_attributes_menu"
         name="Attributes" 
         sequence="10"
         parent="menu_products_configuration_menu"
         action="product.attribute_action"
     />
-
+    
+    <menuitem 
+        id="menu_products_categories_menu"
+        name="Categories" 
+        sequence="20"
+        parent="menu_products_configuration_menu"
+        action="product_menu_categories_action"
+    />
 </odoo>

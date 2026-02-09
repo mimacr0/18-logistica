@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+t\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 15:10+0000\n"
-"PO-Revision-Date: 2026-01-23 15:10+0000\n"
+"POT-Creation-Date: 2026-02-09 14:45+0000\n"
+"PO-Revision-Date: 2026-02-09 14:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,104 +23,104 @@ msgstr "变体数量"
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.product_images_import_wizard_form_view
 msgid "&amp;nbsp;"
-msgstr "&amp;nbsp;"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_128gb
 msgid "128GB"
-msgstr "128GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_12gb
 msgid "12GB"
-msgstr "12GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_16gb
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_16gb
 msgid "16GB"
-msgstr "16GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_1tb
 msgid "1TB"
-msgstr "1TB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_24gb
 msgid "24GB"
-msgstr "24GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_256gb
 msgid "256GB"
-msgstr "256GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_2gb
 msgid "2GB"
-msgstr "2GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_2tb
 msgid "2TB"
-msgstr "2TB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_32gb
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_32gb
 msgid "32GB"
-msgstr "32GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_3gb
 msgid "3GB"
-msgstr "3GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_4gb
 msgid "4GB"
-msgstr "4GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_512gb
 msgid "512GB"
-msgstr "512GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_rom_64gb
 msgid "64GB"
-msgstr "64GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_6gb
 msgid "6GB"
-msgstr "6GB"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_ram_8gb
 msgid "8GB"
-msgstr "8GB"
+msgstr ""
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
 msgid "<span>cm</span>"
-msgstr "<span>cm</span>"
+msgstr ""
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
 msgid "<span>cm³</span>"
-msgstr "<span>cm³</span>"
+msgstr ""
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
 msgid "<span>kg</span>"
-msgstr "<span>kg</span>"
+msgstr ""
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
 msgid "<span>×</span>"
-msgstr "<span>×</span>"
+msgstr ""
 
 #. module: product_menu
 #: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__account_partner_id
@@ -205,7 +205,10 @@ msgid "Cancel"
 msgstr "取消"
 
 #. module: product_menu
+#: model:ir.actions.act_window,name:product_menu.product_menu_categories_action
+#: model:ir.ui.menu,name:product_menu.menu_products_categories_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_categories_list_view
 msgid "Categories"
 msgstr "类别"
 
@@ -289,6 +292,11 @@ msgid "Green"
 msgstr "绿色"
 
 #. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
+msgid "Group By"
+msgstr ""
+
+#. module: product_menu
 #: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__height
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
 msgid "Height"
@@ -300,12 +308,12 @@ msgstr "高度"
 #: model:ir.model.fields,field_description:product_menu.field_odoo_product_image__id
 #: model:ir.model.fields,field_description:product_menu.field_product_images_import_wizard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_form_view
 msgid "IMG"
-msgstr "IMG"
+msgstr ""
 
 #. module: product_menu
 #: model:ir.model.fields,field_description:product_menu.field_add_products_wizard__image_1920
@@ -323,6 +331,12 @@ msgstr "图片"
 #: model:ir.actions.act_window,name:product_menu.product_images_import_wizard_action
 msgid "Images Import"
 msgstr "图片导入"
+
+#. module: product_menu
+#: model:ir.model.fields,field_description:product_menu.field_product_product__internal_reference
+#: model:ir.model.fields,field_description:product_menu.field_product_template__internal_reference
+msgid "Internal Reference"
+msgstr ""
 
 #. module: product_menu
 #: model:ir.model.fields,field_description:product_menu.field_add_products_line_wizard__write_uid
@@ -350,6 +364,11 @@ msgstr "长度"
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
 msgid "Logistics"
 msgstr "物流"
+
+#. module: product_menu
+#: model:ir.actions.server,name:product_menu.action_manual_generate_code
+msgid "Manual Generate Code"
+msgstr ""
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
@@ -422,6 +441,7 @@ msgstr "产品"
 
 #. module: product_menu
 #: model_terms:ir.ui.view,arch_db:product_menu.add_products_wizard_view
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
 msgid "Product Category"
 msgstr "产品类别"
 
@@ -446,6 +466,11 @@ msgid "Product Tmpl"
 msgstr "产品模板"
 
 #. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
+msgid "Product Type"
+msgstr ""
+
+#. module: product_menu
 #: model:ir.model,name:product_menu.model_product_product
 msgid "Product Variant"
 msgstr "产品变体"
@@ -461,6 +486,7 @@ msgstr "产品变体名称"
 #: model:ir.actions.act_window,name:product_menu.product_menu_product_product_action
 #: model:ir.ui.menu,name:product_menu.menu_products_product_menu
 #: model:ir.ui.menu,name:product_menu.menu_root_product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
 msgid "Products"
 msgstr "产品"
 
@@ -560,6 +586,11 @@ msgstr "尺寸：长 × 宽 × 高"
 #: model:product.attribute.value,name:product_menu.product_attribute_value_color_space_gray
 msgid "Space Gray"
 msgstr "深空灰"
+
+#. module: product_menu
+#: model_terms:ir.ui.view,arch_db:product_menu.product_menu_product_view_search
+msgid "Spare Parts"
+msgstr ""
 
 #. module: product_menu
 #: model:product.attribute.value,name:product_menu.product_attribute_value_color_starlight

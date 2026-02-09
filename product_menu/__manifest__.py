@@ -19,12 +19,14 @@
     'data': [
         'security/ir.model.access.csv',
         'data/product_attribute_data.xml',
+        'data/product_category_data.xml',
         'wizard/account_add_products_wizard.xml',
         'wizard/product_images_import_wizard.xml',
         'views/product_template_views.xml',
         'views/product_template_attribute_line_views.xml',
         'views/product_template_value_views.xml',
         'views/product_product_views.xml',
+        'views/product_category_views.xml',
         'views/menu_product.xml',
     ],
     'assets': {
