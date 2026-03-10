@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-name="account_partner.AccountCarrierSelectListView.Buttons" t-inherit="web.ListView.Buttons" owl="1">
+
+        <xpath expr="//div[contains(@t-if, 'props.showButtons')]" position="inside">
+            <button class="btn btn-primary ms-2" t-on-click="() => this.selectCarriers()">Select</button>
+        </xpath>
+
+    </t>
+
+</templates>

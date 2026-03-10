@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_credit_account,access_credit_account,model_credit_account,client_account.group_client_account_user,1,1,1,1
-access_add_account_partner,access_add_account_partner,model_add_account_partner,client_account.group_client_account_user,1,1,1,1
-access_account_partner,access_account_partner,model_account_partner,client_account.group_client_account_user,1,1,1,1
-access_account_carrier_line,access_account_carrier_line,model_account_carrier_line,client_account.group_client_account_user,1,1,1,1
-reject_reason_credit,reject_reason_credit,model_reject_reason_credit,client_account.group_client_account_user,1,1,1,1

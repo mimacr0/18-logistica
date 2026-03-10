@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="rma_base_root"
+              name="Products"
+              web_icon="rma_base,static/description/product_menu.png"
+              sequence="25"/>
+
+    <menuitem id="general_products_menu"
+              name="General"
+              parent="rma_base_root"
+              action="action_product_product_general"
+              sequence="10"/>
+
+    <menuitem id="account_product_map_menu"
+              name="Product Map"
+              parent="rma_base_root"
+              action="action_account_product_map"
+              sequence="20"/>
+
+    <menuitem id="generic_rma_base"
+              name="Generic Products"
+              parent="rma_base_root"
+              action="action_product_product_generic"
+              sequence="30"/>
+
+    <!-- Menu that appears in account_partner -->
+    <menuitem id="account_product_map_menu_partner"
+              name="Product Map"
+              parent="account_partner.credit_account_menu_root"
+              action="action_account_product_map"
+              sequence="40"/>
+</odoo>

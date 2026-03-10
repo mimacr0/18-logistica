@@ -1,0 +1,773 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+t\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-23 14:58+0000\n"
+"PO-Revision-Date: 2026-01-23 14:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_partner
+#: model:mail.template,body_html:account_partner.email_template_delivery_carrier_confirmation
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear <t t-out=\"object.partner_id.name or ''\"/>,\n"
+"        <br/><br/>\n"
+"        Your order with number <strong t-out=\"object.name or ''\"/> has been confirmed. Please check your customer portal to continue with the process.\n"
+"        <br/><br/>\n"
+"\n"
+"        You can track your order status and delivery details in your customer portal.\n"
+"        <br/><br/>\n"
+"        Regards,<br/>\n"
+"        <t t-out=\"object.user_id.signature or ''\"/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Estimado <t t-out=\"object.partner_id.name or ''\"/>,\n"
+"        <br/><br/>\n"
+"        Su pedido con número <strong t-out=\"object.name or ''\"/> ha sido confirmado. Por favor, revise su portal de cliente para continuar con el proceso.\n"
+"        <br/><br/>\n"
+"        <strong>Método de envío:</strong> <t t-out=\"object.carrier_id.name or ''\"/><br/>\n"
+"        <t t-if=\"object.carrier_id.shipping_package\">\n"
+"            <strong>Tipo de paquete:</strong> <span t-field=\"object.carrier_id.shipping_package\"/><br/>\n"
+"        </t>\n"
+"        <br/>\n"
+"        Puede rastrear el estado de su pedido y los detalles de entrega en su portal de cliente.\n"
+"        <br/><br/>\n"
+"        Saludos,<br/>\n"
+"        <t t-out=\"object.user_id.signature or ''\"/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_kanban
+msgid "<i class=\"fa fa-calendar me-2\" title=\"Date\"/>"
+msgstr "<i class=\"fa fa-calendar me-2\" title=\"Fecha\"/>"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.my_credit_available
+msgid ""
+"<i class=\"fa fa-credit-card-alt\" aria-hidden=\"true\"/>\n"
+"                    Available Credit"
+msgstr ""
+"<i class=\"fa fa-credit-card-alt\" aria-hidden=\"true\"/>\n"
+"                    Crédito disponible"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_kanban
+msgid "<i class=\"fa fa-money me-2\" title=\"Amount\"/>"
+msgstr "<i class=\"fa fa-money me-2\" title=\"Cantidad\"/>"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "<span>Other address for the company (e.g. subsidiary, ...)</span>"
+msgstr "<span>Otra dirección para la empresa (p. ej. filial, ...)</span>"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid ""
+"<span>Preferred address for all deliveries. Selected by default when you "
+"deliver an order that belongs to this company.</span>"
+msgstr ""
+"<span>Dirección preferida para todas las entregas. Se selecciona por defecto "
+"cuando entrega un pedido que pertenece a esta empresa.</span>"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid ""
+"<span>Preferred address for all invoices. Selected by default when you "
+"invoice an order that belongs to this company.</span>"
+msgstr ""
+"<span>Dirección preferida para todas las facturas. Se selecciona por defecto "
+"cuando factura un pedido que pertenece a esta empresa.</span>"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid ""
+"<span>Use this to organize the contact details of employees of a given "
+"company (e.g. CEO, CFO, ...).</span>"
+msgstr ""
+"<span>Use esto para organizar los datos de contacto de empleados de una "
+"empresa (p. ej. CEO, CFO, ...).</span>"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__account
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__account_id
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__account
+#: model:ir.model.fields,field_description:account_partner.field_res_users__account
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_search
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_partner
+#: model:ir.model,name:account_partner.model_account_carrier_line
+msgid "Account Carrier Line"
+msgstr "Línea de cuenta de transportista"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__account_id
+#: model:ir.model.fields,field_description:account_partner.field_res_users__account_id
+msgid "Account ID"
+msgstr "ID de cuenta"
+
+#. module: account_partner
+#: model:res.groups,name:account_partner.group_account_partner_manager
+msgid "Account Manager"
+msgstr "Gestor de cuentas"
+
+#. module: account_partner
+#: model:ir.actions.act_window,name:account_partner.action_account_partner
+#: model:ir.model,name:account_partner.model_account_partner
+msgid "Account Partner"
+msgstr "Contacto de cuenta"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Account Partners"
+msgstr "Socios de cuenta"
+
+#. module: account_partner
+#: model:res.groups,name:account_partner.group_account_partner_user
+msgid "Account User"
+msgstr "Usuario de cuenta"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Account balance"
+msgstr "Saldo de cuenta"
+
+#. module: account_partner
+#: model:ir.ui.menu,name:account_partner.contacts_account
+#: model:ir.ui.menu,name:account_partner.credit_account_menu_root
+msgid "Accounts"
+msgstr "Cuentas"
+
+#. module: account_partner
+#: model:ir.ui.menu,name:account_partner.account_partner
+msgid "Accounts Partners"
+msgstr "Contactos de cuentas"
+
+#. module: account_partner
+#. odoo-javascript
+#: code:addons/account_partner/static/src/js/add_account_partner_list.xml:0
+msgid "Add Account"
+msgstr "Agregar Cuenta"
+
+#. module: account_partner
+#: model:ir.model,name:account_partner.model_add_account_partner
+msgid "Add Account Partner"
+msgstr "Agregar Socio de Cuenta"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Address"
+msgstr "Dirección"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__type
+#: model:ir.model.fields,field_description:account_partner.field_res_users__type
+msgid "Address Type"
+msgstr "Tipo de dirección"
+
+#. module: account_partner
+#: model:ir.model.fields,help:account_partner.field_add_account_partner__lang
+msgid ""
+"All the emails and documents sent to this contact will be translated in this"
+" language."
+msgstr ""
+"Todos los correos electrónicos y documentos enviados a este contacto se "
+"traducirán en este idioma."
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__amount
+msgid "Amount"
+msgstr "Cantidad"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+msgid "Approval Data"
+msgstr "Fecha de aprobación"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__approve_user
+msgid "Approved By"
+msgstr "Aprobado por"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__approve_date
+msgid "Approved Date"
+msgstr "Fecha de aprobación"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__credit_account__concept__transfer
+msgid "Bank Transfer"
+msgstr "Transferencia bancaria"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_search
+msgid "Buscar Cuenta de Crédito"
+msgstr "Buscar Cuenta de Crédito"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.add_account_partner_view
+#: model_terms:ir.ui.view,arch_db:account_partner.reject_reason_credit_wizard
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__carrier_line_ids
+#: model:ir.model.fields,field_description:account_partner.field_res_users__carrier_line_ids
+msgid "Carrier Lines"
+msgstr "Líneas de transportista"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__credit_account__concept__cash
+msgid "Cash Payment"
+msgstr "Pago en efectivo"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "City"
+msgstr "Ciudad"
+
+#. module: account_partner
+#: model:ir.module.category,name:account_partner.module_category_account_partner
+msgid "Client Account"
+msgstr "Cuenta de cliente"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__commercial
+msgid "Commercial"
+msgstr "Comercial"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__concept
+msgid "Concept"
+msgstr "Concepto"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.add_account_partner_view
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__credit_account__state__confirmed
+#: model:ir.model.fields.selection,name:account_partner.selection__res_partner__state_account__active
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: account_partner
+#: model:ir.model,name:account_partner.model_res_partner
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__partner_id
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Contact / Address"
+msgstr "Contacto / Dirección"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Contact Name"
+msgstr "Nombre de contacto"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Contact image"
+msgstr "Imagen de contacto"
+
+#. module: account_partner
+#: model:ir.actions.act_window,name:account_partner.action_partner_account
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__contact_ids
+#: model:ir.model.fields,field_description:account_partner.field_res_users__contact_ids
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Contacts"
+msgstr "Contactos"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Country"
+msgstr "País"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__create_uid
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__create_uid
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__create_uid
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__create_uid
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__create_date
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__create_date
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__create_date
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__create_date
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__credits
+#: model:ir.model.fields,field_description:account_partner.field_res_users__credits
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: account_partner
+#: model:ir.actions.act_window,name:account_partner.action_credit_account
+#: model:ir.model,name:account_partner.model_credit_account
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__credit_account
+#: model:ir.model.fields,field_description:account_partner.field_res_users__credit_account
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_list
+msgid "Credit Account"
+msgstr "Cuenta de Crédito"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+msgid "Credit Number"
+msgstr "Número de Crédito"
+
+#. module: account_partner
+#. odoo-python
+#: code:addons/account_partner/wizard/reject_reason_credit.py:0
+msgid "Credit account not found."
+msgstr "No se encontró la cuenta de crédito."
+
+#. module: account_partner
+#: model:ir.ui.menu,name:account_partner.credits_account
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Credits"
+msgstr "Créditos"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_partner
+#: model:mail.template,name:account_partner.email_template_delivery_carrier_confirmation
+msgid "Delivery Carrier: Confirmation"
+msgstr "Confirmación de transportista de entrega"
+
+#. module: account_partner
+#: model:ir.model.fields,help:account_partner.field_account_carrier_line__sequence
+msgid "Determine the display order"
+msgstr "Determina el orden de visualización"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__display_name
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__display_name
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__display_name
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__display_name
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__credit_account__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: account_partner
+#. odoo-python
+#: code:addons/account_partner/models/credit_account.py:0
+msgid "Entering an amount is required."
+msgstr "Se requiere ingresar una cantidad."
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__is_favorite
+msgid "Favorite"
+msgstr "Favorito"
+
+#. module: account_partner
+#: model:ir.model,name:account_partner.model_portal_wizard
+msgid "Grant Portal Access"
+msgstr "Otorgar acceso al portal "
+
+#. module: account_partner
+#: model:ir.module.category,description:account_partner.module_category_account_partner
+msgid "Grupos para gestión de cuentas de clientes"
+msgstr "Grupos para gestión de cuentas de clientes"
+
+#. module: account_partner
+#. odoo-javascript
+#: code:addons/account_partner/static/src/list/account_carrier_select_list_view.js:0
+msgid "Guardando selección..."
+msgstr "Guardando selección..."
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__id
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__id
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__id
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__id
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Information"
+msgstr "Información"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Internal notes..."
+msgstr "Notas internas..."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Invite"
+msgstr "Invitar"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__is_carrier
+#: model:ir.model.fields,field_description:account_partner.field_res_users__is_carrier
+msgid "Is Carrier"
+msgstr "Es transportista"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__lang
+msgid "Language"
+msgstr "Idioma"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__write_uid
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__write_uid
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__write_uid
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__write_uid
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__write_date
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__write_date
+#: model:ir.model.fields,field_description:account_partner.field_add_account_partner__write_date
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__write_date
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Manage Account"
+msgstr "Gestionar cuenta"
+
+#. module: account_partner
+#: model:res.groups,comment:account_partner.group_account_partner_manager
+msgid "Manager can configure and administer client accounts"
+msgstr "El gerente puede configurar y administrar cuentas de clientes"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Mobile:"
+msgstr "Móvil:"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__credit_account__concept__credit
+msgid "Monthly Credit"
+msgstr "Crédito mensual"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__name
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__res_partner__state_account__new
+msgid "Never Connected"
+msgstr "Nunca Conectado"
+
+#. module: account_partner
+#. odoo-python
+#: code:addons/account_partner/models/credit_account.py:0
+msgid "New"
+msgstr "Nuevo"
+
+#. module: account_partner
+#: model:ir.actions.act_window,name:account_partner.action_add_account_partner_view
+msgid "New account registration"
+msgstr "Registro de nueva cuenta"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__res_partner__state_account__no
+msgid "No Account"
+msgstr "Sin cuenta"
+
+#. module: account_partner
+#. odoo-python
+#: code:addons/account_partner/wizard/reject_reason_credit.py:0
+msgid "No active ID found in context."
+msgstr "No se encontró ID activa en el contexto."
+
+#. module: account_partner
+#. odoo-javascript
+#: code:addons/account_partner/static/src/list/account_carrier_select_list_view.js:0
+msgid "No hay transportistas seleccionados"
+msgstr "No hay transportistas seleccionados"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__partner_id
+#: model:ir.model.fields,field_description:account_partner.field_account_partner__partner_id
+msgid "Partner"
+msgstr "Socio"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__partner_account
+msgid "Partner Account"
+msgstr "Cuenta del socio"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_portal_wizard__partner_ids
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_list
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_list
+msgid "Partners"
+msgstr "Contactos"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Phone:"
+msgstr "Teléfono:"
+
+#. module: account_partner
+#: model:ir.model,name:account_partner.model_portal_wizard_user
+msgid "Portal User Config"
+msgstr "Configuración del usuario del portal"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.reject_reason_credit_wizard
+msgid "Reason"
+msgstr "Razón"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+#: model_terms:ir.ui.view,arch_db:account_partner.reject_reason_credit_wizard
+msgid "Reject"
+msgstr "Rechazar"
+
+#. module: account_partner
+#: model:ir.actions.act_window,name:account_partner.reject_reason_credit_wizard_action
+#: model_terms:ir.ui.view,arch_db:account_partner.reject_reason_credit_wizard
+msgid "Reject Reason"
+msgstr "Razón de rechazo"
+
+#. module: account_partner
+#: model:ir.model,name:account_partner.model_reject_reason_credit
+msgid "Reject Reason Credit"
+msgstr "Razón de rechazo de crédito"
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__credit_account__state__rejected
+msgid "Rejected"
+msgstr "Rechazado"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__reject_user
+msgid "Rejected By"
+msgstr "Rechazado por"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__reject_date
+msgid "Rejected Date"
+msgstr "Fecha de rechazo"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+msgid "Rejection Data"
+msgstr "Datos de rechazo"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__reject_reason
+#: model:ir.model.fields,field_description:account_partner.field_reject_reason_credit__reason
+msgid "Rejection Reason"
+msgstr "Razón de rechazo"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_form
+msgid "Return to Draft"
+msgstr "Regresar a borrador"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.add_account_partner_view
+msgid "SHORT ACCOUNT NAME"
+msgstr "NOMBRE CORTO DE LA CUENTA"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__sale_order_ids
+#: model:ir.model.fields,field_description:account_partner.field_res_users__sale_order_ids
+msgid "Sale Orders"
+msgstr "Pedido de venta"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__sales
+#: model:ir.model.fields,field_description:account_partner.field_res_users__sales
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: account_partner
+#. odoo-javascript
+#: code:addons/account_partner/static/src/list/account_carrier_select_list_view.xml:0
+msgid "Select"
+msgstr "Seleccionar"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.add_account_partner_view
+msgid "Select a created contact..."
+msgstr "Select a created contact."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.add_account_partner_view
+msgid "Select the salesperson who will be in charge of the account."
+msgstr "Seleccione el vendedor que estará a cargo de la cuenta."
+
+#. module: account_partner
+#: model:ir.model.fields.selection,name:account_partner.selection__res_partner__type__sender
+msgid "Sender"
+msgstr "Remitente"
+
+#. module: account_partner
+#: model:mail.template,description:account_partner.email_template_delivery_carrier_confirmation
+msgid "Sent to customer when a delivery carrier is confirmed"
+msgstr "Enviado al cliente cuando se confirma un transportista de entrega"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_account_carrier_line__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_credit_account__state
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "State"
+msgstr "Estado"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__state_account
+#: model:ir.model.fields,field_description:account_partner.field_res_users__state_account
+msgid "State Account"
+msgstr "Estado de la cuenta"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: account_partner
+#. odoo-python
+#: code:addons/account_partner/models/credit_account.py:0
+msgid "This record is already confirmed."
+msgstr "Este registro ya está confirmado."
+
+#. module: account_partner
+#. odoo-python
+#: code:addons/account_partner/models/credit_account.py:0
+msgid "This record is already in draft state."
+msgstr "Este registro ya está en estado borrador."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.credit_account_view_list
+msgid "Total"
+msgstr "Total"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__total_account
+#: model:ir.model.fields,field_description:account_partner.field_res_users__total_account
+msgid "Total Account"
+msgstr "Cuenta total"
+
+#. module: account_partner
+#. odoo-javascript
+#: code:addons/account_partner/static/src/list/account_carrier_select_list_view.js:0
+msgid "Transportistas guardados correctamente"
+msgstr "Transportistas guardados correctamente"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "Update"
+msgstr "Actualizar"
+
+#. module: account_partner
+#: model:res.groups,comment:account_partner.group_account_partner_user
+msgid "User can view and manage client accounts"
+msgstr "El usuario puede ver y gestionar cuentas de clientes"
+
+#. module: account_partner
+#: model:ir.model.fields,field_description:account_partner.field_res_partner__portal_user_ids
+#: model:ir.model.fields,field_description:account_partner.field_res_users__portal_user_ids
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid ""
+"You must add the e-mail address in the client in order to create your "
+"account."
+msgstr ""
+"Debe agregar la dirección de correo electrónico en el cliente para crear su "
+"cuenta."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.reject_reason_credit_wizard
+msgid "You must enter the reason you are declining credit."
+msgstr "Debe ingresar la razón por la que está rechazando el crédito."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "ZIP"
+msgstr "Código postal"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "e.g. 'B2B', 'VIP', 'Consulting', ..."
+msgstr "por ejemplo. 'B2B', 'VIP', 'Consultoría', ..."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "e.g. Mr."
+msgstr "p. ej. Sr."
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "e.g. New Address"
+msgstr "p. ej. Nueva dirección"
+
+#. module: account_partner
+#: model_terms:ir.ui.view,arch_db:account_partner.account_partner_view_form
+msgid "e.g. Sales Director"
+msgstr "p. ej. Director de ventas"
+
+#. module: account_partner
+#: model:mail.template,subject:account_partner.email_template_delivery_carrier_confirmation
+msgid "{{ object.company_id.name }}: Order Confirmed"
+msgstr "{{ object.company_id.name }}: Pedido confirmado"
