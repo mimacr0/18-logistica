@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Search View -->
+    <record id="account_product_map_view_search" model="ir.ui.view">
+        <field name="name">account.product.map.search</field>
+        <field name="model">account.product.map</field>
+        <field name="arch" type="xml">
+            <search string="Product Map Search">
+                <!-- Free-text Search Fields -->
+                <field name="account_sku" string="Account SKU"/>
+                <field name="account_name" string="Account Product Name"/>
+                <field name="product_id" string="Internal Product"/>
+                <field name="account_ean13" string="EAN13"/>
+                <field name="account_asin" string="ASIN"/>
+                
+                <!-- Filters -->
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                
+                <!-- Group By -->
+                <group expand="0" string="Group By">
+                    <filter string="Client Account" name="group_by_account" context="{'group_by':'account_id'}"/>
+                    <filter string="Marketplace" name="group_by_marketplace" context="{'group_by':'marketplace'}"/>
+                    <filter string="Internal Product" name="group_by_product" context="{'group_by':'product_id'}"/>
+                </group>
+                
+                <!-- Search Panel -->
+                <searchpanel>
+                    <field name="account_id" icon="fa-users" enable_counters="1" limit="0"/>
+                    <field name="marketplace" icon="fa-shopping-cart" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="account_product_map_view_list" model="ir.ui.view">
+        <field name="name">account.product.map.list</field>
+        <field name="model">account.product.map</field>
+        <field name="arch" type="xml">
+            <list string="Product Map">
+                <field name="product_id"/>
+                <field name="account_id"/>
+                <field name="marketplace"/>
+                <field name="tracking"/>
+                <field name="account_sku" string="Account SKU" optional="hide"/>
+                <field name="product_id" string="Internal Product" optional="hide"/>
+                <field name="account_ean13" string="EAN13" optional="hide"/>
+                <field name="account_asin" string="ASIN" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_account_product_map" model="ir.actions.act_window">
+        <field name="name">Product Map</field>
+        <field name="res_model">account.product.map</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="account_product_map_view_search"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Product Mapping
+          </p>
+        </field>
+    </record>
+</odoo>

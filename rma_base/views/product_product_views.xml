@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Search View -->
+    <record id="action_product_product_general" model="ir.actions.act_window">
+        <field name="name">General Products</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new General Product
+          </p>
+        </field>
+    </record>
+      <record id="action_product_product_generic" model="ir.actions.act_window">
+        <field name="name">Generic Products</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Generic Product
+          </p>
+        </field>
+    </record>
+</odoo>
