@@ -2,7 +2,7 @@
 <odoo>
     <menuitem id="rma_base_root"
               name="Products"
-              web_icon="rma_base,static/description/product_menu.png"
+              web_icon="rma_base,static/description/rma_base.png"
               sequence="25"/>
 
     <menuitem id="general_products_menu"
@@ -17,11 +17,11 @@
               action="action_account_product_map"
               sequence="20"/>
 
-    <menuitem id="generic_rma_base"
+    <!-- <menuitem id="generic_rma_base"
               name="Generic Products"
               parent="rma_base_root"
               action="action_product_product_generic"
-              sequence="30"/>
+              sequence="30"/> -->
 
     <!-- Menu that appears in account_partner -->
     <menuitem id="account_product_map_menu_partner"
