@@ -1,4 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_create","perm_write","perm_unlink"
-"access_privilege_rpc_server_action","Access rpc_server_action","rpc_server_api.model_rpc_server_action","base.group_user",1,1,1,1
-"access_privilege_rpc_server_key","Access rpc_server_key","rpc_server_api.model_rpc_server_key","base.group_user",1,1,1,1
-"access_wizard_rpc_token_api_wizard","Access rpc_token_api_wizard","rpc_server_api.model_rpc_token_api_wizard","base.group_user",1,1,1,1
