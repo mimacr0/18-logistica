@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rma_unit_user,rma.unit user,model_rma_unit,group_rma_user,1,1,1,0
+access_rma_unit_manager,rma.unit manager,model_rma_unit,group_rma_manager,1,1,1,1
+access_rma_unit_move_user,rma.unit_move user,model_rma_unit_move,group_rma_user,1,1,1,0
+access_rma_unit_move_manager,rma.unit_move manager,model_rma_unit_move,group_rma_manager,1,1,1,1

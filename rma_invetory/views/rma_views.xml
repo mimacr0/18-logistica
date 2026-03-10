@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- RMA Unit Tree View -->
+    <record id="view_rma_unit_tree" model="ir.ui.view">
+        <field name="name">rma.unit.tree</field>
+        <field name="model">rma.unit</field>
+        <field name="arch" type="xml">
+            <list string="RMA Units">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="owner_id"/>
+                <field name="location_id"/>
+                <field name="serial"/>
+                <field name="imei"/>
+                <field name="condition"/>
+                <field name="state" widget="badge" 
+                       decoration-info="state == 'received'" 
+                       decoration-warning="state in ('inspection', 'repair')" 
+                       decoration-success="state in ('refurbish', 'stored', 'ready_to_ship')" 
+                       decoration-danger="state == 'scrap'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- RMA Unit Move Tree View -->
+    <record id="view_rma_unit_move_tree" model="ir.ui.view">
+        <field name="name">rma.unit.move.tree</field>
+        <field name="model">rma.unit.move</field>
+        <field name="arch" type="xml">
+            <list string="Unit Moves">
+                <field name="date"/>
+                <field name="rma_unit_id"/>
+                <field name="from_location_id"/>
+                <field name="to_location_id"/>
+                <field name="user_id"/>
+                <field name="reason"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- RMA Unit Move Action -->
+    <record id="action_rma_unit_move" model="ir.actions.act_window">
+        <field name="name">Unit Moves</field>
+        <field name="res_model">rma.unit.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('rma_unit_id', '=', active_id)]</field>
+        <field name="context">{'default_rma_unit_id': active_id}</field>
+    </record>
+
+    <!-- RMA Unit Form View -->
+    <record id="view_rma_unit_form" model="ir.ui.view">
+        <field name="name">rma.unit.form</field>
+        <field name="model">rma.unit</field>
+        <field name="arch" type="xml">
+            <form string="RMA Unit">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="received,inspection,stored,ready_to_ship,shipped"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="action"
+                                name="%(rma_invetory.action_rma_unit_move)d"
+                                icon="fa-exchange">
+                            <field name="move_count" widget="statinfo" string="Moves"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <!-- Muestra el texto normal cuando ya tiene ID -->
+                            <field class="text-break" name="name" invisible="not id"/>
+                            <!-- Muestra el texto "más clarito" cuando estamos creando un nuevo registro -->
+                            <span class="text-muted" invisible="id">RMA...</span>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group name="info" string="General Information">
+                            <field name="product_id"/>
+                            <field name="owner_id"/>
+                            <!-- <field name="client_product_map_id" domain="[('partner_id', '=', owner_id)]"/> -->
+                            <field name="package_id"/>
+                        </group>
+                        <group name="tracking" string="Tracking">
+                            <field name="serial"/>
+                            <field name="imei"/>
+                            <field name="location_id"/>
+                            <field name="condition"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Dates">
+                            <group>
+                                <field name="received_date"/>
+                                <field name="stored_date"/>
+                                <field name="shipped_date"/>
+                            </group>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Add internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- RMA Unit Action -->
+    <record id="action_rma_unit" model="ir.actions.act_window">
+        <field name="name">RMA Units</field>
+        <field name="res_model">rma.unit</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new RMA Unit
+          </p><p>
+            RMA Units are tracked individually. Log the IMEI, serial, and condition for each unit.
+          </p>
+        </field>
+    </record>
+
+
+    <!-- Main Menus -->
+    <menuitem id="menu_rma_root" name="RMA Inventory" web_icon="rma_invetory,static/description/icon.png" sequence="30"/>
+    
+    <menuitem id="menu_rma_operations" name="Operations" parent="menu_rma_root" sequence="10"/>
+
+    <menuitem id="menu_rma_unit" name="RMA Units" parent="menu_rma_operations" action="action_rma_unit" sequence="10"/>
+
+</odoo>
