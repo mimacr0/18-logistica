@@ -8,7 +8,7 @@
             <search string="Product Map Search">
                 <!-- Free-text Search Fields -->
                 <field name="account_sku" string="Account SKU"/>
-                <field name="account_name" string="Account Product Name"/>
+                <field name="name" string="Name"/>
                 <field name="product_id" string="Internal Product"/>
                 <field name="account_ean13" string="EAN13"/>
                 <field name="account_asin" string="ASIN"/>
@@ -48,6 +48,48 @@
             </list>
         </field>
     </record>
+
+    <record id="account_product_map_view_form" model="ir.ui.view">
+        <field name="name">account.product.map.form</field>
+        <field name="model">account.product.map</field>
+        <field name="arch" type="xml">
+            <form string="Product Map">
+                <sheet>
+                    <div class="oe_title" invisible="not name">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="relations" string="Relations">
+                            <field name="account_id" widget="many2one_avatar"/>
+                            <field name="product_id" options="{'no_create': True}"/>
+                            <field name="marketplace"/>
+                        </group>
+                        <group name="identifiers" string="Account Identifiers">
+                            <field name="account_sku" required="1"/>
+                            <field name="account_ean13"/>
+                            <field name="account_asin"/>
+                            <field name="account_fnsku"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="config" string="Configuration">
+                            <field name="tracking"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Additional information..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
 
     <record id="action_account_product_map" model="ir.actions.act_window">
         <field name="name">Product Map</field>

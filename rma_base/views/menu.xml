@@ -2,7 +2,7 @@
 <odoo>
     <menuitem id="rma_base_root"
               name="Products"
-              web_icon="rma_base,static/description/rma_base.png"
+              web_icon="rma_base,static/description/product_menu.png"
               sequence="25"/>
 
     <menuitem id="general_products_menu"
