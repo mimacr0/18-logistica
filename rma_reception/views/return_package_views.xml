@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Custom RMA Reception Form for stock.quant.package -->
+    <record id="view_rma_reception_package_form" model="ir.ui.view">
+        <field name="name">rma.reception.package.form</field>
+        <field name="model">stock.quant.package</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Return Package / Bulto">
+                <header>
+                    <button name="unpack" string="Desempaquetar" type="object"/>
+                    <field name="rma_state" widget="statusbar" statusbar_visible="draft,opened,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_view_picking"
+                        string="Traslados" type="object"
+                        widget="statinfo" icon="oi-arrows-v"/>
+                    </div>
+
+                    <!-- Image widget to allow quick photo via mobile/tablet/webcam -->
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Tracking Number / Code"/>
+                        <h1>
+                            <!-- Tracking Code Input -->
+                            <field name="name" default_focus="1" placeholder="Scan Barcode..."/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="package_type_id"/>
+                            <label for="shipping_weight"/>
+                            <div class="o_row" name="Shipping Weight">
+                                <field name="shipping_weight" class="oe_inline"/>
+                                <span><field name="weight_uom_name"/></span>
+                                <span class="text-muted">(calculado: <field name="weight" class="oe_inline" nolabel="1"/></span><span class="text-muted"><field name="weight_uom_name" nolabel="1" class="oe_inline"/>)</span>
+                            </div>
+                            <field name="carrier_id" placeholder="Correos, UPS, Amazon..."/>
+                        </group>
+                        <group>
+                            <field name="pack_date"/>
+                            <field name="location_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Contenido (Stock)">
+                            <field name="quant_ids">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="lot_id" groups="stock.group_production_lot"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id" groups="uom.group_uom"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Contents (RMA Units)">
+                            <field name="rma_unit_ids" widget="one2many" readonly="rma_state == 'draft'">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="owner_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Outer box damage, special delivery indications, etc."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Custom RMA Reception Tree for stock.quant.package -->
+    <record id="view_rma_reception_package_tree" model="ir.ui.view">
+        <field name="name">rma.reception.package.tree</field>
+        <field name="model">stock.quant.package</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list string="Received Packages">
+                <field name="name"/>
+                <field name="carrier_id"/>
+                <field name="shipping_weight"/>
+                <field name="rma_state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Door Reception Action -->
+    <record id="action_rma_reception_package" model="ir.actions.act_window">
+        <field name="name">Door Reception</field>
+        <field name="res_model">stock.quant.package</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Scan your first tracking or box!
+          </p><p>
+            Reception allows you to capture outer boxes before identifying inner RMAs.
+          </p>
+        </field>
+    </record>
+
+    <!-- Force Action to use Custom Views -->
+    <record id="action_rma_reception_package_view_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_rma_reception_package_tree"/>
+        <field name="act_window_id" ref="action_rma_reception_package"/>
+    </record>
+
+    <record id="action_rma_reception_package_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_rma_reception_package_form"/>
+        <field name="act_window_id" ref="action_rma_reception_package"/>
+    </record>
+
+    <!-- Menuitem: Add explicitly under RMA Root -->
+    <menuitem id="menu_reception_root" name="Reception" parent="rma_invetory.menu_rma_root" sequence="5"/>
+    <menuitem id="menu_reception_packages" name="Door Reception" parent="menu_reception_root" action="action_rma_reception_package" sequence="10"/>
+
+</odoo>
