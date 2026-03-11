@@ -17,7 +17,7 @@
         - Registra pallets, cajas y sobres antes del triage.
         - Permite escaneo rápido y asociación de fotos al bulto recibido.
     """,
-    'depends': ['rma_invetory', 'delivery', 'stock_delivery'],
+    'depends': ['rma_inventory', 'delivery', 'stock_delivery'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [

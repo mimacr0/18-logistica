@@ -9,6 +9,7 @@
             <form string="Return Package / Bulto">
                 <header>
                     <button name="unpack" string="Desempaquetar" type="object"/>
+                    <button name="action_unpack_rma" string="Desempaquetar RMA" type="object"/>
                     <field name="rma_state" widget="statusbar" statusbar_visible="draft,opened,done"/>
                 </header>
                 <sheet>
@@ -17,6 +18,8 @@
                         string="Traslados" type="object"
                         widget="statinfo" icon="oi-arrows-v"/>
                     </div>
+                    <field name="type" widget="radio" options="{'horizontal': true}"/>
+
 
                     <!-- Image widget to allow quick photo via mobile/tablet/webcam -->
                     <field name="image_1920" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
@@ -47,7 +50,15 @@
                     </group>
 
                     <notebook>
-                        <page string="Contenido (Stock)">
+                        <page string="Contenido (Account Products)" invisible="type == 'new'">
+                            <field name="rma_products_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_map_id" />
+                                    <field name="quantity" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Contenido (Stock)" invisible="type == 'return'">
                             <field name="quant_ids">
                                 <list>
                                     <field name="product_id"/>
@@ -70,6 +81,13 @@
                         <page string="Notes">
                             <field name="notes" placeholder="Outer box damage, special delivery indications, etc."/>
                         </page>
+
+                        <page string="Info">
+                            <group>
+                                <field name="owner_id" readonly="1"/>
+                            </group>
+                        </page>
+
                     </notebook>
                 </sheet>
                 <chatter/>
@@ -122,7 +140,7 @@
     </record>
 
     <!-- Menuitem: Add explicitly under RMA Root -->
-    <menuitem id="menu_reception_root" name="Reception" parent="rma_invetory.menu_rma_root" sequence="5"/>
+    <menuitem id="menu_reception_root" name="Reception" parent="rma_inventory.menu_rma_root" sequence="5"/>
     <menuitem id="menu_reception_packages" name="Door Reception" parent="menu_reception_root" action="action_rma_reception_package" sequence="10"/>
 
 </odoo>

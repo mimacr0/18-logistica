@@ -5,6 +5,7 @@
 ##############################################################################
 
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 class AccountProductMap(models.Model):
     _name = 'account.product.map'
@@ -67,3 +68,31 @@ class AccountProductMap(models.Model):
                 record.name = f"{account_name}-{product_name}"
             else:
                 record.name = account_name or product_name or _('New Mapping')
+
+    @api.constrains('account_ean13')
+    def _check_ean13(self):
+        for record in self:
+            if record.account_ean13 and len(record.account_ean13) != 13:
+                raise ValidationError(_("The EAN13 must have exactly 13 characters."))
+
+    @api.model
+    def _find_or_create_mapping(self, account_id, sku, product_id=None, **kwargs):
+        """
+        Busca un mapa por account y SKU. Si no lo encuentra, lo crea
+        (siempre que exista un product_id asociado).
+        """
+        mapping = self.search([
+            ('account_id', '=', account_id),
+            ('account_sku', '=', sku)
+        ], limit=1)
+        
+        if not mapping and product_id:
+            vals = {
+                'account_id': account_id,
+                'product_id': product_id,
+                'account_sku': sku,
+            }
+            vals.update(kwargs) # Añade campos adicionales como account_ean13, marketplace, etc.
+            mapping = self.create(vals)
+            
+        return mapping

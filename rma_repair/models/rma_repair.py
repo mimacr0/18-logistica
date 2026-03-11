@@ -57,3 +57,30 @@ class RmaRepair(models.Model):
         self.write({'state': 'done'})
         if self.unit_id:
             self.unit_id.write({'state': 'refurbish'})
+
+    def action_open_add_parts_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Add Spare Parts'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'rma.repair.add.parts.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_repair_id': self.id,
+            }
+        }
+
+    def action_open_harvest_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Harvest Spare Parts'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'rma.repair.harvest.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_repair_id': self.id,
+                'default_unit_id': self.unit_id.id,
+            }
+        }

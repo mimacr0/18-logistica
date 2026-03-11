@@ -24,8 +24,8 @@
             <form string="Repair">
                 <header>
                     <button name="action_confirm_repair" string="Confirm" type="object" class="btn-primary" invisible="state != 'draft'"/>
-                    <button name="action_done_repair" string="Mark as Done" type="object" class="btn-primary" invisible="state != 'confirmed'"/>
                     <button name="action_draft" string="Set to Draft" type="object" invisible="state not in ['confirmed', 'cancel']"/>
+                    <button name="action_done_repair" string="Mark as Done" type="object" class="btn-primary" invisible="state != 'confirmed'"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
                 </header>
                 <sheet>
@@ -34,6 +34,7 @@
                             <field name="name" readonly="1"/>
                         </h1>
                     </div>
+                    
                     <group>
                         <group>
                             <field name="unit_id" options="{'no_create': True}"/>
@@ -45,6 +46,18 @@
                             <field name="technician_id" options="{'no_create': True}"/>
                         </group>
                     </group>
+                    <div class="mb-2" name="action_buttons">
+                        <button name="action_open_add_parts_wizard" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-plus-square" 
+                                string="Add Spare Parts"/>
+                        <button name="action_open_harvest_wizard" 
+                                type="object" 
+                                class="oe_stat_button ms-2" 
+                                icon="fa-scissors" 
+                                string="Harvest Parts"/>
+                    </div>
                     <notebook>
                         <page string="Operations" name="operations">
                             <field name="operation_ids">
