@@ -10,7 +10,8 @@ class AccountProductMap(models.Model):
     _name = 'account.product.map'
     _description = 'Account Product Mapping'
 
-    _rec_name = 'account_sku'
+    _rec_name = 'name'
+    name = fields.Char(string='Name', compute='_compute_name', store=True)
 
     # Relaciones principales
     account_id = fields.Many2one('account.partner', string='Client Account', required=True, index=True, ondelete='cascade')
@@ -23,7 +24,6 @@ class AccountProductMap(models.Model):
     account_ean13 = fields.Char(string='EAN13', index=True)
     account_fnsku = fields.Char(string='FNSKU', index=True)
     account_asin = fields.Char(string='ASIN', index=True)
-    account_name = fields.Char(string='Account Product Name')
 
     # Marketplace
     marketplace = fields.Selection([
@@ -57,3 +57,13 @@ class AccountProductMap(models.Model):
             'account SKU must be unique per account'
         )
     ]
+
+    @api.depends('account_id.name', 'product_id.name')
+    def _compute_name(self):
+        for record in self:
+            account_name = record.account_id.name or ''
+            product_name = record.product_id.name or ''
+            if account_name and product_name:
+                record.name = f"{account_name}-{product_name}"
+            else:
+                record.name = account_name or product_name or _('New Mapping')
