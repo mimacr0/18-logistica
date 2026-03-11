@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="rma_repair_root"
+              name="Repairs"
+              web_icon="rma_repair,static/description/icon.png"
+              sequence="30"/>
+
+    <menuitem id="rma_repair_menu_main"
+              name="Repairs"
+              parent="rma_repair_root"
+              sequence="10"/>
+
+    <menuitem id="rma_repair_menu_action"
+              name="Repair Orders"
+              parent="rma_repair_menu_main"
+              action="action_rma_repair"
+              sequence="10"/>
+
+    <menuitem id="rma_repair_menu_products"
+              name="Services"
+              parent="rma_repair_root"
+              sequence="20"/>
+
+    <menuitem id="rma_repair_menu_product_template"
+              name="Services"
+              parent="rma_repair_menu_products"
+              action="action_product_template_rma"
+              sequence="10"/>
+
+    <menuitem id="rma_repair_menu_product_variant"
+              name="Services Variants"
+              parent="rma_repair_menu_products"
+              action="action_product_product_rma"
+              sequence="20"/>
+
+    <menuitem id="rma_repair_menu_product_spare_parts"
+              name="Spare Parts"
+              parent="rma_repair_menu_products"
+              action="action_product_spare_parts_rma"
+              sequence="30"/>
+</odoo>
