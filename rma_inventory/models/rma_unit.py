@@ -100,7 +100,8 @@ class RmaUnit(models.Model):
         ("stored","Stored"),
         ("ready_to_ship","Ready to ship"),
         ("shipped","Shipped"),
-        ("scrap","Scrap")
+        ("scrap","Scrap"),
+        ("use_for_spare_parts", "Use for Spare Parts")
     ], string="State", tracking=True)
     received_date = fields.Datetime(string="Received Date")
     stored_date = fields.Datetime(string="Stored Date")

@@ -62,7 +62,7 @@
                     
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" type="action"
-                                name="%(rma_invetory.action_rma_unit_move)d"
+                                name="%(rma_inventory.action_rma_unit_move)d"
                                 icon="fa-exchange">
                             <field name="move_count" widget="statinfo" string="Moves"/>
                         </button>
@@ -125,7 +125,7 @@
 
 
     <!-- Main Menus -->
-    <menuitem id="menu_rma_root" name="RMA Inventory" web_icon="rma_invetory,static/description/icon.png" sequence="30"/>
+    <menuitem id="menu_rma_root" name="RMA Inventory" web_icon="rma_inventory,static/description/icon.png" sequence="30"/>
     
     <menuitem id="menu_rma_operations" name="Operations" parent="menu_rma_root" sequence="10"/>
 
