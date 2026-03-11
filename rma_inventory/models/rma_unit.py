@@ -89,7 +89,8 @@ class RmaUnit(models.Model):
         ("A","New"),
         ("B","Used"),
         ("C","Repair"),
-        ("D","Discard")
+        ("D","Discard"),
+        ("converted_to_spare_parts", "Converted to Spare Parts")
     ], string="Condition", tracking=True)
     state = fields.Selection([
         ("received","Received"),
@@ -107,6 +108,7 @@ class RmaUnit(models.Model):
     stored_date = fields.Datetime(string="Stored Date")
     shipped_date = fields.Datetime(string="Shipped Date")
     notes = fields.Text(string="Notes")
+    harvest_notes = fields.Text(string="Harvesting Notes", help="Logs the spare parts harvested from this unit.")
     move_ids = fields.One2many(
         "rma.unit.move",
         "rma_unit_id",

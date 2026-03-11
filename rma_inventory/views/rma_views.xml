@@ -102,6 +102,9 @@
                         <page string="Notes">
                             <field name="notes" placeholder="Add internal notes..."/>
                         </page>
+                        <page string="Harvesting Log" invisible="not harvest_notes">
+                            <field name="harvest_notes" readonly="1"/>
+                        </page>
                     </notebook>
                 </sheet>
                 <chatter/>
