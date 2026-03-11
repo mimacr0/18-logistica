@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rma_repair_add_parts_wizard_view_form" model="ir.ui.view">
+        <field name="name">rma.repair.add.parts.wizard.form</field>
+        <field name="model">rma.repair.add.parts.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add Spare Parts">
+                <sheet>
+                    <group>
+                        <field name="repair_id" invisible="1"/>
+                        <field name="owner_id" invisible="1"/>
+                        <field name="quant_ids" widget="many2many_list" nolabel="1">
+                            <list>
+                                <field name="product_id"/>
+                                <field name="location_id"/>
+                                <field name="lot_id"/>
+                                <field name="quantity" string="Available Qty"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_add_parts" string="Add Parts" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rma_repair_add_parts_wizard" model="ir.actions.act_window">
+        <field name="name">Add Spare Parts</field>
+        <field name="res_model">rma.repair.add.parts.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

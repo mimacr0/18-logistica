@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rma_repair_harvest_wizard_view_form" model="ir.ui.view">
+        <field name="name">rma.repair.harvest.wizard.form</field>
+        <field name="model">rma.repair.harvest.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Harvest Spare Parts">
+                <sheet>
+                    <group>
+                        <field name="repair_id" invisible="1"/>
+                        <field name="owner_id" invisible="1"/>
+                        <field name="unit_id" options="{'no_create': True}"/>
+                        <field name="location_id" options="{'no_create': True}"/>
+                    </group>
+                    <notebook>
+                        <page string="Parts to Harvest" name="parts">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id" options="{'no_create': True}"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_harvest" string="Harvest &amp; Close Unit" type="object" class="btn-danger" confirm="This will scrap the original unit. Are you sure?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rma_repair_harvest_wizard" model="ir.actions.act_window">
+        <field name="name">Harvest Spare Parts</field>
+        <field name="res_model">rma.repair.harvest.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
