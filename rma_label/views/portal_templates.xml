@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal Home Entry -->
+    <template id="portal_my_home_menu_rma_label" name="Portal layout : RMA Label menu entries" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'rma_label' or page_name == 'rma_label_form'" class="breadcrumb-item active">
+                <a t-attf-href="/my/rma_labels">RMA Labels</a>
+            </li>
+            <li t-if="page_name == 'rma_label_form'" class="breadcrumb-item active">
+                New Label
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_rma_label" name="Show RMA Labels" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <xpath expr="//div[@id='portal_client_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">RMA Labels</t>
+                <t t-set="url" t-value="'/my/rma_labels'"/>
+                <t t-set="placeholder_count" t-value="'rma_package_count'"/>
+                <t t-set="text">Create and manage your labels</t>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- List View -->
+    <template id="portal_my_rma_labels" name="My RMA Labels">
+        <t t-call="portal.portal_layout">
+            <t t-set="prev_record" t-value="prev_record"/>
+            <t t-set="next_record" t-value="next_record"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">RMA Labels</t>
+            </t>
+            <t t-if="not packages">
+                <p>There are currently no RMA labels for your account.</p>
+            </t>
+            <div t-if="packages" class="panel panel-default">
+                <div class="table-responsive">
+                    <table class="table table-hover o_portal_my_doc_table">
+                        <thead>
+                            <tr class="active">
+                                <th>Reference</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="packages" t-as="package">
+                                <tr>
+                                    <td>
+                                        <span t-field="package.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="package.create_date" t-options='{"widget": "date"}'/>
+                                    </td>
+                                    <td>
+                                        <span t-field="package.rma_state"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div t-if="pager" class="o_portal_pager text-center">
+                    <t t-call="portal.pager"/>
+                </div>
+            </div>
+            <div class="mt32">
+                <a href="/my/rma_labels/create" class="btn btn-primary">Create New Label</a>
+            </div>
+        </t>
+    </template>
+
+    <!-- Creation Form -->
+    <template id="portal_rma_label_form" name="Create RMA Label">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title">New RMA Label</t>
+            
+            <div class="container mt32">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Create New RMA Label</h2>
+                        <hr/>
+                    </div>
+                </div>
+
+                <form action="/my/rma_labels/save" method="post" class="js_rma_label_portal_form">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    
+                    <div class="row o_portal_details">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="form-group col-xl-6">
+                                    <label class="col-form-label" for="sender_id">Sender</label>
+                                    <div class="input-group">
+                                        <select name="sender_id" class="form-control" required="1" id="sender_id_select">
+                                            <t t-foreach="sender_address" t-as="sender">
+                                                <option t-att-value="sender.id" t-esc="sender.name"/>
+                                            </t>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-secondary" id="add_sender_address_btn" title="Add Address">
+                                                <i class="fa fa-plus-circle"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xl-6">
+                                    <label class="col-form-label" for="package_type_id">Package Type</label>
+                                    <select name="package_type_id" class="form-control" required="1">
+                                        <t t-foreach="package_types" t-as="pt">
+                                            <option t-att-value="pt.id" t-esc="pt.name"/>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt16">
+                                <div class="col-lg-12">
+                                    <h4>Products</h4>
+                                    <table class="table table-sm table-products" id="rma_products_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="product_row">
+                                                <td>
+                                                    <select name="product_map_id" class="form-control">
+                                                        <t t-foreach="product_mappings" t-as="pm">
+                                                            <option t-att-value="pm.id" t-esc="pm.name"/>
+                                                        </t>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="quantity" class="form-control" value="1" min="1"/>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-sm remove_product_row">
+                                                        <i class="fa fa-trash"/>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-secondary btn-sm" id="add_product_row">
+                                        <i class="fa fa-plus"/> Add Product
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row mt16">
+                                <div class="form-group col-xl-12">
+                                    <label class="col-form-label" for="notes">Internal Notes</label>
+                                    <textarea name="notes" class="form-control" rows="3"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt32">
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-primary float-right">Save &amp; Generate Label</button>
+                                    <a href="/my/rma_labels" class="btn btn-secondary mr16 float-right">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Modal for adding sender address -->
+                <div class="modal fade" id="modal_add_sender" tabindex="-1" role="dialog" aria-labelledby="modal_add_sender_label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal_add_sender_label">Add New Sender Address</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&amp;times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="form_add_sender">
+                                    <div class="form-group">
+                                        <label for="new_sender_name">Name</label>
+                                        <input type="text" class="form-control" id="new_sender_name" required="1"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_sender_street">Street</label>
+                                        <input type="text" class="form-control" id="new_sender_street"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_sender_city">City</label>
+                                        <input type="text" class="form-control" id="new_sender_city"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_sender_zip">Zip</label>
+                                        <input type="text" class="form-control" id="new_sender_zip"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_sender_country_id">Country</label>
+                                        <select class="form-control" id="new_sender_country_id">
+                                            <option value="">Select Country...</option>
+                                            <t t-foreach="countries" t-as="country">
+                                                <option t-att-value="country.id" t-esc="country.name"/>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_sender_phone">Phone</label>
+                                        <input type="text" class="form-control" id="new_sender_phone"/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="btn_save_new_sender">Save Address</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

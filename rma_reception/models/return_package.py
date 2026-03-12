@@ -16,7 +16,15 @@ class StockQuantPackage(models.Model):
         string='Carrier',
         tracking=True
     )
-
+    sender_id = fields.Many2one('res.partner', string='Sender')
+    shipping_address_id = fields.Many2one(
+        'res.partner',
+        string='Shipping Address',
+        domain="[('type', 'in', ['delivery', 'other', 'contact'])]"
+    )
+    customer_reference = fields.Char(string='Customer Reference')
+    number_of_packages = fields.Integer(string='Number of Packages', default=1)
+    
     type = fields.Selection([
         ('return', 'Return Package'),
         ('new', 'New Package'),
@@ -27,7 +35,6 @@ class StockQuantPackage(models.Model):
         ('opened', 'Opened & Inspected'),
         ('done', 'Empty / Done'),
     ], string='RMA Status', default='draft', tracking=True)
-    
     notes = fields.Text(string='Reception Notes')
     
     # Optional image capturing from the web backend
