@@ -50,7 +50,7 @@
                     </group>
 
                     <notebook>
-                        <page string="Contenido (Account Products)" invisible="type == 'new'">
+                        <page string="Declared products (Account Products)" invisible="type == 'new'">
                             <field name="rma_products_line_ids">
                                 <list editable="bottom">
                                     <field name="product_map_id" />
@@ -58,7 +58,7 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Contenido (Stock)" invisible="type == 'return'">
+                        <page string="Contents (Stock)" invisible="type == 'return'">
                             <field name="quant_ids">
                                 <list>
                                     <field name="product_id"/>
@@ -84,7 +84,9 @@
 
                         <page string="Info">
                             <group>
-                                <field name="owner_id" readonly="1"/>
+                                <field name="owner_id" readonly="0"/>
+                                <field name="sender_id"/>
+                                <field name="shipping_address_id"/>
                             </group>
                         </page>
 
