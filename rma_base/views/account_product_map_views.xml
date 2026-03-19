@@ -55,6 +55,8 @@
         <field name="arch" type="xml">
             <form string="Product Map">
                 <sheet>
+                    <field name="mapping_image_1920" widget="image" class="oe_avatar" options="{'convert_to_webp': True, 'preview_image': 'image_128'}"/>
+
                     <div class="oe_title" invisible="not name">
                         <label for="name"/>
                         <h1>
@@ -75,10 +77,14 @@
                         </group>
                     </group>
                     <group>
+                        <group name="spare_parts" string="Spare Parts">
+                            <field name="is_spare_parts" widget="toggle"/>
+                        </group>
                         <group name="config" string="Configuration">
                             <field name="tracking"/>
                             <field name="active" widget="boolean_toggle"/>
                         </group>
+
                     </group>
                     <notebook>
                         <page string="Notes" name="notes">

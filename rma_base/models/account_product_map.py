@@ -47,6 +47,9 @@ class AccountProductMap(models.Model):
         ('serial', 'Serial / IMEI')
     ], default='none')
 
+
+    is_spare_parts = fields.Boolean(related="product_id.product_tmpl_id.is_spare_parts", store=True)
+    
     # Estado
     active = fields.Boolean(default=True)
     notes = fields.Text()
@@ -58,6 +61,62 @@ class AccountProductMap(models.Model):
             'account SKU must be unique per account'
         )
     ]
+    mapping_image_1920 = fields.Image("Mapping Image", max_width=1920, max_height=1920)
+
+    # Resized fields stored (as attachment) for performance
+    mapping_image_1024 = fields.Image("Mapping Image 1024", related="mapping_image_1920", max_width=1024, max_height=1024, store=True)
+    mapping_image_512 = fields.Image("Mapping Image 512", related="mapping_image_1920", max_width=512, max_height=512, store=True)
+    mapping_image_256 = fields.Image("Mapping Image 256", related="mapping_image_1920", max_width=256, max_height=256, store=True)
+    mapping_image_128 = fields.Image("Mapping Image 128", related="mapping_image_1920", max_width=128, max_height=128, store=True)
+
+    # Computed fields that are used to create a fallback to the template if
+    # necessary, it's recommended to display those fields to the user.
+    image_1920 = fields.Image("Image", compute='_compute_image_1920', inverse='_set_image_1920')
+    image_1024 = fields.Image("Image 1024", compute='_compute_image_1024')
+    image_512 = fields.Image("Image 512", compute='_compute_image_512')
+    image_256 = fields.Image("Image 256", compute='_compute_image_256')
+    image_128 = fields.Image("Image 128", compute='_compute_image_128')
+
+    template_name = fields.Char(string='Custom Name')
+    attributes = fields.Char(string='Attributes', compute='_compute_attributes', store=True)
+
+    @api.depends('product_id.product_template_attribute_value_ids')
+    def _compute_attributes(self):
+        for record in self:
+            if record.product_id:
+                record.attributes = ", ".join(record.product_id.product_template_attribute_value_ids.mapped('name'))
+            else:
+                record.attributes = False
+
+    @api.depends('mapping_image_1920', 'product_id.image_1920')
+    def _compute_image_1920(self):
+        for record in self:
+            record.image_1920 = record.mapping_image_1920 or record.product_id.image_1920
+
+    def _set_image_1920(self):
+        for record in self:
+            record.mapping_image_1920 = record.image_1920
+
+    @api.depends('mapping_image_1024', 'product_id.image_1024')
+    def _compute_image_1024(self):
+        for record in self:
+            record.image_1024 = record.mapping_image_1024 or record.product_id.image_1024
+
+    @api.depends('mapping_image_512', 'product_id.image_512')
+    def _compute_image_512(self):
+        for record in self:
+            record.image_512 = record.mapping_image_512 or record.product_id.image_512
+
+    @api.depends('mapping_image_256', 'product_id.image_256')
+    def _compute_image_256(self):
+        for record in self:
+            record.image_256 = record.mapping_image_256 or record.product_id.image_256
+
+    @api.depends('mapping_image_128', 'product_id.image_128')
+    def _compute_image_128(self):
+        for record in self:
+            record.image_128 = record.mapping_image_128 or record.product_id.image_128
+
 
     @api.depends('account_id.name', 'product_id.name')
     def _compute_name(self):
