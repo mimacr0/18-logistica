@@ -40,6 +40,7 @@
                 <field name="product_id"/>
                 <field name="account_id"/>
                 <field name="marketplace"/>
+                <field name="product_price" widget="monetary" string="Price" optional="show"/>
                 <field name="tracking"/>
                 <field name="account_sku" string="Account SKU" optional="hide"/>
                 <field name="product_id" string="Internal Product" optional="hide"/>
@@ -67,6 +68,7 @@
                         <group name="relations" string="Relations">
                             <field name="account_id" widget="many2one_avatar"/>
                             <field name="product_id" options="{'no_create': True}"/>
+                            <field name="product_price" widget="monetary"/>
                             <field name="marketplace"/>
                         </group>
                         <group name="identifiers" string="Account Identifiers">

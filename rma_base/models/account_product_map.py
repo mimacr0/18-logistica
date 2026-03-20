@@ -18,6 +18,7 @@ class AccountProductMap(models.Model):
     account_id = fields.Many2one('account.partner', string='Client Account', required=True, index=True, ondelete='cascade')
     partner_id = fields.Many2one('res.partner', string='Partner', related='account_id.partner_id', store=True, index=True)
     product_id = fields.Many2one('product.product', string='Internal Product', required=True, index=True)
+    product_price = fields.Float(string='Internal Price', related='product_id.lst_price', readonly=True)
 
     # Identificadores cliente
 
