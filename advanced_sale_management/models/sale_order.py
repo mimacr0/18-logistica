@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
     # ya que un Pedido de Venta puede tener múltiples envíos y diferentes pesos/bultos por envío.
     
     carrier_id = fields.Many2one('delivery.carrier', string='Carrier')
-    delivery_type = fields.Selection(related='carrier_id.delivery_type', string='Delivery Type')
+    # delivery_type = fields.Selection(related='carrier_id.delivery_type', string='Delivery Type')
     
     shipping_lumps = fields.Integer('Shipping Lumps', default=1)
     shipping_package = fields.Selection([
@@ -92,7 +92,7 @@ class SaleOrder(models.Model):
     label_file_id = fields.Many2one(comodel_name='ir.attachment', string='Label File', copy=False)
     label_attachment_ids = fields.Many2many(comodel_name='ir.attachment', string='Label')
     
-    created_in_portal = fields.Boolean(compute="_compute_has_archived_products")
+    # created_in_portal = fields.Boolean(compute="_compute_has_archived_products")
     is_external_sender = fields.Boolean(string='External Sender', compute='_compute_is_external_sender')
     observations = fields.Text(string='Observations', translate=True, size=100)
 
@@ -124,11 +124,11 @@ class SaleOrder(models.Model):
             else:
                 order.is_external_sender = False
 
-    @api.depends('order_line.product_id')
-    def _compute_has_archived_products(self):
-        for order in self:
-            # has_archived_products no está definido arriba, supongo que es auxiliar o falta el campo.
-            order.created_in_portal = any(product.default_code == 'PORTAL' for product in order.order_line.product_id)
+    # @api.depends('order_line.product_id')
+    # def _compute_has_archived_products(self):
+    #     for order in self:
+    #         # has_archived_products no está definido arriba, supongo que es auxiliar o falta el campo.
+    #         order.created_in_portal = any(product.default_code == 'PORTAL' for product in order.order_line.product_id)
 
     @api.onchange('account_id')
     def _onchange_account_id(self):

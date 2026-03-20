@@ -27,17 +27,17 @@
         - Funcionalidades avanzadas en 'static/src' (JS, QWeb y SCSS)
     """,
 
-    'depends': ['base', 'sale'],
+    'depends': ['base', 'sale', 'account_partner', 'rma_base'],
     'license': 'LGPL-3',
     'website': "https://www.dafe.es",
     'data': [
-        'views/base_views.xml',
+        'views/sale_order_views.xml',
     ],     # Es importante tener en cuenta el orden en el que deben declararse las carpetas y archivos
     'assets': {
       
     },
     'images': ['static/description/icon.png'],
-    'installable': False, #Este campo se debe cambiar a True cuando se quiera que el modulo sea instalable
+    'installable': True, #Este campo se debe cambiar a True cuando se quiera que el modulo sea instalable
     'auto_install': False,
     'application': False,
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_sale_order_list_view" model="ir.ui.view">
+        <field name="name">inherit.sale.order.list.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="account_id"/>
+                <field name="create_uid" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='activity_ids']" position="after">
+                <field name="carrier_id"/>
+                <field name="carrier_tracking_ref"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_sale_order_form_view" model="ir.ui.view">
+        <field name="name">inherit.sale.order.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="account_id"/>
+                <field name="sender_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"/>
+                <field name="partner_shipping_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="create_uid"/>
+                <field name="shipping_package" widget="selection_badge"/>
+                <div class="d-flex align-items-center mb-2" colspan="2">
+                    <label for="total_weight" class="me-4 text-black"/>
+                    <field name="total_weight" class="oe_inline o_input_7ch" readonly="state == 'cancel' or locked"/>
+                    <span class="ms-2 me-5">Kg</span>
+                    <label for="shipping_lumps" string="Lumps" class="me-4 text-black"/>
+                    <field name="shipping_lumps" class="oe_inline o_input_7ch" readonly="state == 'cancel' or locked"/>
+                </div>
+                <field name="state_carrier" invisible="0"/>           
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_id']" position="before">
+                <field name="package_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
