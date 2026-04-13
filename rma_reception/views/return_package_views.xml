@@ -9,7 +9,8 @@
             <form string="Return Package / Bulto">
                 <header>
                     <button name="unpack" string="Desempaquetar" type="object"/>
-                    <button name="action_unpack_rma" string="Desempaquetar RMA" type="object"/>
+                    <button name="action_unpack_rma" string="Desempaquetar RMA" type="object" invisible="type != 'return'"/>
+                    <button name="action_unpack_quant" string="Desempaquetar Quant" type="object" invisible="type != 'new'"/>
                     <field name="rma_state" widget="statusbar" statusbar_visible="draft,opened,done"/>
                 </header>
                 <sheet>
@@ -50,15 +51,15 @@
                     </group>
 
                     <notebook>
-                        <page string="Contenido (Account Products)" invisible="type == 'new'">
-                            <field name="rma_products_line_ids">
+                        <page string="Declared products (Account Products)">
+                            <field name="package_products_line_ids">
                                 <list editable="bottom">
                                     <field name="product_map_id" />
                                     <field name="quantity" />
                                 </list>
                             </field>
                         </page>
-                        <page string="Contenido (Stock)" invisible="type == 'return'">
+                        <page string="Contents (Stock)" invisible="type == 'return'">
                             <field name="quant_ids">
                                 <list>
                                     <field name="product_id"/>
@@ -68,7 +69,7 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Contents (RMA Units)">
+                        <page string="Contents (RMA Units)" invisible="type == 'new'">
                             <field name="rma_unit_ids" widget="one2many" readonly="rma_state == 'draft'">
                                 <list>
                                     <field name="name"/>
@@ -84,7 +85,13 @@
 
                         <page string="Info">
                             <group>
-                                <field name="owner_id" readonly="1"/>
+                                <field name="owner_id" readonly="0"/>
+                                <field name="sender_id"/>
+                                <field name="shipping_address_id"/>
+                            </group>
+
+                            <group>
+                                <field name="sale_id" readonly="1"/>
                             </group>
                         </page>
 
