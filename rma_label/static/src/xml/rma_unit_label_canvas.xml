@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rma_label.RmaUnitLabelCanvas">
+        <div class="o_rma_unit_label_canvas d-flex flex-column h-100">
+            <div class="o_rma_unit_label_canvas__toolbar border-bottom px-3 py-2 d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                <h4 class="mb-0 fs-6 text-body" t-out="dialogTitle"/>
+                <div class="d-flex gap-2 flex-wrap">
+                    <button type="button" class="btn btn-outline-primary btn-sm" t-on-click="onDownloadPdf"
+                            t-att-disabled="state.loading || state.error">
+                        <i class="fa fa-file-pdf-o me-1"/>
+                        PDF
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm" t-on-click="onPrint">
+                        <i class="fa fa-print me-1"/>
+                        Print
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" t-on-click="onClose">
+                        Close
+                    </button>
+                </div>
+            </div>
+            <div class="o_rma_unit_label_canvas__body flex-grow-1 p-3 d-flex flex-column align-items-center justify-content-center">
+                <div t-if="state.error" class="alert alert-danger mb-0" t-out="state.error"/>
+                <div t-if="!state.error" class="o_rma_unit_label_canvas__sheet shadow-sm rounded border bg-white p-2">
+                    <div t-if="state.loading" class="text-center text-muted py-4">Loading…</div>
+                    <canvas t-ref="label-canvas" class="o_rma_unit_label_canvas__canvas" t-att-class="{ 'd-none': state.loading }"/>
+                </div>
+                <p t-if="!state.loading and !state.error" class="text-muted small mt-3 mb-0 text-center">
+                    30 × 20 mm preview · Code128 (same value as PDF name label)
+                </p>
+            </div>
+        </div>
+    </t>
+</templates>

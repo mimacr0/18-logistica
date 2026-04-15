@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rma_inventory.UnitMoveDesk">
+        <div class="o_action o_rma_unit_move_desk h-100 d-flex flex-column bg-view overflow-auto touch-manipulation">
+            <div class="o_rma_unit_move_desk_header border-bottom">
+                <div class="navbar navbar-expand navbar-dark px-2">
+                    <div class="navbar-nav me-auto align-items-center flex-wrap">
+                        <button type="button" class="btn nav-link text-white me-3" t-on-click="exit" title="Volver">
+                            <i class="oi oi-chevron-left"/>
+                        </button>
+                        <span class="navbar-text text-white fw-bold" t-out="title"/>
+                    </div>
+                    <div class="navbar-nav">
+                        <button type="button" class="btn nav-link text-white" t-on-click="exit" title="Cerrar">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid py-3 border-bottom bg-light bg-opacity-50">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <p class="text-muted small mb-2">
+                            Search RMA units (number, SKU, serial, IMEI) or stock in internal location by client map data (name, SKU, EAN, FNSKU, ASIN, custom name) or by location barcode. If there is only one result or an exact match, the line is added alone; if there are several, choose «Add». Then traverse the matrix to the internal destination and confirm.
+                            <strong>PDA / handheld:</strong> configure the scanner as keyboard (HID); scans work without tapping the field first. The on-screen keyboard is suppressed on this box where the browser allows it. Enter runs the search. With lines already selected, an internal location barcode sets destination (exact match).
+                        </p>
+                        <div class="input-group input-group-lg o_rma_unit_move_desk_search_group">
+                            <input type="text" class="form-control o_rma_unit_move_desk_search_input" t-ref="search-input"
+                                   placeholder="Escanear o buscar…"
+                                   autocomplete="off"
+                                   autocorrect="off"
+                                   autocapitalize="none"
+                                   spellcheck="false"
+                                   inputmode="none"
+                                   enterkeyhint="search"
+                                   t-on-keyup="debounceSearch"
+                                   t-on-keydown="onSearchKeydown"/>
+                            <button type="button" class="btn btn-outline-primary o_rma_unit_move_desk_search_btn" t-on-click="searchUnits">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid flex-grow-1 py-3">
+                <div class="row justify-content-center g-3" t-if="state.searchHits.length">
+                    <div class="col-12 col-xl-10">
+                        <p class="text-muted small mb-2">Results — click «Add» to include the line in the movement.</p>
+                        <div class="list-group shadow-sm">
+                            <div t-foreach="state.searchHits" t-as="hit" t-key="hit.rowKey"
+                                 class="list-group-item d-flex flex-wrap align-items-center justify-content-between gap-2 py-3">
+                                <div class="flex-grow-1" style="min-width: 200px;">
+                                    <div class="fw-bold">
+                                        <i class="fa fa-barcode me-2"/>
+                                        <t t-out="hit.name"/>
+                                    </div>
+                                    <div class="small opacity-75 mt-1" t-if="hit.sku">
+                                        Ref.: <t t-out="hit.sku"/>
+                                    </div>
+                                    <div class="small opacity-75 mt-1" t-if="hit.kind === 'quant' and hit.clientMapSku">
+                                        SKU cliente: <t t-out="hit.clientMapSku"/>
+                                    </div>
+                                    <div class="small mt-1 d-flex flex-wrap gap-2 align-items-center">
+                                        <span class="badge rounded-pill" t-att-class="stateBadgeClass(hit.state)">
+                                            <t t-out="hit.stateLabel"/>
+                                        </span>
+                                        <span t-if="hit.locationLabel" class="small text-muted">
+                                            <i class="fa fa-map-marker me-1"/>
+                                            <t t-out="hit.locationLabel"/>
+                                        </span>
+                                        <span t-if="hit.kind === 'quant' and hit.lotLabel" class="small text-muted">
+                                            Lot: <t t-out="hit.lotLabel"/>
+                                        </span>
+                                        <span t-if="hit.kind === 'quant'" class="small text-muted">
+                                            Available: <t t-out="hit.qtyMax"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        t-att-disabled="isSelected(hit.rowKey)"
+                                        t-on-click="() => this.addHit(hit)">
+                                    <t t-if="isSelected(hit.rowKey)">Added</t>
+                                    <t t-else="">Add</t>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mt-4" t-if="state.selected.length">
+                    <div class="col-12 col-xl-10">
+                        <div class="card shadow-sm border-primary border-opacity-25 mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Selected lines</h5>
+                                <p class="text-muted small">All products will be moved to the same destination when confirming. In stock you can adjust the quantity (maximum available when adding the line).</p>
+                                <div class="table-responsive">
+                                    <table class="table table-sm align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Description</th>
+                                                <th class="d-none d-md-table-cell">Ref.</th>
+                                                <th>Type</th>
+                                                <th class="text-end" style="min-width: 7rem;">Quantity</th>
+                                                <th class="d-none d-lg-table-cell">Origin</th>
+                                                <th/>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="state.selected" t-as="row" t-key="row.rowKey">
+                                                <td class="text-break fw-medium" t-out="row.name"/>
+                                                <td class="d-none d-md-table-cell small text-muted">
+                                                    <div t-if="row.sku" t-out="row.sku"/>
+                                                    <div t-if="row.kind === 'quant' and row.clientMapSku">
+                                                        SKU cl.: <t t-out="row.clientMapSku"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge rounded-pill" t-att-class="stateBadgeClass(row.state)">
+                                                        <t t-out="row.stateLabel"/>
+                                                    </span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-if="row.kind === 'rma'" class="text-muted">1</span>
+                                                    <input t-if="row.kind === 'quant'"
+                                                           type="number"
+                                                           class="form-control form-control-sm text-end"
+                                                           step="any"
+                                                           t-att-value="row.qty"
+                                                           t-on-change="(ev) => this.onQuantQtyInput(row.rowKey, ev)"/>
+                                                </td>
+                                                <td class="d-none d-lg-table-cell small" t-out="row.locationLabel"/>
+                                                <td class="text-end">
+                                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                                            t-on-click="() => this.removeSelected(row.rowKey)">
+                                                        Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-secondary" t-if="state.locRoot">
+                            <div class="card-body">
+                                <h5 class="card-title">Destination location</h5>
+                                <p class="text-muted small mb-2" t-if="state.locRoot.multi">
+                                    <strong t-out="state.locRoot.complete_name"/>
+                                </p>
+                                <p class="text-muted small mb-2" t-else="">
+                                    Tree root: <strong t-out="state.locRoot.complete_name"/>
+                                </p>
+
+                                <div t-if="state.locLoading" class="text-center py-4 text-muted">
+                                    <i class="fa fa-spinner fa-spin fa-2x"/>
+                                </div>
+
+                                <t t-else="">
+                                    <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25"
+                                         t-if="state.locMapSuggestions.length">
+                                        <h6 class="text-secondary text-uppercase small fw-bold mb-2">
+                                            By product map
+                                        </h6>
+                                        <p class="text-muted small mb-3">
+                                            Internal locations where there is stock or RMA units with the same product map
+                                            as some line of the list (union if there are several different maps).
+                                        </p>
+                                        <div class="o_rma_move_desk_loc_grid d-grid gap-2"
+                                             style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+                                            <button type="button"
+                                                    t-foreach="state.locMapSuggestions" t-as="sug" t-key="sug.id"
+                                                    t-att-class="suggestionLocationClass(sug.id)"
+                                                    t-on-click="() => this.pickSuggestedLocation(sug)">
+                                                <span class="fw-medium d-block text-break" t-out="sug.display_name || sug.name"/>
+                                                <span class="small d-block text-break mt-1 opacity-75" t-out="sug.complete_name"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-secondary text-uppercase small fw-bold mb-2">
+                                            By root or location tree
+                                        </h6>
+                                        <div class="small text-muted mb-3 d-flex flex-wrap align-items-center gap-1" t-if="state.locStack.length">
+                                            <span>Path:</span>
+                                            <t t-foreach="state.locStack" t-as="crumb" t-key="crumb.id">
+                                                <span t-if="!crumb_first" class="text-body-tertiary">›</span>
+                                                <span class="text-break" t-out="crumb.name"/>
+                                            </t>
+                                        </div>
+
+                                        <div t-if="state.locLeafId" class="alert alert-success">
+                                            <div class="fw-semibold mb-2">Final location</div>
+                                            <div class="mb-0" t-out="state.locLeafName"/>
+                                            <p class="small mt-2 mb-0 text-muted">Click confirm to apply the movement of all lines of the list to this location.</p>
+                                        </div>
+
+                                        <div t-elif="state.locChildren.length" class="o_rma_move_desk_loc_grid d-grid gap-2 mb-3"
+                                                style="grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));">
+                                            <button type="button"
+                                                    t-foreach="state.locChildren" t-as="cell" t-key="cell.id"
+                                                    class="btn btn-outline-primary py-3 text-wrap"
+                                                    t-on-click="() => this.onLocationPick(cell)">
+                                                <span class="fw-medium d-block" t-out="cell.name"/>
+                                                <span t-if="cell.has_children" class="badge bg-secondary mt-1">+</span>
+                                            </button>
+                                        </div>
+
+                                        <div t-else="" class="alert alert-warning mb-0">
+                                            There are no sublocations under the current level. Go back or choose another branch.
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <button type="button" class="btn btn-secondary"
+                                                t-att-disabled="!canLocationGoUp || state.locLoading"
+                                                t-on-click="locationGoUp">
+                                            Go up one level
+                                        </button>
+                                        <button type="button" class="btn btn-success ms-auto"
+                                                t-att-disabled="!state.locLeafId || state.locLoading"
+                                                t-on-click="confirmDestination">
+                                            Confirm location and move
+                                        </button>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

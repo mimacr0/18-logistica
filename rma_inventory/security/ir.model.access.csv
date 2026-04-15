@@ -3,3 +3,9 @@ access_rma_unit_user,rma.unit user,model_rma_unit,group_rma_user,1,1,1,0
 access_rma_unit_manager,rma.unit manager,model_rma_unit,group_rma_manager,1,1,1,1
 access_rma_unit_move_user,rma.unit_move user,model_rma_unit_move,group_rma_user,1,1,1,0
 access_rma_unit_move_manager,rma.unit_move manager,model_rma_unit_move,group_rma_manager,1,1,1,1
+access_rma_unit_store_wizard_user,rma.unit.store.wizard user,model_rma_unit_store_wizard,group_rma_user,1,1,1,1
+access_rma_unit_store_wizard_manager,rma.unit.store.wizard manager,model_rma_unit_store_wizard,group_rma_manager,1,1,1,1
+access_rma_unit_move_desk_wizard_user,rma.unit.move.desk.wizard user,model_rma_unit_move_desk_wizard,group_rma_user,1,1,1,1
+access_rma_unit_move_desk_wizard_manager,rma.unit.move.desk.wizard manager,model_rma_unit_move_desk_wizard,group_rma_manager,1,1,1,1
+access_rma_unit_move_desk_wizard_line_user,rma.unit.move.desk.wizard.line user,model_rma_unit_move_desk_wizard_line,group_rma_user,1,1,1,1
+access_rma_unit_move_desk_wizard_line_manager,rma.unit.move.desk.wizard.line manager,model_rma_unit_move_desk_wizard_line,group_rma_manager,1,1,1,1

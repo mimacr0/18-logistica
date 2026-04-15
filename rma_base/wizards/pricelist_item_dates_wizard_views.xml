@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rma_pricelist_item_dates_wizard_view_form" model="ir.ui.view">
+        <field name="name">rma.pricelist.item.dates.wizard.form</field>
+        <field name="model">rma.pricelist.item.dates.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Set pricelist rule dates">
+                <group>
+                    <field name="pricelist_id" options="{'no_create': True}"/>
+                    <field name="apply_scope" widget="radio"/>
+                </group>
+                <group string="Validity">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                </group>
+                <footer>
+                    <button name="action_apply" string="Apply" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" special="cancel" data-hotkey="z" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rma_pricelist_item_dates_wizard" model="ir.actions.act_window">
+        <field name="name">Set rule dates</field>
+        <field name="res_model">rma.pricelist.item.dates.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Custom RMA Reception Form for stock.quant.package -->
+    <record id="view_rma_reception_package_form" model="ir.ui.view">
+        <field name="name">rma.reception.package.form</field>
+        <field name="model">stock.quant.package</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Return Package / Bulto" edit="package_state in ('draft', 'received', 'opened')">
+                <header>
+                    <button name="unpack" string="Desempaquetar" type="object"/>
+                    <button name="action_confirm_reception_from_form" string="Confirm Reception" type="object"
+                            class="btn-primary"
+                            invisible="package_state != 'draft'"/>
+                    <button name="action_open_reception_confirm_wizard" string="Reception (wizard)" type="object"
+                            invisible="package_state != 'draft'"/>
+                    <button name="action_unpack_rma" string="Unpack RMA" type="object"
+                            invisible="type != 'return' or package_state in ('opened', 'done')"/>
+                    <button name="action_unpack_quant" string="Unpack Quant" type="object"
+                            invisible="type != 'new' or package_state in ('opened', 'done')"/>
+                    <button name="action_finish_reception_closed" string="Finish reception" type="object"
+                            class="btn-primary"
+                            invisible="package_state != 'opened' or package_has_incident"/>
+                    <button name="action_finish_reception_closed" string="Solved incident" type="object"
+                            class="btn-primary"
+                            invisible="package_state != 'opened' or not package_has_incident"/>
+                    <field name="package_state" widget="statusbar" statusbar_visible="draft,received,opened,done"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Package Incident" bg_color="text-bg-warning"
+                            invisible="not package_has_incident"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_view_picking"
+                        string="Traslados" type="object"
+                        widget="statinfo" icon="oi-arrows-v"/>
+                    </div>
+                    <field name="type" widget="radio" options="{'horizontal': true}"/>
+
+
+                    <!-- Image widget to allow quick photo via mobile/tablet/webcam -->
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Tracking Number / Code"/>
+                        <h1>
+                            <!-- Tracking Code Input -->
+                            <field name="name" default_focus="1" placeholder="Scan Barcode..."/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="package_type_id"/>
+                            <label for="shipping_weight"/>
+                            <div class="o_row" name="Shipping Weight">
+                                <field name="shipping_weight" class="oe_inline"/>
+                                <span><field name="weight_uom_name"/></span>
+                                <span class="text-muted">(calculated: <field name="weight" class="oe_inline" nolabel="1"/></span><span class="text-muted"><field name="weight_uom_name" nolabel="1" class="oe_inline"/>)</span>
+                            </div>
+                            <field name="carrier_id" placeholder="Correos, UPS, Amazon..."/>
+                        </group>
+                        <group>
+                            <field name="pack_date"/>
+                            <field name="location_id" options="{'no_create': True}"/>
+                            <field name="package_location_id" options="{'no_create': True}"
+                                   readonly="package_state == 'done'"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Reception unpack checks">
+                            <p class="text-muted mb-2" colspan="2">
+                                Leave <strong>Failed</strong> off when the check is OK. If something is wrong, turn it on
+                                and mark <strong>Incidencia RMA</strong> on the Info tab if needed.
+                            </p>
+                            <field name="unpack_check_line_ids" nolabel="1" colspan="2" readonly="package_state in ('opened', 'done')">
+                                <list editable="bottom" create="false" delete="false">
+                                    <field name="template_id" readonly="1"/>
+                                    <field name="failed" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </group>
+                    </group>
+                    <!-- <group>
+                        <group string="Products">
+                            <field name="package_products_line_ids" nolabel="1">
+                                <list editable="bottom">
+                                    <field name="product_map_id" />
+                                    <field name="quantity" />
+                                </list>
+                            </field>
+                        </group>
+                        <group string="Stock" invisible="type == 'return'">
+                            <field name="quant_ids" nolabel="1">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="lot_id" groups="stock.group_production_lot"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id" groups="uom.group_uom"/>
+                                </list>
+                            </field>
+                        </group>
+                        <group string="RMA Units" invisible="type == 'new'"> 
+                            <field name="rma_unit_ids" nolabel="1" widget="one2many" readonly="package_state in ('draft', 'received')">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="account_product_map_id"/>
+                                    <field name="account_sku" optional="show"/>
+                                    <field name="account_ean13" optional="hide"/>
+                                    <field name="account_fnsku" optional="hide"/>
+                                    <field name="account_asin" optional="hide"/>
+                                    <field name="serial" optional="show"/>
+                                    <field name="imei" optional="show"/>
+                                    <field name="owner_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </group>
+                    </group> -->
+
+                    <notebook>
+                        <page string="Declared products (Account Products)">
+                            <field name="package_products_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_map_id" />
+                                    <field name="quantity" />
+                                    <field name="received_qty" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Contents (Stock)" invisible="type == 'return'">
+                            <field name="quant_ids">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="lot_id" groups="stock.group_production_lot"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id" groups="uom.group_uom"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Contents (RMA Units)" invisible="type == 'new'">
+                            <field name="rma_unit_ids" widget="one2many" readonly="package_state in ('draft', 'received')">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="account_product_map_id"/>
+                                    <field name="account_sku" optional="show"/>
+                                    <field name="account_ean13" optional="hide"/>
+                                    <field name="account_fnsku" optional="hide"/>
+                                    <field name="account_asin" optional="hide"/>
+                                    <field name="serial" optional="show"/>
+                                    <field name="imei" optional="show"/>
+                                    <field name="owner_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Outer box damage, special delivery indications, etc."/>
+                        </page>
+
+                        <page string="Info">
+                            <group string="Package">
+                                <field name="package_has_incident" string="Package Incident"/>
+                            </group>
+                            <group string="Unpacking traceability">
+                                <field name="unpack_user_id" widget="many2one_avatar_user"/>
+                                <field name="unpack_date"/>
+                            </group>
+                            <group>
+                                <field name="owner_id" readonly="0"/>
+                                <field name="sender_id"/>
+                                <field name="shipping_address_id"/>
+                                <field name="customer_reference"/>
+                            </group>
+
+                            <group>
+                                <field name="sale_id" readonly="1"/>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Custom RMA Reception Tree for stock.quant.package -->
+    <record id="view_rma_reception_package_tree" model="ir.ui.view">
+        <field name="name">rma.reception.package.tree</field>
+        <field name="model">stock.quant.package</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list string="Received Packages">
+                <field name="name" string="Package Reference"/>
+                <field name="sender_id" string="Sender"/>
+                <field name="type" string="Package Type"/>
+                <field name="carrier_id" string="Carrier"/>
+                <field name="customer_reference" string="Tracking Number"/>
+                <field name="shipping_weight" string="Shipping W    eight"/>
+                <field name="weight_uom_name" string="Weight Unit" optional="hide"/>
+                <field name="notes" string="Notes"/>
+                <field name="unpack_user_id" widget="many2one_avatar_user" string="Unpacked by"/>
+                <field name="unpack_date" string="Unpacked on"/>
+                <field name="package_state" widget="badge" string="Package State"/>
+                <field name="package_location_id" string="Package location" optional="show"/>
+                <field name="package_has_incident" widget="boolean" string="Incident" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Door Reception: búsqueda y filtro por defecto (no desempaquetados) -->
+    <record id="view_rma_reception_package_search" model="ir.ui.view">
+        <field name="name">rma.reception.package.search</field>
+        <field name="model">stock.quant.package</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <search string="Recepción de bultos">
+                <field name="name" string="Referencia"/>
+                <field name="customer_reference" string="N.º seguimiento"/>
+                <field name="sender_id"/>
+                <field name="carrier_id"/>
+                <field name="package_location_id"/>
+                <separator/>
+                <filter string="Waiting Reception" name="pending_receive"
+                        domain="[('package_state', '=', 'draft')]"
+                        help="Waiting for reception (not yet received)."/>
+                <filter string="Waiting Unpacking" name="pending_unpack"
+                        domain="[('package_state', '=', 'received')]"
+                        help="Waiting for unpacking (already received)."/>                <filter string="Package Incident" name="package_has_incident"
+                        domain="[('package_has_incident', '=', True)]"/>
+                <filter string="Opened &amp; Inspected" name="unpacked"
+                        domain="[('package_state', 'in', ['opened', 'done'])]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Package State" name="group_package_state" context="{'group_by': 'package_state'}"/>
+                    <filter string="Package Incident" name="group_package_has_incident" context="{'group_by': 'package_has_incident'}"/>
+                    <filter string="Package Type" name="group_type" context="{'group_by': 'type'}"/>
+                    <filter string="Carrier" name="group_carrier" context="{'group_by': 'carrier_id'}"/>
+                    <filter string="Package location" name="group_package_location_id"
+                            context="{'group_by': 'package_location_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Door Reception Action -->
+    <record id="action_rma_reception_package" model="ir.actions.act_window">
+        <field name="name">Door Reception</field>
+        <field name="res_model">stock.quant.package</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_rma_reception_package_search"/>
+        <field name="context">{'search_default_pending_receive': 1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Scan your first tracking or box!
+          </p><p>
+            Reception allows you to capture outer boxes before identifying inner RMAs.
+          </p>
+        </field>
+    </record>
+
+    <!-- Force Action to use Custom Views -->
+    <record id="action_rma_reception_package_view_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_rma_reception_package_tree"/>
+        <field name="act_window_id" ref="action_rma_reception_package"/>
+    </record>
+
+    <record id="action_rma_reception_package_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_rma_reception_package_form"/>
+        <field name="act_window_id" ref="action_rma_reception_package"/>
+    </record>
+
+</odoo>

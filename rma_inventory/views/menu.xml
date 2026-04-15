@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_stock_quant_rma" model="ir.actions.act_window">
+        <field name="name">Product on Stock</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[
+            ('product_id.product_tmpl_id.is_spare_parts', '=', False),
+            ('quantity', '>', 0),
+        ]</field>
+        <field name="context">{'account_product_map_spare_parts': False}</field>
+        <!-- <field name="context">{ -->
+            <!-- 'search_default_internal_loc': 1, -->
+            <!-- 'search_default_productgroup': 1, -->
+            <!-- 'search_default_locationgroup': 1, -->
+        <!-- }</field> -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No stock quants for non spare part products.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_stock_quant_rma_spare_parts" model="ir.actions.act_window">
+        <field name="name"> Spare Parts Stock </field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[
+            ('product_id.product_tmpl_id.is_spare_parts', '=', True),
+            ('quantity', '>', 0),
+        ]</field>
+        <field name="context">{'account_product_map_spare_parts': True}</field>
+        <!-- <field name="context">{
+       
+            'search_default_internal_loc': 1,
+            'search_default_productgroup': 1,
+            'search_default_locationgroup': 1,
+        }</field> -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No stock quants for spare part products.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_rma_root"
+              name="RMA Inventory"
+              web_icon="rma_inventory,static/description/icon.png"
+              sequence="30"/>
+
+    <menuitem id="menu_rma_unit"
+              name="RMA Units"
+              parent="menu_rma_root"
+              action="action_rma_unit"
+              sequence="10"/>
+
+    <menuitem id="menu_rma_stock"
+              name="Stock Quants"
+              parent="menu_rma_root"
+              action="action_stock_quant_rma"
+              sequence="10"/>
+
+    <menuitem id="menu_rma_stock_spare"
+              name="Spare parts"
+              parent="menu_rma_root"
+              action="action_stock_quant_rma_spare_parts"
+              sequence="20"/>
+
+
+    <menuitem id="menu_rma_configuration"
+              name="Configuration"
+              parent="menu_rma_root"
+              sequence="100"/>
+
+    <menuitem id="menu_rma_configuration_stock_locations"
+              name="Stock Locations"
+              parent="menu_rma_configuration"
+              action="action_stock_location_rma"
+              sequence="10"/>
+
+    <menuitem id="menu_rma_configuration_stock_categories"
+              name="Stock Categories"
+              parent="menu_rma_configuration"
+              action="stock.action_storage_category"
+              sequence="20"/>
+
+</odoo>

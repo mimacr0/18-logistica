@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rma_repair_user,rma_repair_user,model_rma_repair,base.group_user,1,1,1,1
-access_repair_operation_line_user,repair_operation_line_user,model_repair_operation_line,base.group_user,1,1,1,1
-access_rma_repair_add_parts_wizard,rma_repair_add_parts_wizard,model_rma_repair_add_parts_wizard,base.group_user,1,1,1,1
-access_rma_repair_harvest_wizard,rma_repair_harvest_wizard,model_rma_repair_harvest_wizard,base.group_user,1,1,1,1
-access_rma_repair_harvest_wizard_line,rma_repair_harvest_wizard_line,model_rma_repair_harvest_wizard_line,base.group_user,1,1,1,1

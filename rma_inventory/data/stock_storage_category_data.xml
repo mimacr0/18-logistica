@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="storage_category_operation" model="stock.storage.category">
+            <field name="name">Operación</field>
+        </record>
+        <record id="storage_category_storage_shelf" model="stock.storage.category">
+            <field name="name">Shelf</field>
+        </record>
+        <record id="storage_category_storage_pallet" model="stock.storage.category">
+            <field name="name">Pallet</field>
+        </record>
+    </data>
+</odoo>

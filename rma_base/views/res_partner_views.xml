@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_partner_view_form_pricelist" model="ir.ui.view">
+        <field name="name">account.partner.view.form.pricelist.rma</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account_partner.account_partner_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@id='sales_lines']" position="after">
+                <page string="Pricelist" name="rma_partner_pricelist">
+                    <div class="alert alert-light text-muted mb-3" role="note">
+                        <p class="mb-0">
+                            The pricelists shown here are for checking
+                            <strong>what Mimacro charges for its services</strong> for this customer.
+                            They are unrelated to prices the customer may set for their own products in
+                            their operations; that scope is outside Mimacro's remit.
+                        </p>
+                    </div>
+                    <group>
+                        <field name="property_product_pricelist" options="{'no_create': True}"/>
+                    </group>
+                    <field
+                        name="pricelist_item_ids"
+                        nolabel="1"
+                        invisible="not property_product_pricelist"
+                    >
+                        <list create="false" delete="false" edit="false">
+                            <field name="display_applied_on"/>
+                            <field name="name" string="Applied on"/>
+                            <field name="price"/>
+                            <field name="min_quantity"/>
+                            <field name="date_start" optional="hide"/>
+                            <field name="date_end" optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

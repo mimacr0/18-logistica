@@ -1,0 +1,161 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* widget_qr_attachments
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+t\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-12 15:43+0000\n"
+"PO-Revision-Date: 2026-03-12 15:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: widget_qr_attachments
+#. odoo-python
+#: code:addons/widget_qr_attachments/controllers/main.py:0
+msgid "Access token is required."
+msgstr "Se requiere un token de acceso."
+
+#. module: widget_qr_attachments
+#. odoo-python
+#: code:addons/widget_qr_attachments/controllers/main.py:0
+msgid "Attachment does not belong to this record."
+msgstr "El archivo adjunto no pertenece a este registro."
+
+#. module: widget_qr_attachments
+#: model:ir.model,name:widget_qr_attachments.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: widget_qr_attachments
+#: model_terms:ir.ui.view,arch_db:widget_qr_attachments.res_config_settings_view_form
+msgid "Configure an external URL to be used in the QR codes."
+msgstr "Configure una URL externa para ser utilizada en los códigos QR."
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: widget_qr_attachments
+#: model_terms:ir.ui.view,arch_db:widget_qr_attachments.res_config_settings_view_form
+msgid "External Base URL"
+msgstr "URL base externa"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,help:widget_qr_attachments.field_res_config_settings__qr_external_base_url
+msgid ""
+"External URL to use for the QR code (e.g. https://repair.dafe.es). If empty,"
+" the current instance URL will be used."
+msgstr "URL externa a utilizar para el código QR (ej. https://repair.dafe.es). Si está vacía, se utilizará la URL actual de la instancia."
+
+#. module: widget_qr_attachments
+#: model_terms:ir.ui.view,arch_db:widget_qr_attachments.res_config_settings_view_form
+msgid "General Settings"
+msgstr "Configuración general"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__id
+msgid "ID"
+msgstr "ID"
+
+#. module: widget_qr_attachments
+#. odoo-python
+#: code:addons/widget_qr_attachments/controllers/main.py:0
+msgid "Invalid access token."
+msgstr "Token de acceso inválido."
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__model_name
+msgid "Model"
+msgstr "Modelo"
+
+#. module: widget_qr_attachments
+#: model:ir.model.constraint,message:widget_qr_attachments.constraint_qr_access_token_model_res_id_uniq
+msgid "Only one token per record is allowed."
+msgstr "Solo se permite un token por registro."
+
+#. module: widget_qr_attachments
+#. odoo-javascript
+#: code:addons/widget_qr_attachments/static/src/backend/xml/qr_widget.xml:0
+msgid "Open"
+msgstr "Abrir"
+
+#. module: widget_qr_attachments
+#: model_terms:ir.ui.view,arch_db:widget_qr_attachments.res_config_settings_view_form
+msgid "QR Attachments"
+msgstr "Adjuntos QR"
+
+#. module: widget_qr_attachments
+#. odoo-javascript
+#: code:addons/widget_qr_attachments/static/src/backend/xml/qr_widget.xml:0
+msgid "QR Code"
+msgstr "Código QR"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_res_config_settings__qr_external_base_url
+msgid "QR External Base URL"
+msgstr "URL base externa del QR"
+
+#. module: widget_qr_attachments
+#: model:ir.model,name:widget_qr_attachments.model_qr_access_token
+msgid "QR Upload Access Token"
+msgstr "Token de acceso para subir archivos QR"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__res_id
+msgid "Record ID"
+msgstr "ID de registro"
+
+#. module: widget_qr_attachments
+#. odoo-javascript
+#: code:addons/widget_qr_attachments/static/src/backend/xml/qr_widget.xml:0
+msgid "Save the record to generate QR code"
+msgstr "Guarda el registro para generar el código QR"
+
+#. module: widget_qr_attachments
+#. odoo-javascript
+#: code:addons/widget_qr_attachments/static/src/backend/xml/qr_widget.xml:0
+msgid "Scan to upload files"
+msgstr "Escanea para subir archivos"
+
+#. module: widget_qr_attachments
+#: model:ir.model.fields,field_description:widget_qr_attachments.field_qr_access_token__token
+msgid "Token"
+msgstr "Token"
+
+#. module: widget_qr_attachments
+#. odoo-javascript
+#: code:addons/widget_qr_attachments/static/src/backend/xml/qr_widget.xml:0
+msgid "URL not configured"
+msgstr "URL no configurada"
+
+#. module: widget_qr_attachments
+#: model_terms:ir.ui.view,arch_db:widget_qr_attachments.res_config_settings_view_form
+msgid "https://repair.example.com"
+msgstr "https://repair.example.com"

@@ -19,14 +19,12 @@
                 <!-- Group By -->
                 <group expand="0" string="Group By">
                     <filter string="Client Account" name="group_by_account" context="{'group_by':'account_id'}"/>
-                    <filter string="Marketplace" name="group_by_marketplace" context="{'group_by':'marketplace'}"/>
                     <filter string="Internal Product" name="group_by_product" context="{'group_by':'product_id'}"/>
                 </group>
                 
                 <!-- Search Panel -->
                 <searchpanel>
                     <field name="account_id" icon="fa-users" enable_counters="1" limit="0"/>
-                    <field name="marketplace" icon="fa-shopping-cart" enable_counters="1"/>
                 </searchpanel>
             </search>
         </field>
@@ -36,14 +34,15 @@
         <field name="name">account.product.map.list</field>
         <field name="model">account.product.map</field>
         <field name="arch" type="xml">
-            <list string="Product Map">
-                <field name="product_id"/>
-                <field name="account_id"/>
-                <field name="marketplace"/>
-                <field name="product_price" widget="monetary" string="Price" optional="show"/>
-                <field name="tracking"/>
-                <field name="account_sku" string="Account SKU" optional="hide"/>
+            <list string="Product Map" js_class="account_product_map_list_view">
+                <field name="name"/>
                 <field name="product_id" string="Internal Product" optional="hide"/>
+                <field name="product_categ_id" string="Category" optional="show" readonly="1"/>
+                <field name="attributes" string="Variant attributes" optional="show" readonly="1"/>
+                <field name="account_id"/>
+                <field name="product_price" widget="monetary" string="Price" optional="hide"/>
+                <field name="tracking" optional="hide"/>
+                <field name="account_sku" string="Account SKU" optional="show"/>
                 <field name="account_ean13" string="EAN13" optional="hide"/>
                 <field name="account_asin" string="ASIN" optional="hide"/>
             </list>
@@ -55,6 +54,12 @@
         <field name="model">account.product.map</field>
         <field name="arch" type="xml">
             <form string="Product Map">
+                <field name="duplicate_product_mapping" invisible="1"/>
+                <field name="duplicate_product_mapping_count" invisible="1"/>
+                <div class="alert alert-warning" role="alert" invisible="not duplicate_product_mapping">
+                    <span>This account has other active mappings with the same internal product (different Account SKU). Similar rows: </span>
+                    <field name="duplicate_product_mapping_count" nolabel="1" class="oe_inline"/>
+                </div>
                 <sheet>
                     <field name="mapping_image_1920" widget="image" class="oe_avatar" options="{'convert_to_webp': True, 'preview_image': 'image_128'}"/>
 
@@ -66,21 +71,20 @@
                     </div>
                     <group>
                         <group name="relations" string="Relations">
-                            <field name="account_id" widget="many2one_avatar"/>
-                            <field name="product_id" options="{'no_create': True}"/>
-                            <field name="product_price" widget="monetary"/>
-                            <field name="marketplace"/>
+                            <field name="account_id" widget="many2one_avatar" readonly="1"/>
+                            <field name="product_id" options="{'no_create': True}" domain="[('type', '!=', 'service')]" readonly="1"/>
                         </group>
-                        <group name="identifiers" string="Account Identifiers">
-                            <field name="account_sku" required="1"/>
+                        <group name="identifiers" string="Account Identifiers" invisible="is_spare_parts">
+                            <field name="account_sku"/>
                             <field name="account_ean13"/>
                             <field name="account_asin"/>
                             <field name="account_fnsku"/>
                         </group>
                     </group>
                     <group>
-                        <group name="spare_parts" string="Spare Parts">
+                        <group name="caracteristics" string="Caracteristics">
                             <field name="is_spare_parts" widget="toggle"/>
+                            <field name="attributes" string="Variant attributes" optional="show" readonly="1"/>
                         </group>
                         <group name="config" string="Configuration">
                             <field name="tracking"/>
@@ -94,6 +98,7 @@
                         </page>
                     </notebook>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
@@ -104,10 +109,24 @@
         <field name="res_model">account.product.map</field>
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="account_product_map_view_search"/>
+        <field name="domain">[('is_spare_parts', '=', False)]</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
             Create a new Product Mapping
           </p>
+        </field>
+    </record>
+
+    <record id="action_account_product_map_spare_parts" model="ir.actions.act_window">
+        <field name="name">Spare Parts</field>
+        <field name="res_model">account.product.map</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="account_product_map_view_search"/>
+        <field name="domain">[('is_spare_parts', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a product mapping whose internal product is a spare part.
+            </p>
         </field>
     </record>
 </odoo>

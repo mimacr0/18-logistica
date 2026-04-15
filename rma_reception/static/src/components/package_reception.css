@@ -1,0 +1,116 @@
+/**
+ * Tema verde para el escritorio de recepción (Bootstrap + utilidades tipo Tailwind).
+ * Valores equivalentes a la escala emerald de Tailwind CSS v3.
+ */
+.o_rma_package_reception {
+    /* emerald-600 / emerald-700 / emerald-500 — mismos hex que Tailwind */
+    --tw-emerald-500: #10b981;
+    --tw-emerald-600: #059669;
+    --tw-emerald-700: #047857;
+    --tw-emerald-800: #065f46;
+}
+
+/* Cabecera (antes bg-dark) */
+.o_rma_package_reception .o_rma_desk_receive_header {
+    background-color: var(--tw-emerald-600) !important;
+    border-bottom-color: var(--tw-emerald-700) !important;
+}
+
+/* Botones principales (variables BS 5 + respaldo directo) */
+.o_rma_package_reception .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tw-emerald-600);
+    --bs-btn-border-color: var(--tw-emerald-700);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tw-emerald-700);
+    --bs-btn-hover-border-color: var(--tw-emerald-800);
+    --bs-btn-focus-shadow-rgb: 5, 150, 105;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tw-emerald-800);
+    --bs-btn-active-border-color: var(--tw-emerald-800);
+    background-color: var(--tw-emerald-600);
+    border-color: var(--tw-emerald-700);
+    color: #fff;
+}
+
+.o_rma_package_reception .btn-primary:hover,
+.o_rma_package_reception .btn-primary:focus-visible {
+    background-color: var(--tw-emerald-700);
+    border-color: var(--tw-emerald-800);
+    color: #fff;
+}
+
+.o_rma_package_reception .btn-outline-primary {
+    --bs-btn-color: var(--tw-emerald-700);
+    --bs-btn-border-color: var(--tw-emerald-600);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tw-emerald-600);
+    --bs-btn-hover-border-color: var(--tw-emerald-700);
+    color: var(--tw-emerald-700);
+    border-color: var(--tw-emerald-600);
+}
+
+.o_rma_package_reception .btn-outline-primary:hover,
+.o_rma_package_reception .btn-outline-primary:focus-visible {
+    background-color: var(--tw-emerald-600);
+    border-color: var(--tw-emerald-700);
+    color: #fff;
+}
+
+/* Icono del banner: mismo tono que los botones */
+.o_rma_package_reception .o_rma_desk_receive_banner .text-primary {
+    color: var(--tw-emerald-600) !important;
+}
+
+/* Tarjeta del wizard embebido */
+.o_rma_package_reception .o_rma_reception_wizard_card {
+    border-color: rgba(5, 150, 105, 0.2) !important;
+    background-color: #fff;
+}
+
+.o_rma_package_reception .o_rma_reception_wizard_header_icon {
+    color: var(--tw-emerald-600);
+}
+
+.o_rma_package_reception .o_rma_reception_wizard_body {
+    min-height: 12rem;
+}
+
+.o_rma_package_reception .o_rma_reception_wizard_body .o_form_view,
+.o_rma_package_reception .o_rma_reception_wizard_body .o_form_sheet {
+    max-width: 100%;
+}
+
+/* Formulario embebido: bordes suaves en modo solo lectura */
+.o_rma_package_reception .o_rma_reception_wizard_body .o_inner_group .o_cell {
+    vertical-align: top;
+}
+
+/* Wizard embebido: botón confirmar a flujo (no fijo en esquina) */
+.o_rma_package_reception .o_rma_reception_wizard_body .o_rma_reception_desk_wizard_form .o_rma_reception_desk_confirm {
+    margin-top: 0.5rem;
+}
+
+.o_rma_package_reception .o_rma_reception_wizard_body .o_rma_reception_desk_wizard_form .o_rma_reception_desk_confirm .btn-lg {
+    font-weight: 600;
+}
+
+.o_rma_package_reception.touch-manipulation {
+    touch-action: manipulation;
+}
+
+@media (max-width: 992px) {
+    .o_rma_package_reception .o_rma_desk_receive_search_group .o_rma_desk_receive_search_input {
+        min-height: 3rem;
+        font-size: 1.0625rem;
+    }
+
+    .o_rma_package_reception .o_rma_desk_receive_search_group .btn {
+        min-height: 3rem;
+        min-width: 5.5rem;
+    }
+
+    .o_rma_package_reception .btn:not(.nav-link) {
+        min-height: 2.75rem;
+    }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sat_repair_ticket_category_general" model="rma.repair.ticket.category">
+            <field name="name">General</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sat_repair_ticket_category_display" model="rma.repair.ticket.category">
+            <field name="name">Display / screen</field>
+            <field name="parent_id" ref="sat_repair_ticket_category_general"/>
+            <field name="sequence">10</field>
+            <field name="type_category">ifp</field>
+        </record>
+
+        <record id="sat_repair_ticket_category_board" model="rma.repair.ticket.category">
+            <field name="name">Mainboard / system</field>
+            <field name="parent_id" ref="sat_repair_ticket_category_general"/>
+            <field name="sequence">20</field>
+            <field name="type_category">led</field>
+        </record>
+    </data>
+</odoo>

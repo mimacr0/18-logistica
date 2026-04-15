@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sat_repair.RmaRepairListDashboardPipeline">
+        <div class="o_sat_repair_list_pipeline o_sat_repair_desk_state_theme mb-3">
+            <div class="o_sat_repair_desk_state_section">
+                <div class="small text-muted text-uppercase fw-semibold mb-2">Estado</div>
+                <div class="o_sat_repair_desk_state_cards d-flex flex-wrap gap-2 w-100">
+                    <button type="button"
+                            t-foreach="quickFilterItems" t-as="item" t-key="item.key"
+                            class="o_sat_repair_desk_state_card btn border rounded shadow-sm text-center flex-grow-1"
+                            t-att-class="isActive(item.key) ? 'o_sat_repair_desk_state_card_active' : 'bg-view'"
+                            t-att-style="stateCardButtonStyle(item)"
+                            t-on-click="() => this.setFilter(item.key)">
+                        <i t-att-class="'fa mb-1 d-block ' + item.icon"
+                           t-att-style="stateCardIconStyle(item)"/>
+                        <span class="d-block fw-bold text-uppercase small" style="letter-spacing: 0.4px;"
+                              t-att-style="stateCardLabelStyle(item)">
+                            <t t-out="item.label"/>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

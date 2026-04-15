@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_rma_unit_move_desk" model="ir.actions.client">
+        <field name="name">Workstation: move stock</field>
+        <field name="tag">rma_inventory.UnitMoveDesk</field>
+    </record>
+
+    <menuitem id="menu_rma_unit_move_desk"
+              name="Workstation: move stock"
+              parent="menu_rma_root"
+              action="action_rma_unit_move_desk"
+              sequence="12"/>
+
+
+    <menuitem id="menu_rma_unit_move_desk"
+              name="Workstation: move stock"
+              action="action_rma_unit_move_desk"
+              sequence="37"              
+              web_icon="rma_inventory,static/description/icon.png"
+              />
+</odoo>

@@ -64,6 +64,13 @@
                     </group>
                     <notebook>
                         <page string="Contacts" name="contacts_only">
+                            <div class="alert alert-light text-muted mb-3" role="note">
+                                <p class="mb-0">
+                                    These are the users related to this account. Each user can have access to
+                                    the portal if enabled. This page has nothing to do with sender addresses
+                                    or shipping addresses.
+                                </p>
+                            </div>
                             <field name="contact_ids" mode="kanban" order="type, name" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'contact'}">
                                 <kanban color="color">
                                     <field name="color"/>

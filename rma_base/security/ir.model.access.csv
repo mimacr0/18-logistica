@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_account_product_map,account_product_map,model_account_product_map,base.group_user,1,1,1,1
+access_account_product_map_import_wizard,account.product.map.import.wizard,model_account_product_map_import_wizard,base.group_user,1,1,1,1
+access_rma_add_product_map_wizard,rma.add.product.map.wizard,model_rma_add_product_map_wizard,base.group_user,1,1,1,1
+access_rma_product_template_harvest_line,rma.product.template.harvest.line,model_rma_product_template_harvest_line,base.group_user,1,1,1,1
+access_rma_pricelist_item_dates_wizard,rma.pricelist.item.dates.wizard,model_rma_pricelist_item_dates_wizard,product.group_product_manager,1,1,1,1

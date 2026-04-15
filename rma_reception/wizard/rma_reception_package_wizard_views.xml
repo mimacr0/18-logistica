@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Mesa recepción: solo Confirmar (draft → recibido / incidencia); datos solo lectura -->
+    <record id="view_rma_reception_package_wizard_form_desk" model="ir.ui.view">
+        <field name="name">rma.reception.package.wizard.form.desk.receive</field>
+        <field name="model">rma.reception.package.wizard</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form string="Package reception" class="o_rma_reception_desk_wizard_form" edit="1">
+                <field name="package_id" invisible="1" readonly="1"/>
+                <field name="package_state" invisible="1" readonly="1"/>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline justify-content-between">
+                        <div class="d-flex align-items-baseline me-3">
+                            <i class="fa fa-fw fa-lg fa-book me-3" title="Account"/>
+                            <field name="account_id" placeholder="Account" nolabel="1" required="1" readonly="1"
+                                   options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-user me-3" title="Sender"/>
+                        <field name="sender_id" placeholder="Sender" nolabel="1" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-archive me-3" title="Package type"/>
+                        <field name="package_type" nolabel="1" widget="radio" options="{'horizontal': true}" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-truck me-3" title="Carrier"/>
+                        <field name="carrier_id" placeholder="Carrier" nolabel="1" required="1" readonly="1"
+                               options="{'no_create_edit': True, 'no_open': True, 'no_create': True}"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-barcode me-3" title="Main reference"/>
+                        <field name="expedition1" placeholder="Tracking / package reference (required)" nolabel="1" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-barcode me-3" title="Secondary reference"/>
+                        <field name="expedition" placeholder="Secondary reference (optional)" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-7 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-balance-scale me-3" title="Weight"/>
+                        <field name="weight" placeholder="Shipping weight" nolabel="1" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-cube me-3" title="Dimensions"/>
+                        <field name="length" placeholder="Length" nolabel="1" readonly="1"/>
+                        <span class="p-2">×</span>
+                        <field name="width" placeholder="Width" nolabel="1" readonly="1"/>
+                        <span class="p-2">×</span>
+                        <field name="height" placeholder="Height" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-exclamation-triangle me-3" title="Incident"/>
+                        <field name="with_incidence" widget="boolean_toggle" nolabel="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-upload me-3" title="Images / videos"/>
+                        <field name="media_ids" widget="many2many_binary" nolabel="1"
+                               options="{'accepted_file_extensions': 'image/*,video/*'}"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-user me-3" title="Person receiving"/>
+                        <field name="receiver_user_id" string="Person receiving" readonly="1" nolabel="0"/>
+                    </div>
+                </div>
+                <div class="o_rma_reception_desk_confirm mt-4 pt-4 border-top">
+                    <div class="d-grid gap-2">
+                        <button string="Confirmar recepción" type="object" name="action_confirm"
+                                class="btn btn-primary btn-lg py-3 w-100"
+                                invisible="package_state and package_state != 'draft'"/>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Mesa desempaquetado: solo Desempaquetar; datos solo lectura -->
+    <record id="view_rma_reception_package_wizard_form_desk_unpack" model="ir.ui.view">
+        <field name="name">rma.reception.package.wizard.form.desk.unpack</field>
+        <field name="model">rma.reception.package.wizard</field>
+        <field name="priority">1001</field>
+        <field name="arch" type="xml">
+            <form string="Package unpack desk" class="o_barcode_line_form flex-column position-relative o_rma_wizard_unpack_desk" edit="0">
+                <field name="package_id" invisible="1" readonly="1"/>
+                <field name="package_state" invisible="1" readonly="1"/>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline justify-content-between">
+                        <div class="d-flex align-items-baseline me-3">
+                            <i class="fa fa-fw fa-lg fa-book me-3" title="Account"/>
+                            <field name="account_id" placeholder="Account" nolabel="1" required="1" readonly="1"
+                                   options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-user me-3" title="Sender"/>
+                        <field name="sender_id" placeholder="Sender" nolabel="1" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-archive me-3" title="Package type"/>
+                        <field name="package_type" nolabel="1" widget="radio" options="{'horizontal': true}" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-truck me-3" title="Carrier"/>
+                        <field name="carrier_id" placeholder="Carrier" nolabel="1" required="1" readonly="1"
+                               options="{'no_create_edit': True, 'no_open': True, 'no_create': True}"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-barcode me-3" title="Main reference"/>
+                        <field name="expedition1" placeholder="Tracking / package reference (required)" nolabel="1" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-barcode me-3" title="Secondary reference"/>
+                        <field name="expedition" placeholder="Secondary reference (optional)" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-7 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-balance-scale me-3" title="Weight"/>
+                        <field name="weight" placeholder="Shipping weight" nolabel="1" required="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-cube me-3" title="Dimensions"/>
+                        <field name="length" placeholder="Length" nolabel="1" readonly="1"/>
+                        <span class="p-2">×</span>
+                        <field name="width" placeholder="Width" nolabel="1" readonly="1"/>
+                        <span class="p-2">×</span>
+                        <field name="height" placeholder="Height" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-exclamation-triangle me-3" title="Incident"/>
+                        <field name="with_incidence" widget="boolean_toggle" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-upload me-3" title="Images / videos"/>
+                        <field name="media_ids" widget="many2many_binary" nolabel="1"
+                               options="{'accepted_file_extensions': 'image/*,video/*'}"/>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 d-flex align-items-baseline">
+                        <i class="fa fa-fw fa-lg fa-user me-3" title="Person receiving"/>
+                        <field name="receiver_user_id" string="Person receiving" readonly="1" nolabel="0"/>
+                    </div>
+                </div>
+                <div class="fixed-bottom">
+                    <div class="o_barcode_control d-flex">
+                        <button string="Desempaquetar" class="btn btn-primary o_save" type="object" name="action_unpack"
+                                context="{'package_unpack_desk': True}"
+                                invisible="package_state != 'received'"/>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>

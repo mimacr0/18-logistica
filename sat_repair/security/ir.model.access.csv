@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sat_repair_user,sat_repair_user,model_rma_repair,base.group_user,1,1,1,1
+access_repair_operation_line_user,repair_operation_line_user,model_repair_operation_line,base.group_user,1,1,1,1
+access_sat_repair_add_parts_wizard,sat_repair_add_parts_wizard,model_rma_repair_add_parts_wizard,base.group_user,1,1,1,1
+access_sat_repair_add_parts_wizard_line,sat_repair_add_parts_wizard_line,model_rma_repair_add_parts_wizard_line,base.group_user,1,1,1,1
+access_sat_repair_harvest_wizard,sat_repair_harvest_wizard,model_rma_repair_harvest_wizard,base.group_user,1,1,1,1
+access_sat_repair_harvest_wizard_line,sat_repair_harvest_wizard_line,model_rma_repair_harvest_wizard_line,base.group_user,1,1,1,1
+access_rma_harvest_operation_user,rma.harvest.operation user,model_rma_harvest_operation,base.group_user,1,1,1,1
+access_rma_harvest_operation_line_user,rma.harvest.operation.line user,model_rma_harvest_operation_line,base.group_user,1,1,1,1
+access_sat_repair_ticket_type_user,rma.repair.ticket.type user,model_rma_repair_ticket_type,base.group_user,1,1,1,1
+access_sat_repair_ticket_category_user,rma.repair.ticket.category user,model_rma_repair_ticket_category,base.group_user,1,1,1,1
+access_sat_repair_ticket_tag_user,rma.repair.ticket.tag user,model_rma_repair_ticket_tag,base.group_user,1,1,1,1

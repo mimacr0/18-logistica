@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>  
+    
+    <!-- Root app menu: Reception (independent from RMA Inventory) -->
+    <!-- Mesas cliente: componentes y plantillas separados (estilos independientes) -->
+    <record id="action_rma_reception_package_desk" model="ir.actions.client">
+        <field name="name">Workstation: Door Reception</field>
+        <field name="tag">rma_reception.PackageReception</field>
+    </record>
+
+    <record id="action_rma_reception_unpack_desk" model="ir.actions.client">
+        <field name="name">Workstation: Unpack Packages</field>
+        <field name="tag">rma_reception.PackageUnpackDesk</field>
+    </record>
+
+
+    <menuitem 
+            id="menu_reception_root" 
+            name="Reception" sequence="28"
+            web_icon="rma_reception,static/description/icon.png"
+    />
+
+    <menuitem 
+            id="menu_reception_packages" 
+            name="Packages List" 
+            parent="menu_reception_root" 
+            action="action_rma_reception_package" 
+            sequence="10"
+    />
+
+    <menuitem 
+        id="menu_reception_configuration" 
+        name="Configuration" 
+        parent="menu_reception_root" 
+        sequence="20"
+    />
+
+    <menuitem 
+        id="menu_reception_package_types" 
+        name="Package Types" 
+        parent="menu_reception_configuration" 
+        action="stock.action_package_type_view"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_reception_check_templates"
+        name="Reception Checks Templates"
+        parent="menu_reception_configuration"
+        action="action_rma_reception_check_template"
+        sequence="20"
+    />
+
+
+    <!-- Workstation menu -->
+    <menuitem
+            id="menu_reception_packages_desk"
+            name="Door Reception"
+            action="action_rma_reception_package_desk"
+            web_icon="rma_reception,static/description/icon_door_reception.png"
+            sequence="35"/>
+
+    <menuitem
+            id="menu_unpack_packages_desk"
+            name="Unpack Packages"
+            action="action_rma_reception_unpack_desk"
+            web_icon="rma_reception,static/description/icon_unpack_packages.png"
+            sequence="36"/>
+</odoo> 

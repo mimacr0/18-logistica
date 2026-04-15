@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rma_reception.PackageSearchLine">
+        <div class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between gap-2 py-3"
+             t-att-class="{'list-group-item-primary': props.isSelected}">
+            <div class="flex-grow-1" style="min-width: 200px;">
+                <div class="fw-bold">
+                    <i class="fa fa-cube me-2"/>
+                    <t t-out="props.line.name"/>
+                </div>
+                <div class="small opacity-75 mt-1" t-if="props.line.customer_reference">
+                    <i class="fa fa-barcode me-1"/>
+                    <t t-out="props.line.customer_reference"/>
+                </div>
+                <div class="small mt-1 d-flex flex-wrap gap-2">
+                    <span t-if="props.line.sender_label" class="badge rounded-pill text-bg-secondary">
+                        <t t-out="props.line.sender_label"/>
+                    </span>
+                    <span t-if="props.line.carrier_label" class="badge rounded-pill text-bg-info">
+                        <t t-out="props.line.carrier_label"/>
+                    </span>
+                    <span class="badge rounded-pill" t-att-class="stateBadgeClass">
+                        <t t-out="props.line.package_state_label"/>
+                    </span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" t-on-click="onOpen">
+                <t t-out="openLabel"/>
+            </button>
+        </div>
+    </t>
+</templates>

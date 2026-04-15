@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="sat_repair_root"
+              name="Repairs"
+              web_icon="sat_repair,static/description/icon.png"
+              sequence="30"/>
+
+    <menuitem id="sat_repair_menu_main"
+              name="Repairs"
+              parent="sat_repair_root"
+              sequence="10"/>
+
+    <menuitem id="sat_repair_menu_action"
+              name="Repair Orders"
+              parent="sat_repair_menu_main"
+              action="action_sat_repair"
+              sequence="10"/>
+
+    <menuitem id="sat_repair_menu_harvest_wizard"
+              name="New harvest"
+              parent="sat_repair_menu_main"
+              action="action_rma_harvest_wizard_standalone"
+              sequence="15"/>
+
+    <menuitem id="sat_repair_menu_harvest_operations"
+              name="Harvest operations"
+              parent="sat_repair_menu_main"
+              action="action_rma_harvest_operation"
+              sequence="20"/>
+
+    <menuitem id="sat_repair_menu_products"
+              name="Services"
+              parent="sat_repair_root"
+              sequence="20"/>
+
+    <menuitem id="sat_repair_menu_product_template"
+              name="Services"
+              parent="sat_repair_menu_products"
+              action="action_services_template_sat"
+              sequence="10"/>
+
+    <menuitem id="sat_repair_menu_product_spare_parts"
+              name="Spare Parts"
+              parent="sat_repair_menu_products"
+              action="action_product_spare_parts_sat"
+              sequence="20"/>
+
+    <menuitem id="sat_repair_menu_configuration"
+              name="Configuration"
+              parent="sat_repair_root"
+              sequence="40"/>
+
+    <menuitem id="sat_repair_menu_ticket_types"
+              name="Repair ticket types"
+              parent="sat_repair_menu_configuration"
+              action="action_sat_repair_ticket_type"
+              sequence="10"/>
+
+    <menuitem id="sat_repair_menu_ticket_categories"
+              name="Repair ticket categories"
+              parent="sat_repair_menu_configuration"
+              action="action_sat_repair_ticket_category"
+              sequence="20"/>
+
+    <menuitem id="sat_repair_menu_ticket_tags"
+              name="Repair ticket tags"
+              parent="sat_repair_menu_configuration"
+              action="action_sat_repair_ticket_tag"
+              sequence="30"/>
+</odoo>

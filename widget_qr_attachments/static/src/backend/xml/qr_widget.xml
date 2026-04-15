@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="widget_qr_attachments.QRWidget" owl="1">
+        <div class="o_qr_widget_container d-flex flex-column align-items-center p-2 rounded">
+            <t t-if="!state.urlConfigured">
+                <div class="alert alert-warning p-2 mb-0 small text-center w-100">
+                    <i class="fa fa-warning me-1"/> URL not configured
+                </div>
+            </t>
+            <t t-elif="state.qrUrl">
+                <div class="o_qr_code_wrapper rounded p-1 mb-2" t-on-click="openUploadUI">
+                    <img t-att-src="state.qrUrl" alt="QR Code" class="img-fluid" style="max-width: 140px; display: block;"/>
+                </div>
+                <div class="text-muted small text-center">
+                    Scan to upload files
+                </div>
+                <button class="btn btn-primary btn-sm mt-2 w-100" t-on-click="openUploadUI">
+                    <i class="fa fa-external-link me-1"/> Open
+                </button>
+            </t>
+            <t t-else="">
+                <div class="text-warning small text-center">
+                    Save the record to generate QR code
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,31 @@
+/* Custom Critical status (Dark Red) */
+.btn-critical {
+    background-color: #8b0000 !important;
+    border-color: #8b0000 !important;
+    color: white !important;
+}
+
+.btn-outline-critical {
+    color: #8b0000 !important;
+    border-color: #8b0000 !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-critical:hover {
+    background-color: #8b0000 !important;
+    color: white !important;
+}
+
+.o_selection_badge.active-badge-selected {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-1px);
+    font-weight: 600;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Subtle hover effect for all badges */
+.o_selection_badge:hover:not(.active) {
+    opacity: 0.9;
+    transform: translateY(-0.5px);
+    transition: all 0.2s ease;
+}

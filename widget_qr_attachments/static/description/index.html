@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        :root {
+            --primary: #71639e;
+            --primary-light: #9b8ec4;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #333;
+            --text-muted: #6c757d;
+            --border: #e9ecef;
+            --code-bg: #f4f1fa;
+            --code-border: #d6cfe8;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 40px;
+            font-size: 22px;
+            border-left: 4px solid var(--primary);
+            padding-left: 12px;
+        }
+
+        h3 {
+            color: var(--text);
+            margin-top: 25px;
+            font-size: 17px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .badge-success {
+            background: #28a745;
+        }
+
+        .badge-info {
+            background: #17a2b8;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        code {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--primary);
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: var(--text);
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .success-box strong {
+            color: #155724;
+        }
+
+        .info-box {
+            background: #e8e1f5;
+            border-left: 4px solid var(--primary);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            min-width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:nth-child(even) {
+            background: #f8f6fc;
+        }
+
+        .separator {
+            border: none;
+            border-top: 2px dashed var(--border);
+            margin: 40px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .feature-card .icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card h4 {
+            margin: 5px 0;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📱 Widget QR Attachments</h1>
+    <p>
+        <span class="badge">v18.0.1.0.0</span>
+        <span class="badge badge-success">Plug &amp; Play</span>
+        <span class="badge badge-info">Public Upload</span>
+    </p>
+    <p>
+        Widget de Odoo que genera un código QR para subir archivos desde el móvil directamente a cualquier registro,
+        <strong>sin necesidad de iniciar sesión en Odoo</strong>. Compatible con modo claro y oscuro.
+    </p>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="icon">🔌</div>
+            <h4>Zero Config</h4>
+            <p>Solo añade <code>widget="qr_attachments"</code> en tu vista</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🔐</div>
+            <h4>Token Autónomo</h4>
+            <p>El módulo genera y valida tokens sin tocar tu modelo</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📸</div>
+            <h4>Cámara &amp; Files</h4>
+            <p>Interfaz móvil con cámara directa y subida de archivos</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🌙</div>
+            <h4>Dark Mode</h4>
+            <p>Soporte completo de modo claro/oscuro con toggle</p>
+        </div>
+    </div>
+
+    <hr class="separator" />
+
+    <h2>🚀 Guía de Integración Rápida</h2>
+
+    <p>Para usar el widget QR en tu módulo, sigue estos pasos:</p>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+            <h3>Añadir dependencia en el manifest</h3>
+            <p>En el archivo <code>__manifest__.py</code> de tu módulo, añade <code>widget_qr_attachments</code> como
+                dependencia:</p>
+            <pre><code># tu_modulo/__manifest__.py
+{
+    'name': 'Mi Módulo',
+    'depends': [
+        'base',
+        'mail',
+        'widget_qr_attachments',  # ← Añadir esta línea
+    ],
+    # ...
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+            <h3>Añadir el widget en la vista XML</h3>
+            <p>En la vista de formulario de tu modelo, añade el widget sobre cualquier campo de tipo
+                <code>Char</code>, <code>Text</code> o <code>Integer</code> (normalmente <code>name</code>):
+            </p>
+            <pre><code>&lt;!-- tu_modulo/views/mi_modelo_views.xml --&gt;
+&lt;record id="view_mi_modelo_form" model="ir.ui.view"&gt;
+    &lt;field name="name"&gt;mi.modelo.form&lt;/field&gt;
+    &lt;field name="model"&gt;mi.modelo&lt;/field&gt;
+    &lt;field name="arch" type="xml"&gt;
+        &lt;form&gt;
+            &lt;sheet&gt;
+                &lt;group&gt;
+                    &lt;field name="name"/&gt;
+
+                    &lt;!-- ✅ Solo esta línea es necesaria --&gt;
+                    &lt;field name="name"
+                           widget="qr_attachments"
+                           nolabel="1"
+                           invisible="not id"/&gt;
+                &lt;/group&gt;
+            &lt;/sheet&gt;
+        &lt;/form&gt;
+    &lt;/field&gt;
+&lt;/record&gt;</code></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+            <h3>Configurar la URL base</h3>
+            <p>Ve a <strong>Ajustes → Técnico → QR Upload Settings</strong> y configura la URL externa
+                de tu instancia de Odoo:</p>
+            <pre><code>https://tu-dominio.com</code></pre>
+            <div class="note">
+                <strong>⚠️ Importante:</strong> Sin esta URL configurada, el widget mostrará
+                "URL not configured" y no generará el QR. Debe ser la URL pública accesible desde móvil.
+            </div>
+        </div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ ¡Eso es todo!</strong> No necesitas crear campos extra en tu modelo, ni tokens,
+        ni controladores. El módulo <code>widget_qr_attachments</code> se encarga de todo automáticamente.
+    </div>
+
+    <hr class="separator" />
+
+    <h2>📋 Ejemplo Completo: Módulo de Reparación</h2>
+
+    <p>Este es un ejemplo real de cómo se usa en el módulo <code>sat_repair</code>:</p>
+
+    <h3>Manifest</h3>
+    <pre><code># sat_repair/__manifest__.py
+{
+    'name': 'SAT Repair',
+    'depends': [
+        'mail',
+        'widget_qr_attachments',  # ← Dependencia
+        'widget_m2o_binary',
+    ],
+}</code></pre>
+
+    <h3>Vista XML</h3>
+    <pre><code>&lt;!-- La zona de archivos + QR lado a lado --&gt;
+&lt;group&gt;
+    &lt;div class="d-flex align-items-start justify-content-between gap-3 w-100"&gt;
+
+        &lt;!-- Preview de archivos adjuntos --&gt;
+        &lt;field name="image_ids"
+               widget="dafe_media_preview"
+               nolabel="1"
+               class="flex-grow-1"/&gt;
+
+        &lt;!-- Widget QR (se genera automáticamente) --&gt;
+        &lt;div class="flex-shrink-0" style="min-width: 170px;"&gt;
+            &lt;field name="name"
+                   widget="qr_attachments"
+                   nolabel="1"
+                   invisible="not id"/&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/group&gt;</code></pre>
+
+    <div class="info-box">
+        <strong>💡 Nota:</strong> Los archivos subidos por QR se vinculan automáticamente a los campos
+        <code>Many2many('ir.attachment')</code> del modelo (como <code>image_ids</code>), así que aparecen
+        inmediatamente en el widget de preview.
+    </div>
+
+    <hr class="separator" />
+
+    <h2>⚙️ Arquitectura Interna</h2>
+
+    <p>Entender cómo funciona internamente el módulo:</p>
+
+    <table>
+        <tr>
+            <th>Componente</th>
+            <th>Responsabilidad</th>
+        </tr>
+        <tr>
+            <td><code>qr.access.token</code></td>
+            <td>Modelo que almacena tokens por (model, res_id). Genera tokens nuevos automáticamente al primer uso.</td>
+        </tr>
+        <tr>
+            <td><code>qr_widget.js</code></td>
+            <td>Widget OWL backend. Llama a <code>qr.access.token.get_or_create_token()</code> para obtener el token y
+                genera la URL del QR.</td>
+        </tr>
+        <tr>
+            <td><code>controllers/main.py</code></td>
+            <td>Rutas públicas (<code>auth='public'</code>). Valida el token del QR y gestiona subida/listado/borrado de
+                archivos.</td>
+        </tr>
+        <tr>
+            <td><code>upload_template.xml</code></td>
+            <td>Interfaz móvil HTML independiente con soporte de cámara, subida de archivos, y toggle de modo oscuro.
+            </td>
+        </tr>
+        <tr>
+            <td><code>upload_ui.js</code></td>
+            <td>JavaScript frontend para la interfaz móvil. Gestiona la subida, listado y borrado de attachments vía
+                JSON-RPC.</td>
+        </tr>
+    </table>
+
+    <h3>Flujo de Funcionamiento</h3>
+    <pre><code>1. Usuario abre formulario en Odoo
+   ↓
+2. Widget JS llama a qr.access.token.get_or_create_token()
+   ↓
+3. Se genera URL: https://dominio/qr_upload/mi.modelo/123?token=UUID
+   ↓
+4. Se muestra el QR en el formulario
+   ↓
+5. Usuario escanea QR con el móvil
+   ↓
+6. Se abre la página de upload (auth='public')
+   ↓
+7. Controlador valida el token contra qr.access.token
+   ↓
+8. El archivo se sube y se vincula al registro
+   ↓
+9. Se añade automáticamente a campos Many2many de ir.attachment</code></pre>
+
+    <hr class="separator" />
+
+    <h2>🔐 Seguridad</h2>
+
+    <table>
+        <tr>
+            <th>Escenario</th>
+            <th>Acceso</th>
+        </tr>
+        <tr>
+            <td>Usuario interno de Odoo autenticado</td>
+            <td>✅ Acceso directo, no necesita token</td>
+        </tr>
+        <tr>
+            <td>Usuario público con token válido</td>
+            <td>✅ Acceso permitido (subir, ver, borrar attachments)</td>
+        </tr>
+        <tr>
+            <td>Usuario público sin token</td>
+            <td>❌ Acceso denegado</td>
+        </tr>
+        <tr>
+            <td>Token inválido o de otro registro</td>
+            <td>❌ Acceso denegado</td>
+        </tr>
+    </table>
+
+    <div class="note">
+        <strong>⚠️ Seguridad:</strong> Cada par (modelo, registro) tiene un token único. Los tokens se generan
+        como UUID v4 y se almacenan en la tabla <code>qr_access_token</code>. Los archivos subidos por QR
+        se marcan como <code>public=True</code> en <code>ir.attachment</code>.
+    </div>
+
+    <hr class="separator" />
+
+    <h2>🔧 Configuración Avanzada</h2>
+
+    <h3>Parámetro del Sistema</h3>
+    <table>
+        <tr>
+            <th>Clave</th>
+            <th>Valor</th>
+            <th>Descripción</th>
+        </tr>
+        <tr>
+            <td><code>widget_qr_attachments.qr_external_base_url</code></td>
+            <td><code>https://tu-dominio.com</code></td>
+            <td>URL base pública para generar el enlace del QR. <strong>Obligatorio</strong>.</td>
+        </tr>
+    </table>
+
+    <h3>Campos soportados</h3>
+    <p>El widget <code>qr_attachments</code> se puede usar sobre campos de tipo:</p>
+    <ul>
+        <li><code>Char</code> — Lo más común, se usa sobre el campo <code>name</code></li>
+        <li><code>Text</code></li>
+        <li><code>Integer</code></li>
+    </ul>
+    <p>El campo solo se usa como "soporte" para renderizar el widget. El QR se genera a partir del
+        <code>resModel</code> y <code>resId</code> del registro, no del valor del campo.
+    </p>
+
+    <hr class="separator" />
+
+    <h2>❓ FAQ</h2>
+
+    <h3>¿Necesito añadir campos al modelo?</h3>
+    <p><strong>No.</strong> El modelo no necesita ningún campo extra. El módulo gestiona los tokens internamente
+        en su propia tabla (<code>qr.access.token</code>).</p>
+
+    <h3>¿Los archivos subidos por QR aparecen en el chatter?</h3>
+    <p>Los archivos se vinculan como <code>ir.attachment</code> al registro (<code>res_model</code> /
+        <code>res_id</code>).
+        Además, si el modelo tiene campos <code>Many2many('ir.attachment')</code>, se añaden automáticamente.
+    </p>
+
+    <h3>¿Funciona sin conexión a internet?</h3>
+    <p>No. El dispositivo móvil necesita acceso a la URL pública configurada para poder subir archivos.</p>
+
+    <h3>¿Puedo personalizar la interfaz de subida?</h3>
+    <p>Sí. Puedes heredar el template <code>widget_qr_attachments.upload_mobile_template</code> o
+        modificar los estilos en <code>static/src/frontend/scss/upload_ui.scss</code>.</p>
+    <hr class="separator" />
+
+    <h2>🔄 Regenerar Tokens</h2>
+
+    <p>Puedes invalidar el QR actual y generar uno nuevo llamando a <code>regenerate_token()</code>.
+        Esto es útil por seguridad cuando cambias de estado o quieres revocar el acceso al QR anterior.</p>
+
+    <h3>Método disponible</h3>
+    <table>
+        <tr>
+            <th>Método</th>
+            <th>Parámetros</th>
+            <th>Retorna</th>
+        </tr>
+        <tr>
+            <td><code>regenerate_token(model_name, res_id)</code></td>
+            <td><code>model_name</code> (str), <code>res_id</code> (int)</td>
+            <td>Nuevo token (str)</td>
+        </tr>
+    </table>
+
+    <h3>Ejemplo: Regenerar al cambiar de estado</h3>
+    <pre><code># mi_modulo/models/mi_modelo.py
+from odoo import models, api
+
+class MiModelo(models.Model):
+    _inherit = 'sat.repair.rma'  # o tu modelo
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'state' in vals:
+            for record in self:
+                # Invalida el QR anterior y genera uno nuevo
+                self.env['qr.access.token'].regenerate_token(
+                    self._name, record.id
+                )
+        return res</code></pre>
+
+    <h3>Ejemplo: Regenerar desde un botón</h3>
+    <pre><code># mi_modulo/models/mi_modelo.py
+class MiModelo(models.Model):
+    _inherit = 'sat.repair'
+
+    def action_regenerate_qr(self):
+        """Botón en la vista para regenerar el QR manualmente."""
+        for record in self:
+            self.env['qr.access.token'].regenerate_token(
+                self._name, record.id
+            )
+        return True</code></pre>
+
+    <pre><code>&lt;!-- mi_modulo/views/mi_modelo_views.xml --&gt;
+&lt;button name="action_regenerate_qr"
+        string="🔄 Regenerar QR"
+        type="object"
+        class="btn-secondary"/&gt;</code></pre>
+
+    <div class="note">
+        <strong>⚠️ Importante:</strong> Al regenerar el token, cualquier QR impreso o compartido
+        anteriormente dejará de funcionar. El widget del formulario mostrará automáticamente
+        el nuevo QR la próxima vez que se abra el registro.
+    </div>
+
+</body>
+
+</html>

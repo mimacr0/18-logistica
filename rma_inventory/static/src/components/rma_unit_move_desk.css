@@ -1,0 +1,139 @@
+/**
+ * Mesa «Mover stock»: cabecera y botones primary/outline en azul (escala blue de Tailwind v3).
+ */
+.o_rma_unit_move_desk {
+    --tw-blue-500: #3b82f6;
+    --tw-blue-600: #2563eb;
+    --tw-blue-700: #1d4ed8;
+    --tw-blue-800: #1e40af;
+}
+
+.o_rma_unit_move_desk .o_rma_unit_move_desk_header {
+    background-color: var(--tw-blue-600) !important;
+    border-bottom-color: var(--tw-blue-700) !important;
+}
+
+.o_rma_unit_move_desk .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tw-blue-600);
+    --bs-btn-border-color: var(--tw-blue-700);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tw-blue-700);
+    --bs-btn-hover-border-color: var(--tw-blue-800);
+    --bs-btn-focus-shadow-rgb: 37, 99, 235;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tw-blue-800);
+    --bs-btn-active-border-color: var(--tw-blue-800);
+    background-color: var(--tw-blue-600);
+    border-color: var(--tw-blue-700);
+    color: #fff;
+}
+
+.o_rma_unit_move_desk .btn-primary:hover,
+.o_rma_unit_move_desk .btn-primary:focus-visible {
+    background-color: var(--tw-blue-700);
+    border-color: var(--tw-blue-800);
+    color: #fff;
+}
+
+.o_rma_unit_move_desk .btn-outline-primary {
+    --bs-btn-color: var(--tw-blue-700);
+    --bs-btn-border-color: var(--tw-blue-600);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tw-blue-600);
+    --bs-btn-hover-border-color: var(--tw-blue-700);
+    color: var(--tw-blue-700);
+    border-color: var(--tw-blue-600);
+}
+
+.o_rma_unit_move_desk .btn-outline-primary:hover,
+.o_rma_unit_move_desk .btn-outline-primary:focus-visible {
+    background-color: var(--tw-blue-600);
+    border-color: var(--tw-blue-700);
+    color: #fff;
+}
+
+/* Confirmar: mismo azul que el resto de acciones principales */
+.o_rma_unit_move_desk .btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tw-blue-600);
+    --bs-btn-border-color: var(--tw-blue-700);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tw-blue-700);
+    --bs-btn-hover-border-color: var(--tw-blue-800);
+    background-color: var(--tw-blue-600);
+    border-color: var(--tw-blue-700);
+    color: #fff;
+}
+
+.o_rma_unit_move_desk .btn-success:hover,
+.o_rma_unit_move_desk .btn-success:focus-visible {
+    background-color: var(--tw-blue-700);
+    border-color: var(--tw-blue-800);
+    color: #fff;
+}
+
+.o_rma_unit_move_desk .card-title.text-primary,
+.o_rma_unit_move_desk .text-primary {
+    color: var(--tw-blue-600) !important;
+}
+
+.o_rma_unit_move_desk .border-primary {
+    border-color: rgba(37, 99, 235, 0.35) !important;
+}
+
+/* Hover para resultados de búsqueda */
+.o_rma_unit_move_desk .list-group-item {
+    transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.o_rma_unit_move_desk .list-group-item:hover {
+    background-color: rgba(37, 99, 235, 0.06);
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+}
+
+/* Hover más claro para el botón Añadir */
+.o_rma_unit_move_desk .list-group-item .btn.btn-primary.btn-sm {
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.o_rma_unit_move_desk .list-group-item .btn.btn-primary.btn-sm:hover:not(:disabled),
+.o_rma_unit_move_desk .list-group-item .btn.btn-primary.btn-sm:focus-visible:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
+}
+
+/* PDA / tablets: menos latencia táctil y objetivos ~44px (recomendación accesibilidad móvil) */
+.o_rma_unit_move_desk.touch-manipulation {
+    touch-action: manipulation;
+}
+
+@media (max-width: 992px) {
+    .o_rma_unit_move_desk .o_rma_unit_move_desk_search_group .o_rma_unit_move_desk_search_input {
+        min-height: 3rem;
+        font-size: 1.0625rem;
+    }
+
+    .o_rma_unit_move_desk .o_rma_unit_move_desk_search_group .o_rma_unit_move_desk_search_btn {
+        min-height: 3rem;
+        min-width: 5.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .o_rma_unit_move_desk .btn:not(.nav-link) {
+        min-height: 2.75rem;
+    }
+
+    .o_rma_unit_move_desk .list-group-item .btn.btn-primary.btn-sm {
+        min-height: 2.75rem;
+        min-width: 5rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9375rem;
+    }
+
+    .o_rma_unit_move_desk .o_rma_move_desk_loc_grid .btn {
+        min-height: 3rem;
+    }
+}

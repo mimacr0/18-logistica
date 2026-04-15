@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Ticket type -->
+    <record id="view_sat_repair_ticket_type_tree" model="ir.ui.view">
+        <field name="name">rma.repair.ticket.type.list</field>
+        <field name="model">rma.repair.ticket.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="sequence_prefix"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sat_repair_ticket_type_form" model="ir.ui.view">
+        <field name="name">rma.repair.ticket.type.form</field>
+        <field name="model">rma.repair.ticket.type</field>
+        <field name="arch" type="xml">
+            <form string="Repair ticket type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="color"/>
+                            <field name="sequence_prefix"/>
+                            <field name="sequence_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Description..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sat_repair_ticket_type" model="ir.actions.act_window">
+        <field name="name">Repair ticket types</field>
+        <field name="res_model">rma.repair.ticket.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Ticket category -->
+    <record id="view_sat_repair_ticket_category_tree" model="ir.ui.view">
+        <field name="name">rma.repair.ticket.category.list</field>
+        <field name="model">rma.repair.ticket.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="complete_name"/>
+                <field name="name" column_invisible="1"/>
+                <field name="parent_id"/>
+                <field name="type_category" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sat_repair_ticket_category_form" model="ir.ui.view">
+        <field name="name">rma.repair.ticket.category.form</field>
+        <field name="model">rma.repair.ticket.category</field>
+        <field name="arch" type="xml">
+            <form string="Repair ticket category">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Category name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Hardware"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="parent_id"/>
+                            <field name="type_category"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="sequence"/>
+                            <field name="color"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Description..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sat_repair_ticket_category" model="ir.actions.act_window">
+        <field name="name">Repair ticket categories</field>
+        <field name="res_model">rma.repair.ticket.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Ticket tag -->
+    <record id="view_sat_repair_ticket_tag_tree" model="ir.ui.view">
+        <field name="name">rma.repair.ticket.tag.list</field>
+        <field name="model">rma.repair.ticket.tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sat_repair_ticket_tag_form" model="ir.ui.view">
+        <field name="name">rma.repair.ticket.tag.form</field>
+        <field name="model">rma.repair.ticket.tag</field>
+        <field name="arch" type="xml">
+            <form string="Repair ticket tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="color" widget="color_picker"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sat_repair_ticket_tag" model="ir.actions.act_window">
+        <field name="name">Repair ticket tags</field>
+        <field name="res_model">rma.repair.ticket.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

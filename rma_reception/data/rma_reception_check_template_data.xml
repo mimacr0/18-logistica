@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rma_reception_check_inc_01" model="rma.reception.check.template">
+            <field name="name">Quantity mismatch: fewer or extra units vs order (picking, transport, or paperwork)</field>
+            <field name="sequence">10</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_02" model="rma.reception.check.template">
+            <field name="name">Documentation: incorrect delivery notes or invoices; missing docs; order vs DN vs goods</field>
+            <field name="sequence">20</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_03" model="rma.reception.check.template">
+            <field name="name">Damaged goods or packaging (impact, moisture, poor packing; transit or handling)</field>
+            <field name="sequence">30</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_04" model="rma.reception.check.template">
+            <field name="name">Wrong product or variant (size, color, model, lot, etc.)</field>
+            <field name="sequence">40</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_05" model="rma.reception.check.template">
+            <field name="name">Late delivery vs agreed schedule (production or sales impact)</field>
+            <field name="sequence">50</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_06" model="rma.reception.check.template">
+            <field name="name">Identification: illegible or missing labels; wrong or non-matching barcodes</field>
+            <field name="sequence">60</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_07" model="rma.reception.check.template">
+            <field name="name">Quality: expired or near-expiry; manufacturing defects; below agreed standards</field>
+            <field name="sequence">70</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_08" model="rma.reception.check.template">
+            <field name="name">Transport conditions inadequate for sensitive goods (temperature, hygiene)</field>
+            <field name="sequence">80</field>
+            <field name="type">all</field>
+        </record>
+        <record id="rma_reception_check_inc_09" model="rma.reception.check.template">
+            <field name="name">Missing traceability: lot, manufacturing date, or supplier (tracking / recalls)</field>
+            <field name="sequence">90</field>
+            <field name="type">all</field>
+        </record>
+    </data>
+</odoo>

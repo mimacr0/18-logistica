@@ -1,0 +1,223 @@
+/**
+ * Mesa desempaquetado: tema salmón (tonos tipo coral/salmón oscuro para cabecera, salmón medio para acciones).
+ */
+.o_rma_unpack_desk {
+    --salmon-50: #fff7f4;
+    --salmon-100: #ffe8e0;
+    --salmon-200: #ffd0c2;
+    --salmon-400: #f09078;
+    --salmon-500: #e6785c;
+    --salmon-600: #d86548;
+    --salmon-700: #c4553e;
+    --salmon-800: #a84834;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_desk_header {
+    background-color: var(--salmon-700) !important;
+    border-bottom-color: var(--salmon-800) !important;
+}
+
+/* Banner informativo: fondo suave salmón en lugar del azul de alert-info */
+.o_rma_unpack_desk .o_rma_desk_unpack_banner.alert-info {
+    background-color: var(--salmon-50) !important;
+    color: var(--salmon-800) !important;
+    border-bottom-color: var(--salmon-200) !important;
+}
+
+.o_rma_unpack_desk .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--salmon-600);
+    --bs-btn-border-color: var(--salmon-700);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--salmon-700);
+    --bs-btn-hover-border-color: var(--salmon-800);
+    --bs-btn-focus-shadow-rgb: 216, 101, 72;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--salmon-800);
+    --bs-btn-active-border-color: var(--salmon-800);
+    background-color: var(--salmon-600);
+    border-color: var(--salmon-700);
+    color: #fff;
+}
+
+.o_rma_unpack_desk .btn-primary:hover,
+.o_rma_unpack_desk .btn-primary:focus-visible {
+    background-color: var(--salmon-700);
+    border-color: var(--salmon-800);
+    color: #fff;
+}
+
+.o_rma_unpack_desk .btn-outline-primary {
+    --bs-btn-color: var(--salmon-700);
+    --bs-btn-border-color: var(--salmon-500);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--salmon-600);
+    --bs-btn-hover-border-color: var(--salmon-700);
+    color: var(--salmon-700);
+    border-color: var(--salmon-500);
+}
+
+.o_rma_unpack_desk .btn-outline-primary:hover,
+.o_rma_unpack_desk .btn-outline-primary:focus-visible {
+    background-color: var(--salmon-600);
+    border-color: var(--salmon-700);
+    color: #fff;
+}
+
+.o_rma_unpack_desk .card-title.text-primary,
+.o_rma_unpack_desk .text-primary {
+    color: var(--salmon-700) !important;
+}
+
+.o_rma_unpack_desk .border-primary {
+    border-color: rgba(196, 85, 62, 0.35) !important;
+}
+
+/* Enlace secundario al pie del panel */
+.o_rma_unpack_desk .btn-link {
+    color: var(--salmon-700);
+}
+
+.o_rma_unpack_desk .btn-link:hover,
+.o_rma_unpack_desk .btn-link:focus-visible {
+    color: var(--salmon-800);
+}
+
+.o_rma_unpack_desk .o_rma_unpack_desk_detail {
+    border-color: var(--salmon-200) !important;
+    background-color: var(--salmon-50);
+}
+
+/* Checklist desempaquetado: rejilla tipo kanban (sin componente card) */
+.o_rma_unpack_desk .o_rma_unpack_check_kanban {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
+    grid-auto-rows: 10 rem;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-radius: 0.7rem;
+    transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile:hover {
+    transform: translateY(-1px);
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile:focus-visible {
+    outline: 2px solid var(--salmon-500);
+    outline-offset: 2px;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile__accent {
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 4px;
+    border-radius: 4px;
+    background: rgba(196, 85, 62, 0.2);
+    transition: background 0.15s ease, width 0.15s ease;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    height: 100%;
+    min-height: 0;
+    padding: 0.85rem 0.75rem 0.85rem 0.95rem;
+    margin-left: 2px;
+    background: #fff;
+    border: 1px solid rgba(43, 36, 33, 0.1);
+    border-radius: 0.65rem;
+    box-shadow: 0 1px 3px rgba(43, 36, 33, 0.06);
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile:hover .o_rma_unpack_check_tile__body {
+    border-color: rgba(196, 85, 62, 0.35);
+    box-shadow: 0 3px 10px rgba(196, 85, 62, 0.1);
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-size: 0.6rem;
+    color: #fff;
+    background: var(--salmon-200);
+    opacity: 0.25;
+    transition: opacity 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile__text {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    font-weight: 600;
+    color: rgba(43, 36, 33, 0.88);
+    word-break: break-word;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile--selected .o_rma_unpack_check_tile__accent {
+    width: 5px;
+    background: var(--salmon-600);
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile--selected .o_rma_unpack_check_tile__body {
+    background: linear-gradient(135deg, var(--salmon-50) 0%, #fff 55%);
+    border: 2px solid var(--salmon-600);
+    box-shadow: 0 4px 14px rgba(196, 85, 62, 0.18);
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile--selected .o_rma_unpack_check_tile__mark {
+    opacity: 1;
+    background: var(--salmon-600);
+    transform: scale(1.05);
+}
+
+.o_rma_unpack_desk .o_rma_unpack_check_tile--selected .o_rma_unpack_check_tile__text {
+    color: var(--salmon-800);
+}
+
+.o_rma_unpack_desk.touch-manipulation {
+    touch-action: manipulation;
+}
+
+@media (max-width: 992px) {
+    .o_rma_unpack_desk .o_rma_desk_unpack_search_group .o_rma_desk_unpack_search_input {
+        min-height: 3rem;
+        font-size: 1.0625rem;
+    }
+
+    .o_rma_unpack_desk .o_rma_desk_unpack_search_group .btn {
+        min-height: 3rem;
+        min-width: 5.5rem;
+    }
+
+    .o_rma_unpack_desk .btn:not(.nav-link) {
+        min-height: 2.75rem;
+    }
+}

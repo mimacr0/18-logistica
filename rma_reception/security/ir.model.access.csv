@@ -3,3 +3,10 @@ access_stock_quant_package_user_reception,stock.quant.package setup,stock.model_
 access_stock_quant_package_manager_reception,stock.quant.package del,stock.model_stock_quant_package,rma_inventory.group_rma_manager,1,1,1,1
 access_rma_package_line_user,rma.package.line.user,model_rma_package_line,rma_inventory.group_rma_user,1,1,1,1
 access_rma_package_line_manager,rma.package.line.manager,model_rma_package_line,rma_inventory.group_rma_manager,1,1,1,1
+access_rma_reception_check_template_user,rma.reception.check.template user,model_rma_reception_check_template,rma_inventory.group_rma_user,1,0,0,0
+access_rma_reception_check_template_manager,rma.reception.check.template manager,model_rma_reception_check_template,rma_inventory.group_rma_manager,1,1,1,1
+access_rma_package_unpack_check_line_user,rma.reception.check.line user,model_rma_reception_check_line,rma_inventory.group_rma_user,1,1,1,1
+access_rma_package_unpack_check_line_manager,rma.reception.check.line manager,model_rma_reception_check_line,rma_inventory.group_rma_manager,1,1,1,1
+access_rma_reception_package_wizard_user,rma.reception.package.wizard user,model_rma_reception_package_wizard,rma_inventory.group_rma_user,1,1,1,1
+access_rma_reception_desk_store_wizard_user,rma.reception.desk.store.wizard user,model_rma_reception_desk_store_wizard,rma_inventory.group_rma_user,1,1,1,1
+access_rma_reception_desk_store_wizard_line_user,rma.reception.desk.store.wizard.line user,model_rma_reception_desk_store_wizard_line,rma_inventory.group_rma_user,1,1,1,1

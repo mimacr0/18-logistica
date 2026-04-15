@@ -1,28 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- RMA Unit Tree View -->
     <record id="view_rma_unit_tree" model="ir.ui.view">
         <field name="name">rma.unit.tree</field>
         <field name="model">rma.unit</field>
         <field name="arch" type="xml">
             <list string="RMA Units">
+                <header>
+                    <button name="action_open_move_desk_wizard_multi" type="object" string="Mover (mesa)…" class="btn-secondary"/>
+                    <button name="action_rma_open_store_wizard" type="object" string="Store…" class="btn-secondary"/>
+                </header>
                 <field name="name"/>
-                <field name="product_id"/>
+                <field name="account_product_map_id"/>
                 <field name="owner_id"/>
                 <field name="location_id"/>
-                <field name="serial"/>
-                <field name="imei"/>
-                <field name="condition"/>
-                <field name="state" widget="badge" 
-                       decoration-info="state == 'received'" 
-                       decoration-warning="state in ('inspection', 'repair')" 
-                       decoration-success="state in ('refurbish', 'stored', 'ready_to_ship')" 
-                       decoration-danger="state == 'scrap'"/>
+                <field name="account_sku" optional="show"/>
+                <field name="account_ean13" optional="hide"/>
+                <field name="account_fnsku" optional="hide"/>
+                <field name="account_asin" optional="hide"/>
+                <field name="marketplace" optional="hide"/>
+                <field name="serial" optional="show"/>
+                <field name="imei" optional="show"/>
+                <field name="condition" string="Physical condition" optional="show"/>
+                <field name="state" string="Operational state" widget="badge"
+                       decoration-info="state == 'received'"
+                       decoration-warning="state in ('review', 'repair')"
+                       decoration-success="state in ('stored', 'shipped')"/>
+                <button name="action_view_rma_moves" string="Movimientos" type="object" class="btn-link" icon="fa-history"/>
             </list>
         </field>
     </record>
 
-    <!-- RMA Unit Move Tree View -->
+    <record id="view_rma_unit_search" model="ir.ui.view">
+        <field name="name">rma.unit.search</field>
+        <field name="model">rma.unit</field>
+        <field name="arch" type="xml">
+            <search string="RMA Units">
+                <field name="name"/>
+                <field name="account_product_map_id"/>
+                <field name="owner_id"/>
+                <field name="location_id"/>
+                <field name="state"/>
+                <field name="marketplace"/>
+                <separator/>
+                <filter name="filter_state_received" string="Received" domain="[('state', '=', 'received')]"/>
+                <filter name="filter_state_review" string="In review" domain="[('state', '=', 'review')]"/>
+                <filter name="filter_state_repair" string="In repair" domain="[('state', '=', 'repair')]"/>
+                <filter name="filter_state_stored" string="Stored" domain="[('state', '=', 'stored')]"/>
+                <filter name="filter_state_shipped" string="Shipped" domain="[('state', '=', 'shipped')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_owner" string="Propietario" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_by_location" string="Ubicación" context="{'group_by': 'location_id'}"/>
+                    <filter name="group_by_marketplace" string="Marketplace" context="{'group_by': 'marketplace'}"/>
+                </group>
+                <searchpanel>
+                    <field name="owner_id" string="Propietario"/>
+                    <field name="state" string="Estado"/>
+                    <field name="account_product_map_id" string="Producto"/>
+                    <field name="marketplace" string="Marketplace"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
     <record id="view_rma_unit_move_tree" model="ir.ui.view">
         <field name="name">rma.unit.move.tree</field>
         <field name="model">rma.unit.move</field>
@@ -30,6 +69,8 @@
             <list string="Unit Moves">
                 <field name="date"/>
                 <field name="rma_unit_id"/>
+                <field name="from_state" optional="show"/>
+                <field name="to_state" optional="show"/>
                 <field name="from_location_id"/>
                 <field name="to_location_id"/>
                 <field name="user_id"/>
@@ -38,7 +79,31 @@
         </field>
     </record>
 
-    <!-- RMA Unit Move Action -->
+    <record id="view_rma_unit_move_form" model="ir.ui.view">
+        <field name="name">rma.unit.move.form</field>
+        <field name="model">rma.unit.move</field>
+        <field name="arch" type="xml">
+            <form string="RMA Unit Move">
+                <sheet>
+                    <group>
+                        <field name="rma_unit_id"/>
+                        <field name="date"/>
+                        <field name="user_id"/>
+                        <field name="reason"/>
+                    </group>
+                    <group string="State">
+                        <field name="from_state"/>
+                        <field name="to_state"/>
+                    </group>
+                    <group string="Locations">
+                        <field name="from_location_id"/>
+                        <field name="to_location_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="action_rma_unit_move" model="ir.actions.act_window">
         <field name="name">Unit Moves</field>
         <field name="res_model">rma.unit.move</field>
@@ -47,19 +112,26 @@
         <field name="context">{'default_rma_unit_id': active_id}</field>
     </record>
 
-    <!-- RMA Unit Form View -->
     <record id="view_rma_unit_form" model="ir.ui.view">
         <field name="name">rma.unit.form</field>
         <field name="model">rma.unit</field>
         <field name="arch" type="xml">
             <form string="RMA Unit">
                 <header>
-                    <field name="state" widget="statusbar" statusbar_visible="received,inspection,stored,ready_to_ship,shipped"/>
+                    <button name="action_print_name" type="object" string="Print name" class="btn-secondary"
+                            invisible="not id"/>
+                    <!-- <button name="action_rma_to_reception" type="object" string="To reception" class="btn-secondary"/> -->
+                    <button name="action_rma_to_review" type="object" string="To review" class="btn-secondary"/>
+                    <button name="action_rma_to_repair" type="object" string="To repair" class="btn-secondary"/>
+                    <button name="action_rma_open_store_wizard" type="object" string="Store…" class="btn-primary"/>
+                    <button name="action_rma_to_shipped" type="object" string="Shipped" class="btn-secondary"/>
+                    <field name="state" widget="statusbar" string="Operational state"
+                           statusbar_visible="received,review,repair,stored,shipped"/>
                 </header>
                 <sheet>
                     <field name="active" invisible="1"/>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
-                    
+
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" type="action"
                                 name="%(rma_inventory.action_rma_unit_move)d"
@@ -70,25 +142,31 @@
 
                     <div class="oe_title">
                         <h1>
-                            <!-- Muestra el texto normal cuando ya tiene ID -->
                             <field class="text-break" name="name" invisible="not id"/>
-                            <!-- Muestra el texto "más clarito" cuando estamos creando un nuevo registro -->
                             <span class="text-muted" invisible="id">RMA...</span>
                         </h1>
                     </div>
-                    
+
                     <group>
                         <group name="info" string="General Information">
-                            <field name="product_id"/>
+                            <field name="account_product_map_id" options="{'no_create': True}"/>
                             <field name="owner_id"/>
-                            <!-- <field name="client_product_map_id" domain="[('partner_id', '=', owner_id)]"/> -->
-                            <field name="package_id"/>
+                            <field name="package_id" widget="link_to_record" readonly="1"/>
                         </group>
-                        <group name="tracking" string="Tracking">
+                        <group name="map_identifiers" string="Mapping identifiers (catalog)">
+                            <field name="account_sku" readonly="1"/>
+                            <field name="account_ean13" readonly="1"/>
+                            <field name="account_fnsku" readonly="1"/>
+                            <field name="account_asin" readonly="1"/>
+                        </group>
+                        <group name="unit_identifiers" string="This unit (physical)">
+                            <field name="marketplace"/>
                             <field name="serial"/>
                             <field name="imei"/>
-                            <field name="location_id"/>
-                            <field name="condition"/>
+                            <field name="location_id" options="{'no_create': True}"/>
+                        </group>
+                        <group name="physical_condition" string="Physical condition (internal)">
+                            <field name="condition" colspan="2"/>
                         </group>
                     </group>
                     <notebook>
@@ -99,7 +177,7 @@
                                 <field name="shipped_date"/>
                             </group>
                         </page>
-                        <page string="Notes">
+                        <page string="Notes" name="notes">
                             <field name="notes" placeholder="Add internal notes..."/>
                         </page>
                         <page string="Harvesting Log" invisible="not harvest_notes">
@@ -112,26 +190,18 @@
         </field>
     </record>
 
-    <!-- RMA Unit Action -->
     <record id="action_rma_unit" model="ir.actions.act_window">
         <field name="name">RMA Units</field>
         <field name="res_model">rma.unit</field>
         <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="rma_inventory.view_rma_unit_search"/>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
             Create a new RMA Unit
           </p><p>
-            RMA Units are tracked individually. Log the IMEI, serial, and condition for each unit.
+            RMA Units are tracked individually. Use the header buttons to change state and location; each change is logged as a move.
           </p>
         </field>
     </record>
-
-
-    <!-- Main Menus -->
-    <menuitem id="menu_rma_root" name="RMA Inventory" web_icon="rma_inventory,static/description/icon.png" sequence="30"/>
-    
-    <menuitem id="menu_rma_operations" name="Operations" parent="menu_rma_root" sequence="10"/>
-
-    <menuitem id="menu_rma_unit" name="RMA Units" parent="menu_rma_operations" action="action_rma_unit" sequence="10"/>
 
 </odoo>

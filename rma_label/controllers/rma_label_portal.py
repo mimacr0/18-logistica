@@ -115,7 +115,8 @@ class RmaLabelPortal(CustomerPortal):
         package_vals = {
             'owner_id': commercial_partner.id,
             'type': 'return',
-            'rma_state': 'draft',
+            'package_state': 'draft',
+            'package_has_incident': False,
             'package_type_id': int(post.get('package_type_id')) if post.get('package_type_id') else False,
             'sender_id': int(post.get('sender_id')) if post.get('sender_id') else False,
             'carrier_id': int(post.get('carrier_id')) if post.get('carrier_id') else False,

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_rma_unit_store_wizard_form" model="ir.ui.view">
+        <field name="name">rma.unit.store.wizard.form</field>
+        <field name="model">rma.unit.store.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Store RMA units">
+                <group>
+                    <field name="rma_unit_ids" widget="many2many_tags" readonly="1" force_save="1"/>
+                    <field name="location_id" options="{'no_create': True}"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_rma_unit_store_wizard" model="ir.actions.act_window">
+        <field name="name">Store RMA units</field>
+        <field name="res_model">rma.unit.store.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="rma_inventory.model_rma_unit"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_rma_add_product_map_wizard_form" model="ir.ui.view">
+        <field name="name">rma.add.product.map.wizard.form</field>
+        <field name="model">rma.add.product.map.wizard</field>
+        <field name="arch" type="xml">
+            <form string="New product map">
+                <div class="alert alert-warning mb-3" role="alert" invisible="not warning_message">
+                    <field name="warning_message" nolabel="1" readonly="1"/>
+                </div>
+                <group>
+                    <field name="account_id" options="{'no_create': True}"/>
+                    <field name="selection_type" widget="selection_badge"/>
+                    <field name="product_id" options="{'no_create': True}" domain="[('type', '!=', 'service'), ('is_spare_parts', '=', selection_type == 'spare_parts')]"/>
+                </group>
+                <footer>
+                    <button name="action_open_product_map" type="object" string="Continue" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rma_add_product_map_wizard" model="ir.actions.act_window">
+        <field name="name">New product map</field>
+        <field name="res_model">rma.add.product.map.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_rma_add_product_map_wizard_form"/>
+    </record>
+</odoo>

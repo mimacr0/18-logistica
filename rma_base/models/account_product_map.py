@@ -10,44 +10,43 @@ from odoo.exceptions import ValidationError
 class AccountProductMap(models.Model):
     _name = 'account.product.map'
     _description = 'Account Product Mapping'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     _rec_name = 'name'
     name = fields.Char(string='Name', compute='_compute_name', store=True)
 
     # Relaciones principales
-    account_id = fields.Many2one('account.partner', string='Client Account', required=True, index=True, ondelete='cascade')
+    account_id = fields.Many2one(
+        'account.partner', string='Client Account', required=True, index=True, ondelete='cascade',
+        tracking=True,
+    )
     partner_id = fields.Many2one('res.partner', string='Partner', related='account_id.partner_id', store=True, index=True)
-    product_id = fields.Many2one('product.product', string='Internal Product', required=True, index=True)
+    product_id = fields.Many2one(
+        'product.product', string='Internal Product', required=True, index=True,
+        tracking=True,
+    )
+    product_categ_id = fields.Many2one(
+        'product.category',
+        string='Product Category',
+        related='product_id.categ_id',
+        store=True,
+        readonly=True,
+    )
     product_price = fields.Float(string='Internal Price', related='product_id.lst_price', readonly=True)
 
     # Identificadores cliente
 
-    account_sku = fields.Char(string='Account SKU', index=True)
+    account_sku = fields.Char(string='Account SKU', index=True, tracking=True)
     account_ean13 = fields.Char(string='EAN13', index=True)
     account_fnsku = fields.Char(string='FNSKU', index=True)
     account_asin = fields.Char(string='ASIN', index=True)
-
-    # Marketplace
-    marketplace = fields.Selection([
-        ('amazon', 'Amazon'),
-        ('cdiscount', 'Cdiscount'),
-        ('ebay', 'eBay'),
-        ('temu', 'Temu'),
-        ('aliexpress', 'AliExpress'),
-        ('pccomponentes', 'PcComponentes'),
-        ('carrefour', 'Carrefour'),
-        ('worten', 'Worten'),
-        ('web', 'Webstore'),
-        ('other', 'Other')
-    ], index=True)
 
     # Tracking logic
     tracking = fields.Selection([
         ('none', 'No Tracking'),
         ('lot', 'Batch'),
         ('serial', 'Serial / IMEI')
-    ], default='none')
-
+    ], default='none', tracking=True)
 
     is_spare_parts = fields.Boolean(related="product_id.product_tmpl_id.is_spare_parts", store=True)
     
@@ -80,6 +79,31 @@ class AccountProductMap(models.Model):
 
     template_name = fields.Char(string='Custom Name')
     attributes = fields.Char(string='Attributes', compute='_compute_attributes', store=True)
+
+    duplicate_product_mapping = fields.Boolean(
+        string='Other mapping same product',
+        compute='_compute_duplicate_product_mapping',
+        help='There is another active mapping for this client account with the same internal product (different Account SKU).',
+    )
+    duplicate_product_mapping_count = fields.Integer(
+        compute='_compute_duplicate_product_mapping',
+    )
+
+    @api.depends('account_id', 'product_id', 'active')
+    def _compute_duplicate_product_mapping(self):
+        for record in self:
+            if not record.account_id or not record.product_id:
+                record.duplicate_product_mapping = False
+                record.duplicate_product_mapping_count = 0
+                continue
+            others = record.search([
+                ('id', '!=', record.id),
+                ('account_id', '=', record.account_id.id),
+                ('product_id', '=', record.product_id.id),
+                ('active', '=', True),
+            ])
+            record.duplicate_product_mapping_count = len(others)
+            record.duplicate_product_mapping = bool(others)
 
     @api.depends('product_id.product_template_attribute_value_ids')
     def _compute_attributes(self):
@@ -135,6 +159,34 @@ class AccountProductMap(models.Model):
             if record.account_ean13 and len(record.account_ean13) != 13:
                 raise ValidationError(_("The EAN13 must have exactly 13 characters."))
 
+    def _check_unique_identifier_per_account(self, field_name, label):
+        for record in self:
+            value = (record[field_name] or '').strip()
+            if not value:
+                continue
+            dup = self.search([
+                ('id', '!=', record.id),
+                ('account_id', '=', record.account_id.id),
+                (field_name, '=', value),
+            ], limit=1)
+            if dup:
+                raise ValidationError(
+                    _("%(label)s %(value)s is already used in another mapping for this account (see: %(name)s).")
+                    % {'label': label, 'value': value, 'name': dup.display_name}
+                )
+
+    @api.constrains('account_id', 'account_ean13')
+    def _check_unique_ean13_per_account(self):
+        self._check_unique_identifier_per_account('account_ean13', _('EAN13'))
+
+    @api.constrains('account_id', 'account_asin')
+    def _check_unique_asin_per_account(self):
+        self._check_unique_identifier_per_account('account_asin', _('ASIN'))
+
+    @api.constrains('account_id', 'account_fnsku')
+    def _check_unique_fnsku_per_account(self):
+        self._check_unique_identifier_per_account('account_fnsku', _('FNSKU'))
+
     @api.model
     def _find_or_create_mapping(self, account_id, sku, product_id=None, **kwargs):
         """
@@ -152,7 +204,7 @@ class AccountProductMap(models.Model):
                 'product_id': product_id,
                 'account_sku': sku,
             }
-            vals.update(kwargs) # Añade campos adicionales como account_ean13, marketplace, etc.
+            vals.update(kwargs)  # e.g. account_ean13, tracking, etc.
             mapping = self.create(vals)
             
         return mapping

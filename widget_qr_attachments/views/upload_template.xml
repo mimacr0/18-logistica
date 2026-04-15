@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="upload_mobile_template" name="QR Upload Mobile UI">
+        &lt;!DOCTYPE html&gt;
+        <html lang="es">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+                <title>Upload Attachments - <t t-esc="record_name"/></title>
+                
+                <script type="text/javascript">
+                    var odoo = {
+                        csrf_token: "<t t-esc="request.csrf_token()"/>",
+                        model: "<t t-esc="model"/>",
+                        res_id: <t t-esc="res_id"/>,
+                        token: "<t t-esc="token or ''"/>",
+                    };
+                </script>
+                
+                <t t-call-assets="widget_qr_attachments.assets_upload_ui" t-js="false"/>
+                <script type="text/javascript" src="/widget_qr_attachments/static/src/frontend/js/upload_ui.js"></script>
+
+                <!-- Theme toggle: detect system pref, then allow manual override -->
+                <script type="text/javascript">
+                    (function() {
+                        var saved = localStorage.getItem('qr_upload_theme');
+                        if (saved === 'dark' || (!saved &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                            document.documentElement.setAttribute('data-theme', 'dark');
+                        }
+                    })();
+
+                    function toggleTheme() {
+                        var html = document.documentElement;
+                        var isDark = html.getAttribute('data-theme') === 'dark';
+                        if (isDark) {
+                            html.removeAttribute('data-theme');
+                            localStorage.setItem('qr_upload_theme', 'light');
+                        } else {
+                            html.setAttribute('data-theme', 'dark');
+                            localStorage.setItem('qr_upload_theme', 'dark');
+                        }
+                    }
+                </script>
+            </head>
+            <body>
+                <div class="upload-header mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text-start">
+                            <h5 class="mb-1"><t t-esc="record_name"/></h5>
+                            <p class="small opacity-75 mb-0">Attachment Management</p>
+                        </div>
+                        <button class="btn-theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+                            <i class="fa fa-moon-o dark-icon"></i>
+                            <i class="fa fa-sun-o light-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="upload_app" class="px-3">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body text-center p-3">
+                            <p class="text-muted small mb-3">Take photos or select files to attach to this record.</p>
+                            
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label for="camera_input" id="lbl_camera" class="btn btn-primary w-100 py-3 d-flex flex-column align-items-center justify-content-center cursor-pointer">
+                                        <i class="fa fa-camera fa-lg mb-2"></i>
+                                        <span class="small fw-bold">Take Photo</span>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="file_input" id="lbl_upload" class="btn btn-outline-primary w-100 py-3 d-flex flex-column align-items-center justify-content-center cursor-pointer">
+                                        <i class="fa fa-upload fa-lg mb-2"></i>
+                                        <span class="small fw-bold">Upload Files</span>
+                                    </label>
+                                </div>
+                                <input type="file" id="file_input" class="d-none" multiple="true"/>
+                                <input type="file" id="camera_input" class="d-none" accept="image/*" capture="environment"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm">
+                        <div class="card-header py-2 border-0">
+                            <h6 class="mb-0 fw-bold small text-uppercase text-muted">Attached Files</h6>
+                        </div>
+                        <div id="attachment_list" class="list-group list-group-flush">
+                            <div class="text-center p-4 text-muted" id="no_attachments">
+                                <i class="fa fa-file-o fa-2x mb-2 d-block opacity-25"></i>
+                                <span class="d-block small">No attachments found</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success w-100 mt-3 py-3 fw-bold" onclick="window.close(); return false;">
+                        <i class="fa fa-check me-2"></i>Continue
+                    </button>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

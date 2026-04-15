@@ -1,0 +1,74 @@
+.o_rma_unit_label_canvas__canvas {
+    display: block;
+    width: 30mm;
+    height: 20mm;
+    /* Canvas interno en alta resolución; suavizado al mostrarlo a 30×20 mm */
+    image-rendering: auto;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff !important;
+    }
+
+    /* Cliente web: barra superior y área de acción (formulario detrás del modal) */
+    .o_navbar,
+    .o_action_manager {
+        display: none !important;
+    }
+
+    /* Sombra/modal de fondo si existe */
+    .modal-backdrop {
+        display: none !important;
+    }
+
+    /* ActionDialog: título del modal + pie con «Ok» / «Cerrar» */
+    .o_dialog .modal-header,
+    .o_dialog .modal-footer {
+        display: none !important;
+    }
+
+    /* Si hay varios diálogos en DOM, ocultar los inactivos */
+    .o_dialog.o_inactive_modal {
+        display: none !important;
+    }
+
+    .o_dialog .modal-content {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .o_dialog .modal-dialog {
+        margin: 0 !important;
+        max-width: none !important;
+        width: auto !important;
+    }
+
+    .o_dialog .modal-body {
+        padding: 0 !important;
+    }
+
+    /* Toolbar interna (Print / Close) y texto de ayuda */
+    .o_rma_unit_label_canvas__toolbar,
+    .o_rma_unit_label_canvas__body > p {
+        display: none !important;
+    }
+
+    .o_rma_unit_label_canvas__body {
+        padding: 0 !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+    }
+
+    .o_rma_unit_label_canvas__sheet {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    .o_rma_unit_label_canvas__canvas {
+        width: 30mm;
+        height: 20mm;
+    }
+}

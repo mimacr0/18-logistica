@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_location_form_inherit_rma_inventory" model="ir.ui.view">
+        <field name="name">stock.location.form.inherit.rma.inventory</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='scrap_location']" position="after">
+                <field name="barcode"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_stock_location_rma" model="ir.actions.act_window">
+        <field name="name">RMA Stock Locations</field>
+        <field name="res_model">stock.location</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+</odoo>

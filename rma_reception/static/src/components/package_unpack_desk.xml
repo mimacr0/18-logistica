@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Mesa desempaquetado: plantilla y clases propias (estilos vía .o_rma_unpack_desk / .o_rma_desk_unpack_*) -->
+    <t t-name="rma_reception.PackageUnpackDesk">
+        <div class="o_action o_rma_unpack_desk touch-manipulation h-100 d-flex flex-column bg-view overflow-auto">
+            <div class="o_rma_unpack_desk_header border-bottom">
+                <div class="navbar navbar-expand navbar-dark px-2">
+                    <div class="navbar-nav me-auto align-items-center flex-wrap">
+                        <button type="button" class="btn nav-link text-white me-3" t-on-click="exit" title="Volver">
+                            <i class="oi oi-chevron-left"/>
+                        </button>
+                        <span class="navbar-text text-white fw-bold" t-out="title"/>
+                    </div>
+                    <div class="navbar-nav">
+                        <button type="button" class="btn nav-link text-white" t-on-click="exit" title="Cerrar">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="o_rma_desk_unpack_banner row alert alert-info m-0 py-3 border-0 rounded-0 border-bottom mb-0">
+                <div class="d-flex align-items-center justify-content-center w-100 gap-3 flex-wrap">
+                    <i t-if="info.icon" t-attf-class="fa fa-3x fa-{{info.icon}}"/>
+                    <span class="fs-5 text-center" t-attf-class="{{info.class}}">
+                        <t t-out="info.message"/>
+                    </span>
+                </div>
+            </div>
+
+            <div class="o_rma_desk_unpack_search container-fluid py-3 border-bottom bg-light bg-opacity-50">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="input-group input-group-lg o_rma_desk_unpack_search_group">
+                            <input type="text" class="form-control o_rma_desk_unpack_search_input" t-ref="search-input"
+                                   t-att-placeholder="searchPlaceholder"
+                                   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                                   inputmode="none"
+                                   t-on-keydown="onSearchKeydown"
+                                   t-on-keyup="debounceSearch"/>
+                            <button type="button" class="btn btn-outline-primary" t-on-click="searchPackages">
+                                <t t-out="searchButtonLabel"/>
+                            </button>
+                        </div>
+                        <p class="text-muted small mt-2 mb-0" t-out="searchHint"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="o_rma_desk_unpack_body container-fluid flex-grow-1 py-3">
+                <div class="row justify-content-center g-3 mb-3">
+                    <div class="col-12 col-md-6 col-lg-5">
+                        <button type="button"
+                                class="btn btn-primary w-100 py-3"
+                                t-on-click="openPendingList">
+                            <t t-out="listButtonLabel"/>
+                            <span t-if="state.pendingPackageCount !== null"
+                                  class="badge text-bg-light text-dark ms-2 align-middle"
+                                  t-out="state.pendingPackageCount"/>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-5">
+                        <button type="button"
+                                class="btn btn-warning w-100 py-3"
+                                t-on-click="openIncidentList">
+                            <i class="fa fa-exclamation-triangle me-2"/>
+                            <t t-out="incidentListButtonLabel"/>
+                            <span t-if="state.incidentPackageCount !== null"
+                                  class="badge text-bg-dark ms-2 align-middle"
+                                  t-out="state.incidentPackageCount"/>
+                        </button>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-1 mb-3" t-if="showPackageCandidateList">
+                    <div class="col-12 col-xl-10">
+                        <p class="text-muted small mb-2" t-out="packageListHint"/>
+                        <div class="list-group shadow-sm">
+                            <RmaReceptionPackageSearchLine t-foreach="state.searchCandidates" t-as="pkg" t-key="pkg.id"
+                                                           line="pkg"
+                                                           isSelected="false"
+                                                           onSelect.bind="selectCandidate"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center pb-5" t-if="showPostUnpackActions">
+                    <div class="col-12 col-xl-10 o_rma_desk_unpack_post_unpack card shadow border border-primary border-opacity-25">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary mb-2" t-out="postUnpackTitle"/>
+                            <p class="text-muted small mb-2" t-out="postUnpackSubtitle"/>
+                            <p class="fw-semibold mb-3 text-break" t-out="state.postUnpackLabel"/>
+                            <div class="table-responsive mb-0" t-if="state.postUnpackUnits.length">
+                                <table class="table table-sm table-hover align-middle o_rma_desk_unpack_units_table">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" t-out="labelColumnUnit"/>
+                                            <th scope="col" class="d-none d-md-table-cell" t-out="labelColumnState"/>
+                                            <th scope="col" t-out="labelColumnActions"/>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="state.postUnpackUnits" t-as="line" t-key="line.id">
+                                            <td class="text-break">
+                                                <span class="fw-medium" t-out="line.lineLabel"/>
+                                                <span t-if="line.sku" class="d-block small text-muted" t-out="line.sku"/>
+                                            </td>
+                                            <td class="d-none d-md-table-cell text-muted small" t-out="line.stateLabel"/>
+                                            <td class="p-2">
+                                                <div class="btn-group btn-group-sm flex-wrap" role="group">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            t-att-disabled="isPostUnpackRowDisabled(line.id)"
+                                                            t-on-click="() => this.onPostUnpackMoveOne(line.id, 'review')">
+                                                        <t t-out="labelMoveReview"/>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            t-att-disabled="isPostUnpackRowDisabled(line.id)"
+                                                            t-on-click="() => this.onPostUnpackMoveOne(line.id, 'repair')">
+                                                        <t t-out="labelMoveRepair"/>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            t-att-disabled="isPostUnpackRowDisabled(line.id)"
+                                                            t-on-click="() => this.onPostUnpackMoveOne(line.id, 'storage')">
+                                                        <t t-out="labelMoveStorage"/>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                            t-att-disabled="isPostUnpackRowDisabled(line.id)"
+                                                            t-on-click="() => this.onPostUnpackMoveOne(line.id, 'scrap')">
+                                                        <t t-out="labelMoveScrap"/>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div t-if="state.postUnpackUnits.length">
+                                <hr class="my-4"/>
+                                <h6 class="text-body-secondary mb-2" t-out="labelSendAllTitle"/>
+                                <p class="text-muted small mb-3" t-out="labelSendAllHint"/>
+                                <div class="row g-2">
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <button type="button" class="btn btn-primary w-100 py-2"
+                                                t-att-disabled="state.postUnpackBusyAll || postUnpackAnyRowBusy"
+                                                t-on-click="postUnpackAllReview">
+                                            <t t-out="labelSendAllReview"/>
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <button type="button" class="btn btn-primary w-100 py-2"
+                                                t-att-disabled="state.postUnpackBusyAll || postUnpackAnyRowBusy"
+                                                t-on-click="postUnpackAllRepair">
+                                            <t t-out="labelSendAllRepair"/>
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <button type="button" class="btn btn-primary w-100 py-2"
+                                                t-att-disabled="state.postUnpackBusyAll || postUnpackAnyRowBusy"
+                                                t-on-click="postUnpackAllStorage">
+                                            <t t-out="labelSendAllStorage"/>
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <button type="button" class="btn btn-danger w-100 py-2"
+                                                t-att-disabled="state.postUnpackBusyAll || postUnpackAnyRowBusy"
+                                                t-on-click="postUnpackAllScrap">
+                                            <t t-out="labelSendAllScrap"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="state.postUnpackQuants.length">
+                                <hr class="my-4" t-if="state.postUnpackUnits.length"/>
+                                <h6 class="text-body-secondary mb-2" t-out="labelQuantsSection"/>
+                                <div class="table-responsive mb-3">
+                                    <table class="table table-sm table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th scope="col" t-out="labelColumnUnit"/>
+                                                <th scope="col" class="text-end" t-out="labelColumnQty"/>
+                                                <th scope="col" class="d-none d-md-table-cell" t-out="labelColumnLot"/>
+                                                <th scope="col" class="d-none d-lg-table-cell" t-out="labelColumnLocation"/>
+                                                <th scope="col" t-out="labelColumnActions"/>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="state.postUnpackQuants" t-as="qline" t-key="qline.id">
+                                                <td class="text-break">
+                                                    <span class="fw-medium" t-out="qline.lineLabel"/>
+                                                </td>
+                                                <td class="text-end text-nowrap" t-out="qline.qty"/>
+                                                <td class="d-none d-md-table-cell small text-muted text-break" t-out="qline.lotLabel"/>
+                                                <td class="d-none d-lg-table-cell small text-muted text-break" t-out="qline.locationLabel"/>
+                                                <td class="p-2">
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            t-att-disabled="isPostUnpackQuantRowDisabled(qline.id)"
+                                                            t-on-click="() => this.onPostUnpackQuantStoreOne(qline.id)">
+                                                        <t t-out="labelQuantStore"/>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button type="button" class="btn btn-primary w-100 py-2"
+                                        t-att-disabled="state.postUnpackBusyAll || postUnpackAnyRowBusy"
+                                        t-on-click="postUnpackAllQuantStorage">
+                                    <t t-out="labelSendAllQuantStorage"/>
+                                </button>
+                            </div>
+                            <button type="button" class="btn btn-link btn-sm px-0 mt-3"
+                                    t-att-disabled="state.postUnpackBusyAll || postUnpackAnyRowBusy"
+                                    t-on-click="clearPostUnpackPanel">
+                                <t t-out="labelDismissPostUnpack"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center pb-5" t-if="canShowWizardEmbed">
+                    <div class="col-12 col-xl-10 o_rma_desk_unpack_package_embed position-relative">
+                        <h5 class="text-muted mb-3 border-bottom pb-2">
+                            <t t-out="wizardSectionTitle"/>
+                        </h5>
+                        <RmaPackageUnpackDeskDetail t-key="state.wizardMountKey" packageId="state.wizardPackageId"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

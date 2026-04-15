@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_product_map_import_wizard_form" model="ir.ui.view">
+        <field name="name">account.product.map.import.wizard.form</field>
+        <field name="model">account.product.map.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Product Map (CSV / Excel)">
+                <group>
+                    <field name="account_id" options="{'no_create': True}"/>
+                    <field name="file_data" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+                    <field name="is_excel_file" invisible="1"/>
+                    <field name="dry_run"/>
+                    <field name="delimiter" invisible="is_excel_file"/>
+                    <field name="has_header"/>
+                </group>
+                <div class="alert alert-info" role="alert" invisible="result_html">
+                    <p><strong>Supported files:</strong> <code>.csv</code> (UTF-8), <code>.xlsx</code> or <code>.xls</code>. The <strong>first sheet</strong> is read for Excel files.</p>
+                    <p><strong>Columns</strong> (header row recommended):</p>
+                    <ul>
+                        <li><code>account_sku</code> (or <code>sku</code>) — required</li>
+                        <li><code>product</code> (or <code>default_code</code> / internal reference) — required; must match product default code or barcode</li>
+                        <li>Optional: <code>tracking</code>, <code>account_ean13</code>, <code>account_asin</code>, <code>account_fnsku</code>, <code>notes</code></li>
+                    </ul>
+                    <p>With <em>Dry run only</em> enabled, no records are created or updated; a report is shown below.</p>
+                </div>
+                <field name="result_html" invisible="not result_html"/>
+                <footer>
+                    <button name="action_run" type="object" string="Validate / Import" class="btn-primary" data-hotkey="q"/>
+                    <button string="Close" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_product_map_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import Product Map</field>
+        <field name="res_model">account.product.map.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="rma_base.model_account_product_map"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <record id="action_account_product_map_import_wizard_only" model="ir.actions.act_window">
+        <field name="name">Import Product Map</field>
+        <field name="res_model">account.product.map.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

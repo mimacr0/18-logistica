@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="barcode_locations_main" name="Barcode Locations Main">
+        &lt;!DOCTYPE html&gt;
+        <html lang="es" class="dark" style="height: 100%;">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <title>Etiquetas Ubicación Almacén - Synetech</title>
+
+                <!-- Dedicated Tailwind CSS with Cache Buster -->
+                <link rel="stylesheet" href="/barcode_locations/static/src/css/main.min.css?v=1.0.1"/>
+                
+                <!-- External Assets -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+                <style>
+                    /* Safety styles in case Tailwind fails to load */
+                    .hidden { display: none !important; }
+                    .progress-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-center: center; }
+                </style>
+
+                <script type="text/javascript">
+                    var odoo = {
+                        csrf_token: "<t t-nocache="CSRF token" t-esc="request.csrf_token(None)"/>",
+                        debug: "<t t-esc="debug"/>",
+                        __session_info__: <t t-out="json.dumps(session_info)"/>,
+                    };
+                </script>
+
+                <script>
+                    // Theme initialization
+                    (function() {
+                        const savedTheme = localStorage.getItem('theme');
+                        const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                        if (savedTheme === 'light' || (!savedTheme &amp;&amp; systemPrefersLight)) {
+                            document.documentElement.classList.add('light');
+                            document.documentElement.classList.remove('dark');
+                        } else {
+                            document.documentElement.classList.add('dark');
+                            document.documentElement.classList.remove('light');
+                        }
+                    })();
+                </script>
+
+                <!-- Odoo Backend JS Assets -->
+                <t t-call-assets="web.assets_backend" t-js="true" t-css="false"/>
+
+                <!-- Vendor Libraries -->
+                <script src="/barcode_locations/static/src/js/vendor/jsbarcode.all.min.js?v=1"></script>
+                <script src="/barcode_locations/static/src/js/vendor/qrcode.min.js?v=1"></script>
+                <script src="/barcode_locations/static/src/js/vendor/jspdf.umd.min.js?v=1"></script>
+                <script src="/barcode_locations/static/src/js/vendor/html2canvas.min.js?v=1"></script>
+
+                <!-- Application Logic -->
+                <script src="/barcode_locations/static/src/js/main_theme.js?v=1"></script>
+                <script src="/barcode_locations/static/src/js/labels.js?v=1"></script>
+            </head>
+            <body class="bg-dark-900 min-h-screen selection:bg-primary-500/30" style="background-color: #0c0e12; color: #f8fafc;">
+                <!-- TOAST -->
+                <div id="toast" class="toast"></div>
+
+                <!-- Progress Overlay -->
+                <div id="progressOverlay" class="progress-overlay hidden">
+                    <div class="progress-card">
+                        <h3 class="text-sm font-semibold mb-2" data-i18n="generatingPDF">Generando PDF...</h3>
+                        <div class="progress-bar-wrap">
+                            <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <span id="progressText" class="text-[10px] font-mono text-content-muted">0 / 0</span>
+                            <button id="cancelPDF" class="text-[10px] font-semibold text-danger-400 hover:text-danger-300 transition-colors uppercase tracking-wider" data-i18n="cancel">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header -->
+                <header class="glass-header">
+                    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+                        <div class="flex items-center justify-between w-full">
+                            <div class="flex items-center gap-4">
+                                <button class="w-8 h-8 rounded-lg flex items-center justify-center bg-surface-700 hover:bg-surface-600 text-content-muted hover:text-content-main transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </button>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h1 class="text-base font-semibold text-content-main">Barcode Scanner</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="theme-toggle" class="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-700 hover:bg-surface-600 text-content-muted hover:text-content-main transition-all duration-300">
+                                    <div class="theme-icon-container">
+                                        <i class="fas fa-moon theme-icon theme-icon-active" id="theme-toggle-dark-icon"></i>
+                                        <i class="fas fa-sun theme-icon theme-icon-inactive" id="theme-toggle-light-icon"></i>
+                                    </div>
+                                </button>
+                                <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                                    <img class="h-8 rounded-lg bg-white p-1 object-contain" src="/barcode_locations/static/src/img/logo..png" alt="My Company"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="max-w-7xl mx-auto px-4 py-4 md:px-6 lg:px-8">
+                    <!-- ===== SUB HEADER / COUNTER ===== -->
+                    <div class="flex items-center justify-end mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-700 border border-surface-600">
+                                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                                <span class="text-xs font-semibold text-content-main font-mono" id="labelCounter">0</span>
+                                <span class="text-[10px] text-content-muted" data-i18n="labelUnit">etiquetas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== MAIN GRID ===== -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                        <!-- ===== LEFT SIDEBAR ===== -->
+                        <div class="lg:col-span-4 xl:col-span-3 space-y-4 lg:sticky lg:top-4 lg:self-start">
+                            <!-- SINGLE LABEL CONFIG -->
+                            <div class="bg-dark-800 border border-dark-600 rounded-xl p-4">
+                                <h2 class="text-[10px] font-semibold text-content-dim uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                                    <span data-i18n="singleLabel">Etiqueta Individual</span>
+                                </h2>
+                                <div class="mb-2.5">
+                                    <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="zone">Zona</label>
+                                    <div class="zone-select-wrap">
+                                        <div class="zone-dot" id="zoneDot" style="background:#3b82f6; color:#3b82f6"></div>
+                                        <select id="inpZone" onchange="updateLivePreview(); updateZoneDot()" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg py-2 text-sm text-content-main cursor-pointer appearance-none">
+                                            <option value="A">A &#8212; Azul</option>
+                                            <option value="B">B &#8212; Verde</option>
+                                            <option value="C">C &#8212; Amarillo</option>
+                                            <option value="D">D &#8212; Rojo</option>
+                                            <option value="E">E &#8212; P&#250;rpura</option>
+                                            <option value="F">F &#8212; Cian</option>
+                                            <option value="G">G &#8212; Naranja</option>
+                                            <option value="H">H &#8212; Rosa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 mb-2.5">
+                                    <div>
+                                        <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="aisle">Pasillo</label>
+                                        <input id="inpAisle" type="number" min="1" max="99" value="1" oninput="updateLivePreview()" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main text-center font-mono focus:outline-none"/>
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="rack">Estanter&#237;a</label>
+                                        <input id="inpRack" type="number" min="1" max="99" value="1" oninput="updateLivePreview()" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main text-center font-mono focus:outline-none"/>
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="shelf">Nivel</label>
+                                        <input id="inpShelf" type="number" min="1" max="9" value="1" oninput="updateLivePreview()" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main text-center font-mono focus:outline-none"/>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="companyName">Nombre empresa</label>
+                                    <input id="inpCompany" type="text" value="SYNETECH" oninput="updateLivePreview()" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main tracking-wider focus:outline-none"/>
+                                </div>
+                                <button onclick="addSingleLabel()" class="btn-action w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-content-main text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/10">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                    <span data-i18n="btnAdd">Agregar Etiqueta</span>
+                                </button>
+                            </div>
+
+                            <!-- BATCH GENERATION -->
+                            <div class="bg-dark-800 border border-dark-600 rounded-xl p-4">
+                                <h2 class="text-[10px] font-semibold text-content-dim uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    <span data-i18n="batchGen">Generaci&#243;n por Lotes</span>
+                                </h2>
+                                <div class="mb-2.5">
+                                    <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="batchZone">Zona</label>
+                                    <div class="zone-select-wrap">
+                                        <div class="zone-dot" id="batchZoneDot" style="background:#3b82f6; color:#3b82f6"></div>
+                                        <select id="batchZone" onchange="updateBatchZoneDot()" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg py-2 text-sm text-content-main cursor-pointer appearance-none">
+                                            <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                                            <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 mb-2">
+                                    <div>
+                                        <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="batchAisles">Pasillos</label>
+                                        <input id="batchAisles" type="number" min="1" max="20" value="3" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main text-center font-mono focus:outline-none"/>
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="batchRacks">Estanter&#237;as</label>
+                                        <input id="batchRacks" type="number" min="1" max="20" value="4" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main text-center font-mono focus:outline-none"/>
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] text-content-muted font-medium block mb-1" data-i18n="batchShelves">Niveles</label>
+                                        <input id="batchShelves" type="number" min="1" max="9" value="4" class="form-input w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-sm text-content-main text-center font-mono focus:outline-none"/>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-surface-700/60 border border-surface-600">
+                                    <svg class="w-3.5 h-3.5 text-purple-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                                    <span class="text-xs text-content-main font-mono font-semibold" id="batchCount">48</span>
+                                    <span class="text-[10px] text-content-dim" data-i18n="batchUnit">etiquetas a generar</span>
+                                </div>
+                                <button onclick="generateBatch()" class="btn-action w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-content-main text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-purple-500/10">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    <span data-i18n="btnBatch">Generar Lote</span>
+                                </button>
+                            </div>
+
+                            <!-- ACTIONS -->
+                            <div class="flex flex-col gap-2">
+                                <button onclick="generatePDF()" class="btn-action w-full bg-primary-600 hover:bg-primary-500 text-content-main text-xs font-semibold py-2.5 rounded-lg flex items-center justify-center gap-1.5 shadow-lg shadow-primary-500/20">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    <span data-i18n="btnPDF">Guardar PDF</span>
+                                </button>
+                                <button onclick="clearLabels()" class="btn-action w-full bg-surface-700 border-surface-600 border border-dark-600 hover:border-danger-400/30 text-content-muted hover:text-danger-400 text-xs font-semibold py-2.5 px-4 rounded-lg flex items-center justify-center gap-1.5 transition-colors duration-150">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    <span data-i18n="btnClear">Limpiar</span>
+                                </button>
+                            </div>
+
+                            <!-- ZONE LEGEND -->
+                            <div class="bg-dark-800 border border-dark-600 rounded-xl p-4">
+                                <h2 class="text-[10px] font-semibold text-content-dim uppercase tracking-widest mb-2.5" data-i18n="colorLegend">Leyenda de Colores</h2>
+                                <div class="grid grid-cols-4 gap-1.5" id="legendGrid"></div>
+                            </div>
+                        </div>
+
+                        <!-- ===== RIGHT: LABELS PREVIEW ===== -->
+                        <div class="lg:col-span-8 xl:col-span-9">
+                            <!-- LIVE PREVIEW -->
+                            <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 mb-4">
+                                <div class="text-[10px] font-semibold text-content-dim uppercase tracking-widest mb-2.5 flex items-center gap-1.5">
+                                    <svg class="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    <span data-i18n="livePreview">Vista previa en tiempo real</span>
+                                    <button id="btnDownloadPreview" class="ml-auto flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface-700 hover:bg-surface-600 text-[10px] font-semibold text-content-muted hover:text-cyan-400 transition-all duration-200 border border-surface-600">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        <span data-i18n="btnDownloadImage">Descargar Imagen</span>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <div class="w-[100mm] h-[67mm]">
+                                        <div id="livePreviewContainer" class="live-preview-card"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-dark-800 border border-dark-600 rounded-xl p-5 min-h-[70vh]">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h2 class="text-xs font-semibold text-content-dim uppercase tracking-wider flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                                        <span data-i18n="preview">Vista Previa</span>
+                                    </h2>
+                                    <div class="flex items-center gap-3">
+                                        <label class="flex items-center gap-1.5 cursor-pointer">
+                                            <input type="checkbox" id="showGrid" t-att-checked="'checked'" onchange="toggleGrid()" class="w-3.5 h-3.5 rounded border-surface-600 bg-surface-700 text-cyan-500 cursor-pointer"/>
+                                            <span class="text-[10px] text-content-muted" data-i18n="gridView">Cuadr&#237;cula</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div id="printArea" class="flex flex-wrap gap-4 justify-center items-start transition-all duration-200" style="min-height:200px;">
+                                    <!-- Empty state -->
+                                    <div id="emptyState" class="flex flex-col items-center justify-center py-20 text-center w-full select-none opacity-60">
+                                        <div class="w-16 h-16 rounded-2xl bg-surface-700 border border-surface-600 flex items-center justify-center mb-4">
+                                            <svg class="w-8 h-8 text-content-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                                        </div>
+                                        <p class="text-sm text-content-dim font-medium" data-i18n="emptyTitle">Sin etiquetas</p>
+                                        <p class="text-[11px] text-content-muted mt-1 max-w-[240px]" data-i18n="emptyMsg">Configura la ubicaci&#243;n en el panel izquierdo y presiona &#8220;Agregar&#8221;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

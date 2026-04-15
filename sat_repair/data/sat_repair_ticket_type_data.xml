@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sat_repair_ticket_type_software" model="rma.repair.ticket.type">
+            <field name="name">Software</field>
+            <field name="sequence">10</field>
+            <field name="color">1</field>
+            <field name="sequence_prefix">PRE</field>
+        </record>
+
+        <record id="sat_repair_ticket_type_repair" model="rma.repair.ticket.type">
+            <field name="name">Repair</field>
+            <field name="sequence">20</field>
+            <field name="color">3</field>
+            <field name="sequence_prefix">INC</field>
+        </record>
+
+        <record id="sat_repair_ticket_type_visit" model="rma.repair.ticket.type">
+            <field name="name">On-site visit</field>
+            <field name="sequence">30</field>
+            <field name="color">5</field>
+            <field name="sequence_prefix">SOL</field>
+        </record>
+    </data>
+</odoo>

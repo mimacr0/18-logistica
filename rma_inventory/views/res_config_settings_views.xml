@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_rma_inventory" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.rma_inventory</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='stock']" position="inside">
+                <block title="RMA" name="rma_inventory_move_desk_block">
+                    <setting string="Raíces del selector (mesa mover unidades)"
+                             help="Una o varias ubicaciones raíz: en la mesa «Mover unidades» el primer nivel muestra sus hijos, o varios botones si configura más de una raíz. Si queda vacío, se intenta NV1/Stock, luego la ubicación Stock del almacén, o ids en el parámetro técnico rma_inventory.move_desk_root_location_id (uno o varios separados por coma).">
+                        <field name="rma_move_desk_root_location_ids"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </setting>
+                    <setting string="Mesa RMA: incluir categorías de almacenamiento"
+                             help="Si no elige ninguna, se incluyen todas las categorías. Si añade categorías, solo se muestran y permiten ubicaciones con una de ellas (las ubicaciones sin categoría de almacenamiento no entran).">
+                        <field name="rma_move_desk_storage_category_include_ids"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </setting>
+                    <setting string="Mesa RMA: excluir categorías de almacenamiento"
+                             help="Si no elige ninguna, no se excluye nada por categoría. Las categorías indicadas dejan de aparecer en el árbol y en las sugerencias por mapa, y no son destino válido.">
+                        <field name="rma_move_desk_storage_category_exclude_ids"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

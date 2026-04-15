@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_rma_unit_form_inherit_rma_label_canvas" model="ir.ui.view">
+        <field name="name">rma.unit.form.inherit.rma.label.canvas</field>
+        <field name="model">rma.unit</field>
+        <field name="inherit_id" ref="rma_inventory.view_rma_unit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_print_name']" position="after">
+                <button name="action_open_rma_unit_label_canvas" type="object"
+                        string="Etiqueta (navegador)" class="btn-secondary"
+                        invisible="not id"
+                        title="Vista previa e impresión de la etiqueta con código de barras en el navegador"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

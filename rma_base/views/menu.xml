@@ -1,32 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <menuitem id="rma_base_root"
-              name="Products"
+              name="Catalogue"
               web_icon="rma_base,static/description/product_menu.png"
               sequence="25"/>
-
-    <menuitem id="general_products_menu"
-              name="General"
-              parent="rma_base_root"
-              action="action_product_product_general"
-              sequence="10"/>
 
     <menuitem id="account_product_map_menu"
               name="Product Map"
               parent="rma_base_root"
               action="action_account_product_map"
+              sequence="10"/>
+
+    <menuitem id="rma_base_menu_products_services"
+              name="Services"
+              parent="rma_base_root"
+              action="action_product_product_services"
               sequence="20"/>
 
-    <!-- <menuitem id="generic_rma_base"
-              name="Generic Products"
+    <menuitem id="account_product_map_spare_parts_menu"
+              name="Spare Parts Map"
               parent="rma_base_root"
-              action="action_product_product_generic"
-              sequence="30"/> -->
+              action="action_account_product_map_spare_parts"
+              sequence="30"/>
+
+
+    <menuitem id="rma_base_menu_product_product"
+              name="General Catalogue"
+              parent="rma_base_root"
+              sequence="60"/>
+
+    <menuitem id="rma_base_menu_templates_main"
+              name="General Templates"
+              parent="rma_base_menu_product_product"
+              action="action_product_template_main"
+              sequence="10"/>
+
+    <menuitem id="rma_base_menu_products_main"
+              name="General Products"
+              parent="rma_base_menu_product_product"
+              action="action_product_product_main"
+              sequence="20"/>
+
+
+    <menuitem id="rma_base_menu_products_spare_parts"
+              name="General Spare Parts"
+              parent="rma_base_menu_product_product"
+              action="action_product_product_spare_parts"
+              sequence="30"/>
+
+
+    <menuitem id="rma_base_menu_configuration"
+              name="Configuration"
+              parent="rma_base_root"
+              sequence="90"/>
+
+    <menuitem id="rma_base_menu_product_category"
+              name="Product Categories"
+              parent="rma_base_menu_configuration"
+              action="product.product_category_action_form"
+              sequence="10"/>
+
+    <menuitem id="account_product_map_import_menu"
+              name="Import Product Map"
+              parent="rma_base_root"
+              action="action_account_product_map_import_wizard_only"
+              sequence="100"/>
+
 
     <!-- Menu that appears in account_partner -->
-    <menuitem id="account_product_map_menu_partner"
+    <!-- <menuitem id="account_product_map_menu_partner"
               name="Product Map"
               parent="account_partner.credit_account_menu_root"
               action="action_account_product_map"
-              sequence="40"/>
+              sequence="40"/> -->
 </odoo>

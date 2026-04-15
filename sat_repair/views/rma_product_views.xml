@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Mapeos cuenta–producto filtrados por tipo de producto interno -->
+    <record id="action_services_template_sat" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('type', '=', 'service')]</field>
+        <field name="context">{'default_type': 'service'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new product
+            </p>
+        </field>
+    </record>
+
+    <!-- Mapeos cuyo producto interno está marcado como repuesto -->
+    <record id="action_product_spare_parts_sat" model="ir.actions.act_window">
+        <field name="name">Spare Parts</field>
+        <field name="res_model">account.product.map</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="rma_base.account_product_map_view_search"/>
+        <field name="domain">[('is_spare_parts', '=', True), ('product_id.type', '!=', 'service')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new mapping whose internal product is a spare part.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="widget_responsive_selector.ResponsiveSelectorField">
+        <div class="o_responsive_selector d-flex flex-wrap gap-3 w-100" t-att-class="props.className">
+            <t t-foreach="options" t-as="option" t-key="option.value">
+                <div class="o_responsive_selector_item flex-grow-1 d-flex flex-column align-items-center justify-content-center p-4 border rounded shadow-sm cursor-pointer transition-all"
+                     t-att-class="{
+                        'active border-primary bg-primary-light': value === option.value,
+                        'bg-view': value !== option.value
+                     }"
+                     t-att-style="option.color ? (value === option.value ? 'border-color: ' + option.color + ' !important; background-color: ' + option.color + '0D !important;' : '') : ''"
+                     t-on-click="() => this.onChange(option.value)">
+
+                    <i t-if="option.icon" class="fa mb-3"
+                       t-att-class="[option.icon, value === option.value ? 'text-primary' : 'text-muted']"
+                       t-att-style="(option.color ? (value === option.value ? 'color: ' + option.color + ' !important;' : '') : '')"/>
+
+                    <span class="text-center fw-bold text-uppercase"
+                          t-att-class="value === option.value ? 'text-primary' : 'text-body'"
+                          style="font-size: 0.8rem; letter-spacing: 0.5px;"
+                          t-att-style="option.color ? (value === option.value ? 'color: ' + option.color + ' !important;' : '') : ''">
+                        <t t-esc="option.label"/>
+                    </span>
+
+                    <div t-if="value === option.value" class="o_responsive_selector_check position-absolute top-0 end-0 p-1">
+                        <i class="fa fa-check-circle text-primary" t-att-style="option.color ? 'color: ' + option.color + ' !important;' : ''"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

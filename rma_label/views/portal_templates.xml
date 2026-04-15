@@ -57,7 +57,8 @@
                                         <span t-field="package.create_date" t-options='{"widget": "date"}'/>
                                     </td>
                                     <td>
-                                        <span t-field="package.rma_state"/>
+                                        <span t-field="package.package_state"/>
+                                        <span t-if="package.package_has_incident" class="badge text-bg-warning ms-1">Incidencia</span>
                                     </td>
                                 </tr>
                             </t>

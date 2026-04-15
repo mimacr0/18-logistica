@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="barcode_locations.ListView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary">
+        <xpath expr="//div" position="inside">
+            <button type="button" class="btn btn-secondary o_barcode_locations_btn" t-on-click="onOpenBarcodeLocations" title="Barcode Scanner" data-hotkey="b">
+                <i class="fa fa-barcode"/>
+            </button>
+        </xpath>
+    </t>
+</templates>

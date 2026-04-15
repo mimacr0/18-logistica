@@ -1,0 +1,19 @@
+.o_qr_widget_container {
+    max-width: 250px;
+    margin: 10px 0;
+}
+
+.o_qr_code_wrapper {
+    background: white;
+    cursor: pointer;
+    line-height: 0;
+    transition: transform 0.15s ease;
+
+    &:hover {
+        transform: scale(1.03);
+    }
+}
+
+.o_qr_widget_container img {
+    border: none;
+}

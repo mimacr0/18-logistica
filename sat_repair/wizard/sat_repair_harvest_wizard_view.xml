@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sat_repair_harvest_wizard_view_form" model="ir.ui.view">
+        <field name="name">rma.repair.harvest.wizard.form</field>
+        <field name="model">rma.repair.harvest.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Harvest spare parts">
+                <sheet>
+                    <group>
+                        <field name="owner_id" invisible="1"/>
+                        <field name="repair_unit_id" invisible="not repair_unit_id"/>
+                        <field name="unit_id" options="{'no_create': True}"/>
+                        <field name="location_id" options="{'no_create': True}"/>
+                    </group>
+                    <notebook>
+                        <page string="Parts to Harvest" name="parts">
+                            <p class="text-muted mb-2">
+                                Choose an RMA unit to dismantle into spare parts. If you opened this from a repair order, you cannot select the unit currently under repair. Lines are prefilled from the product template (RMA Harvest tab).
+                            </p>
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id" options="{'no_create': True}"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_harvest" string="Confirm harvest" type="object" class="btn-primary" confirm="The selected unit will be converted to spare parts and stocked at the target location. Continue?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sat_repair_harvest_wizard" model="ir.actions.act_window">
+        <field name="name">Harvest Spare Parts</field>
+        <field name="res_model">rma.repair.harvest.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_rma_harvest_wizard_standalone" model="ir.actions.act_window">
+        <field name="name">New harvest</field>
+        <field name="res_model">rma.repair.harvest.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

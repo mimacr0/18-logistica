@@ -1,24 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Search View -->
-    <record id="action_product_product_general" model="ir.actions.act_window">
+    <record id="action_product_product_main" model="ir.actions.act_window">
         <field name="name">General Products</field>
         <field name="res_model">product.product</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">list,form,kanban,activity</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="product.product_search_form_view"/>
+        <field name="domain">[('type', '!=', 'service'), ('product_tmpl_id.is_spare_parts', '=', False)]</field>
         <field name="help" type="html">
-          <p class="o_view_nocontent_smiling_face">
-            Create a new General Product
-          </p>
+            <p class="o_view_nocontent_smiling_face">
+                Create a storable or consumable product that is not a spare part.
+            </p>
         </field>
     </record>
-      <record id="action_product_product_generic" model="ir.actions.act_window">
-        <field name="name">Generic Products</field>
+
+    <record id="product_product_services_tree_view" model="ir.ui.view">
+        <field name="name">product.product.services.list</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <list string="Services" multi_edit="1" duplicate="false" sample="1">
+                <field name="currency_id" column_invisible="1"/>
+                <field name="name" readonly="1"/>
+                <field name="categ_id" optional="show" readonly="1"/>
+                <field name="lst_price" string="Price" widget="monetary"
+                       options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1"/>
+                <field name="all_product_tag_ids" widget="many2many_tags" string="Tags" readonly="1" optional="show"/>
+                <field name="type" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_product_services_kanban_view" model="ir.ui.view">
+        <field name="name">product.product.services.kanban</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex flex-column p-2">
+                            <field name="name" class="fw-bold"/>
+                            <field name="categ_id"/>
+                            <field name="lst_price" widget="monetary"
+                                   options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_product_product_services" model="ir.actions.act_window">
+        <field name="name">Services</field>
         <field name="res_model">product.product</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">list,form,kanban,activity</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('rma_base.product_product_services_tree_view')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('rma_base.product_product_services_kanban_view')}),
+            (0, 0, {'view_mode': 'form'}),
+            (0, 0, {'view_mode': 'activity'}),
+        ]"/>
+        <field name="search_view_id" ref="product.product_search_form_view"/>
+        <field name="domain">[('type', '=', 'service')]</field>
+        <!-- default_taxes_id → Customer taxes on product.template; requires ES chart loaded (e.g. l10n_es) for company 1 -->
+        <field name="context" eval="{'default_type': 'service', 'default_taxes_id': [(6, 0, [ref('account.1_account_tax_template_s_iva21s')])]}"/>
         <field name="help" type="html">
-          <p class="o_view_nocontent_smiling_face">
-            Create a new Generic Product
-          </p>
+            <p class="o_view_nocontent_smiling_face">
+                Create a service product.
+            </p>
         </field>
     </record>
+
+    <record id="action_product_product_spare_parts" model="ir.actions.act_window">
+        <field name="name">General Spare Parts</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">list,form,kanban,activity</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="product.product_search_form_view"/>
+        <field name="domain">[('type', '!=', 'service'), ('product_tmpl_id.is_spare_parts', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a spare part product (storable or consumable).
+            </p>
+        </field>
+    </record>
+
 </odoo>

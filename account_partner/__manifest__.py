@@ -8,7 +8,7 @@
 {
     'name': "Account Partner",
     'category': 'Services/Accounts',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'author': 'DaFe Solutions',
     'maintainer': 'DaFe Solutions',
     'description': """Modulo para la gestión de clientes y cuentas en el portal""",

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Etiqueta 3×2 cm (ancho × alto) = 30×20 mm -->
+    <record id="paperformat_rma_unit_name_label_3x2" model="report.paperformat">
+        <field name="name">RMA unit label 3×2 cm (30×20 mm)</field>
+        <field name="format">custom</field>
+        <field name="page_width">30</field>
+        <field name="page_height">20</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <!-- False: si está activo, wkhtmltopdf no escala y el código de barras se sale de 30×20 mm -->
+        <field name="disable_shrinking" eval="False"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <template id="report_rma_unit_name_document">
+        <!-- Mismo bloque que web.basic_layout pero sin volver a llamar a html_container (el padre ya lo hace). -->
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <div class="article o_report_rma_unit_name"
+             t-att-data-oe-model="o and o._name"
+             t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <style type="text/css">
+                /* Etiqueta pequeña: quitar padding del .container en PDF (Bootstrap ~12px lateral). */
+                body.o_body_pdf.container {
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                    max-width: none !important;
+                }
+                .o_report_rma_unit_name {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+            </style>
+            <div class="page o_rma_unit_name_sheet"
+                 style="width:30mm;height:20mm;margin:0;padding:0;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                <div class="text-center"
+                     style="width:100%;max-width:30mm;padding:0 0.25mm;box-sizing:border-box;font-size:4pt;line-height:1.05;word-break:break-all;">
+                    <!-- humanreadable en el PNG suele hacer la imagen más alta que el CSS y “rompe” la hoja; el nombre va debajo en texto. -->
+                    <span t-out="doc.name"
+                          t-options="{'widget': 'barcode', 'symbology': 'Code128', 'width': 200, 'height': 48, 'humanreadable': 1, 'quiet': 0, 'img_style': 'width:100%;max-width:29mm;height:11mm;max-height:11mm;object-fit:contain;display:block;margin:0 auto;'}"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_rma_unit_name">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="rma_inventory.report_rma_unit_name_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_rma_unit_name" model="ir.actions.report">
+        <field name="name">RMA unit name</field>
+        <field name="model">rma.unit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rma_inventory.report_rma_unit_name</field>
+        <field name="report_file">rma_inventory.report_rma_unit_name</field>
+        <field name="print_report_name">'RMA - %s' % (object.name)</field>
+        <field name="paperformat_id" ref="rma_inventory.paperformat_rma_unit_name_label_3x2"/>
+        <field name="binding_model_id" ref="model_rma_unit"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

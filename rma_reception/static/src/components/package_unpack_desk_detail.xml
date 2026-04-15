@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="rma_reception.PackageUnpackDeskDetail">
+        <div class="card shadow-sm border o_rma_unpack_desk_detail">
+            <div class="card-body" t-if="state.loading">
+                <div class="text-center text-muted py-4">
+                    <i class="fa fa-spinner fa-spin fa-2x"/>
+                </div>
+            </div>
+            <div class="card-body" t-elif="!state.data">
+                <p class="text-muted mb-0" t-out="labelNoLines"/>
+            </div>
+            <div class="card-body" t-else="">
+                <div class="row g-3 mb-4 pb-3 border-bottom">
+                    <div class="col-12 col-md-6">
+                        <span class="text-muted small d-block" t-out="labelName"/>
+                        <span class="fw-semibold text-break" t-out="state.data.display_name or state.data.name"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <span class="text-muted small d-block" t-out="labelType"/>
+                        <span t-out="state.data.type_label"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <span class="text-muted small d-block" t-out="labelWeight"/>
+                        <span>
+                            <t t-out="state.data.shipping_weight"/>
+                            <t t-if="state.data.weight_uom_name" class="ms-1" t-out="state.data.weight_uom_name"/>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <span class="text-muted small d-block" t-out="labelLocation"/>
+                        <span t-out="state.data.location_label or '—'"/>
+                    </div>
+                </div>
+                <div t-if="state.data.check_lines and state.data.check_lines.length" class="mb-4 pb-3 border-bottom">
+                    <h6 class="text-body-secondary mb-2" t-out="labelReceptionUnpackChecks"/>
+                    <p class="text-muted small mb-3" t-out="labelReceptionUnpackChecksHelp"/>
+                    <div class="o_rma_unpack_check_kanban" role="group" t-att-aria-label="labelReceptionUnpackChecks">
+                        <button type="button"
+                            t-foreach="state.data.check_lines" t-as="chk" t-key="chk.id"
+                            class="o_rma_unpack_check_tile"
+                            t-att-class="{'o_rma_unpack_check_tile--selected': state.selectedUnpackCheckIds.includes(chk.id)}"
+                            t-att-aria-pressed="state.selectedUnpackCheckIds.includes(chk.id) ? 'true' : 'false'"
+                            t-on-click="() => this.toggleUnpackCheck(chk.id)">
+                            <span class="o_rma_unpack_check_tile__accent" aria-hidden="true"/>
+                            <span class="o_rma_unpack_check_tile__body">
+                                <span class="o_rma_unpack_check_tile__mark" aria-hidden="true">
+                                    <i class="fa fa-check"/>
+                                </span>
+                                <span class="o_rma_unpack_check_tile__text" t-out="chk.name"/>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                    <h6 class="text-body-secondary mb-0" t-out="labelDeclared"/>
+                    <button type="button" class="btn btn-primary"
+                            t-att-disabled="state.busyUnpack or !state.data.can_unpack"
+                            t-on-click="onUnpackPackage">
+                        <t t-out="unpackButtonLabel"/>
+                    </button>
+                </div>
+                <p t-if="!state.data.can_unpack and state.data.lines.length" class="text-muted small mb-3" t-out="labelNothingLeftToUnpack"/>
+                <div class="table-responsive" t-if="state.data.lines.length">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" t-out="labelProductMap"/>
+                                <th scope="col" class="text-end" t-out="labelQtyDeclared"/>
+                                <th scope="col" class="text-end" t-out="labelQtyReceived"/>
+                                <th scope="col" t-out="labelProductLocation"/>
+                                <th scope="col" class="text-end" t-out="labelDone"/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="state.data.lines" t-as="line" t-key="line.id">
+                                <td class="text-break">
+                                    <span t-out="line.product_map_name or '—'"/>
+                                </td>
+                                <td class="text-end text-nowrap" t-out="line.quantity"/>
+                                <td class="text-end text-nowrap fw-medium" t-out="line.received_qty"/>
+                                <td class="text-muted small text-break" t-out="line.location_label or '—'"/>
+                                <td class="text-end">
+                                    <span t-if="!line.pending_unpack" class="badge text-bg-secondary" t-out="labelDone"/>
+                                    <span t-else="" class="text-muted small">—</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p t-else="" class="text-muted mb-0 small" t-out="labelNoLines"/>
+            </div>
+        </div>
+    </t>
+</templates>

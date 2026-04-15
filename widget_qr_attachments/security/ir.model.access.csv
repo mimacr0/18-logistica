@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_qr_access_token_all,qr.access.token.all,model_qr_access_token,,1,0,0,0
+access_qr_access_token_user,qr.access.token.user,model_qr_access_token,base.group_user,1,1,1,1
